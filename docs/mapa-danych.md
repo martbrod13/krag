@@ -26,17 +26,17 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 
 ### 2. Krąg, role i zaproszenia
 
-- **Co:** nazwa kręgu, osoby w kręgu, ich role i uprawnienia, kto kogo zaprosił, zaproszenia.
-- **Po co:** żeby każdy widział tylko dane swoich kręgów i tylko w zakresie, na który pozwolił koordynator.
-- **Kto widzi:** osoby z kręgu.
-- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy.
+- **Co:** nazwa kręgu, osoby w kręgu, ich role i uprawnienia, kto kogo zaprosił, zaproszenia, połączone urządzenia podopiecznego (np. „tablet mamy”) z datą połączenia i ostatniego użycia.
+- **Po co:** żeby każdy widział tylko dane swoich kręgów i tylko w zakresie, na który pozwolił koordynator. Połączone urządzenie pozwala podopiecznemu korzystać z prostego ekranu bez konta i hasła.
+- **Kto widzi:** osoby z kręgu. Połączone urządzenia widzą koordynatorzy i mogą je w każdej chwili odłączyć.
+- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy. Odłączone urządzenie usuwamy od razu.
 - **Podstawa:** wykonanie umowy (art. 6 ust. 1 lit. b RODO).
 
 ### 3. Profil podopiecznego
 
-- **Co:** imię, rok urodzenia (bez pełnej daty), miasto, adres (nieobowiązkowy, potrzebny opiekunowi do wizyt), kontakty alarmowe, lekarz prowadzący (nieobowiązkowy).
-- **Po co:** plan opieki, wizyty opiekuna, koperta życia.
-- **Kto widzi:** osoby z kręgu. Adres i kontakty opiekun zawodowy widzi tylko wtedy, gdy rodzina na to pozwoli.
+- **Co:** imię, data urodzenia, miasto, adres (nieobowiązkowy, potrzebny opiekunowi do wizyt), kontakty alarmowe, lekarz prowadzący (nieobowiązkowy).
+- **Po co:** plan opieki, wizyty opiekuna, koperta życia, przypomnienia o urodzinach, sprawdzanie świadczeń zależnych od wieku.
+- **Kto widzi:** osoby z kręgu, także opiekun zawodowy, bo adres i kontakty alarmowe są mu potrzebne do wizyt i w nagłych sytuacjach.
 - **Jak długo:** do usunięcia kręgu.
 - **Podstawa:** do ustalenia z prawnikiem. Dane wpisuje rodzina, ale dotyczą podopiecznego, więc potrzebna jest jego zgoda albo zgoda jego przedstawiciela prawnego.
 
@@ -46,7 +46,7 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 - **Co:** leki, dawki i godziny przyjmowania, informacja, czy lek został podany, wizyty lekarskie, choroby i alergie (do koperty życia), notatki o samopoczuciu, pobyty w szpitalu.
 - **Po co:** wspólne prowadzenie opieki przez rodzinę i opiekuna zawodowego.
-- **Kto widzi:** osoby z kręgu, które mają uprawnienie do danych o zdrowiu. Opiekun zawodowy domyślnie widzi leki i plan dnia.
+- **Kto widzi:** osoby z kręgu, które mają uprawnienie do danych o zdrowiu. Opiekun zawodowy domyślnie widzi leki, plan dnia oraz choroby i alergie, bo bez nich nie da się bezpiecznie opiekować podopiecznym.
 - **Jak długo:** do usunięcia kręgu. Każdy wpis można usunąć wcześniej.
 - **Podstawa:** wyraźna zgoda podopiecznego albo jego przedstawiciela prawnego (art. 9 ust. 2 lit. a RODO). Do potwierdzenia z prawnikiem.
 
@@ -134,12 +134,12 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 - Czy agencja, która zatrudnia opiekuna zawodowego, jest osobnym administratorem danych.
 - Okresy przechowywania z tej mapy.
 
-## Decyzje do potwierdzenia
+## Decyzje
 
-Te ustawienia proponuję jako domyślne:
-
-1. Podopieczny nie musi mieć konta ani hasła. Jego prosty ekran łączymy z telefonem albo tabletem przez kod QR.
-2. Opiekun zawodowy domyślnie widzi plan dnia, leki i zadania. Adres, kontakty, dokumenty i notatki rodziny widzi dopiero wtedy, gdy rodzina na to pozwoli.
-3. Zapisujemy rok urodzenia zamiast pełnej daty urodzenia.
+1. Podopieczny nie ma konta ani hasła. Rodzina łączy jego prosty ekran z telefonem albo tabletem przez kod QR, bo seniorzy często boją się logowania i haseł.
+2. Opiekun zawodowy domyślnie widzi wszystko, czego potrzebuje do opieki: profil podopiecznego z adresem i kontaktami alarmowymi, plan dnia, leki, choroby i alergie, zadania oraz swoje wizyty i raporty. Dokumenty (wypisy, recepty) widzi dopiero wtedy, gdy rodzina na to pozwoli. Ustawień kręgu i dziennika dostępu nie widzi.
+3. Zapisujemy pełną datę urodzenia podopiecznego.
 4. Zaproszenie do kręgu działa jeden raz i wygasa po 7 dniach.
 5. Dziennik dostępu trzymamy 12 miesięcy, a dziennik logowań 90 dni.
+
+Punkty 4 i 5 to propozycje, które można jeszcze zmienić.
