@@ -1,4 +1,5 @@
-export const locales = ["pl", "uk"] as const;
+// Every language needs its own file in messages/, e.g. messages/ru.json.
+export const locales = ["pl", "uk", "ru", "en"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -16,7 +17,8 @@ export function isLocale(value: unknown): value is Locale {
 /**
  * Picks the best supported language from the browser's Accept-Language
  * header, e.g. "uk-UA,uk;q=0.9,pl;q=0.8" gives "uk". This way a caregiver
- * whose phone is set to Ukrainian sees Ukrainian on the first visit.
+ * whose phone is set to Ukrainian, Russian or English sees that language
+ * on the first visit. Any other language falls back to Polish.
  */
 export function matchLocale(acceptLanguage: string | null): Locale | undefined {
   if (!acceptLanguage) return undefined;

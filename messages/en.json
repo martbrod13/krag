@@ -1,0 +1,57 @@
+{
+  "Metadata": {
+    "description": "Shared care for a loved one: medicines, tasks and visits in one place."
+  },
+  "Common": {
+    "appName": "Krąg",
+    "backToStart": "Back to start",
+    "comingSoon": "Coming soon"
+  },
+  "Home": {
+    "lead": "Shared care for a loved one. Medicines, tasks and visits in one place.",
+    "choosePanel": "Choose a panel",
+    "family": {
+      "title": "Family panel",
+      "description": "The day’s plan, medicines and tasks for the whole family."
+    },
+    "caregiver": {
+      "title": "Caregiver panel",
+      "description": "For caregivers and nurses: visits and reports."
+    },
+    "senior": {
+      "title": "Senior screen",
+      "description": "Big buttons and only what matters most."
+    },
+    "foundationNote": "This is the foundation of the app. More features are added step by step."
+  },
+  "Family": {
+    "title": "Today",
+    "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits."
+  },
+  "Caregiver": {
+    "title": "My day",
+    "lead": "Visits to the people you care for and reports for their families will appear here."
+  },
+  "Senior": {
+    "title": "Senior screen",
+    "greeting": "Hello!",
+    "allOk": "I’m OK",
+    "preview": "This is a preview. The button will start working in a later stage."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "lead": "The link may be out of date."
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "lead": "Please try again. If the error comes back, refresh the page.",
+    "retry": "Try again"
+  },
+  "LanguageSwitcher": {
+    "label": "App language",
+    "pl": "Polski",
+    "uk": "Українська",
+    "ru": "Русский",
+    "en": "English"
+  }
+}
