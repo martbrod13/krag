@@ -49,7 +49,7 @@ jobs:
       - name: Lint (ESLint)
         run: npm run lint
 
-      - name: Tłumaczenia (te same klucze w PL i UK)
+      - name: Tłumaczenia (te same teksty we wszystkich językach)
         run: npm run check:messages
 
       - name: Typy (TypeScript)

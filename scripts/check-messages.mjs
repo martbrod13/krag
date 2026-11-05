@@ -1,40 +1,66 @@
-// Checks that every translation has exactly the same keys as Polish,
-// so no screen ever shows a missing text in Ukrainian.
-import { readFileSync } from "node:fs";
+// Checks the translations in messages/:
+// - every language file has exactly the same texts as Polish,
+// - no text is empty,
+// - the languages in src/i18n/config.ts match the files.
+import { readdirSync, readFileSync } from "node:fs";
 
 const BASE_LOCALE = "pl";
-const OTHER_LOCALES = ["uk"];
+const messagesDir = new URL("../messages/", import.meta.url);
 
-function load(locale) {
-  const file = new URL(`../messages/${locale}.json`, import.meta.url);
-  return JSON.parse(readFileSync(file, "utf8"));
-}
-
-function keysOf(messages, prefix = "") {
+function flatten(messages, prefix = "") {
   return Object.entries(messages).flatMap(([key, value]) =>
     value !== null && typeof value === "object"
-      ? keysOf(value, `${prefix}${key}.`)
-      : [`${prefix}${key}`],
+      ? flatten(value, `${prefix}${key}.`)
+      : [[`${prefix}${key}`, value]],
   );
 }
 
-const baseKeys = new Set(keysOf(load(BASE_LOCALE)));
-let ok = true;
+function load(locale) {
+  const file = new URL(`${locale}.json`, messagesDir);
+  return new Map(flatten(JSON.parse(readFileSync(file, "utf8"))));
+}
 
-for (const locale of OTHER_LOCALES) {
-  const keys = new Set(keysOf(load(locale)));
-  const missing = [...baseKeys].filter((key) => !keys.has(key));
-  const extra = [...keys].filter((key) => !baseKeys.has(key));
+const fileLocales = readdirSync(messagesDir)
+  .filter((name) => name.endsWith(".json"))
+  .map((name) => name.slice(0, -".json".length))
+  .sort();
 
-  if (missing.length > 0 || extra.length > 0) {
-    ok = false;
-    console.error(`messages/${locale}.json differs from messages/pl.json:`);
-    for (const key of missing) console.error(`  missing: ${key}`);
-    for (const key of extra) console.error(`  extra:   ${key}`);
+const config = readFileSync(
+  new URL("../src/i18n/config.ts", import.meta.url),
+  "utf8",
+);
+const listed = config.match(/export const locales = \[([^\]]*)\]/)?.[1] ?? "";
+const configLocales = [...listed.matchAll(/"([^"]+)"/g)]
+  .map((match) => match[1])
+  .sort();
+
+const problems = [];
+
+if (configLocales.join() !== fileLocales.join()) {
+  problems.push(
+    `src/i18n/config.ts lists [${configLocales}], but messages/ has [${fileLocales}]`,
+  );
+}
+
+const base = load(BASE_LOCALE);
+for (const locale of fileLocales) {
+  const messages = load(locale);
+  for (const key of base.keys()) {
+    if (!messages.has(key)) {
+      problems.push(`messages/${locale}.json: missing ${key}`);
+    }
+  }
+  for (const [key, value] of messages) {
+    if (!base.has(key)) {
+      problems.push(`messages/${locale}.json: extra ${key}`);
+    } else if (typeof value !== "string" || value.trim() === "") {
+      problems.push(`messages/${locale}.json: empty ${key}`);
+    }
   }
 }
 
-if (!ok) process.exit(1);
-console.log(
-  `OK: ${OTHER_LOCALES.join(", ")} match ${BASE_LOCALE} (${baseKeys.size} keys)`,
-);
+if (problems.length > 0) {
+  for (const problem of problems) console.error(problem);
+  process.exit(1);
+}
+console.log(`OK: ${fileLocales.join(", ")} have the same ${base.size} texts`);

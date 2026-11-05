@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 1 z 6: **fundament**. Aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku i po ukraińsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie. Prawdziwe funkcje dochodzą w kolejnych etapach.
+Etap 1 z 6: **fundament**. Aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku, ukraińsku, rosyjsku i angielsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie. Prawdziwe funkcje dochodzą w kolejnych etapach.
 
 1. **Fundament** – szkielet aplikacji, wygląd, języki, automatyczne sprawdzanie kodu.
 2. **Baza danych i mapa danych** – co zapisujemy, gdzie i po co.
@@ -62,7 +62,7 @@ Po `npm install` w projekcie pojawi się nowy plik `package-lock.json`. Zapisuje
 - `src/app` – ekrany aplikacji. Nazwa folderu to adres strony, np. `rodzina` to `/rodzina`.
 - `src/components` – elementy używane w wielu miejscach: przyciski, karty, logo.
 - `src/i18n` – obsługa języków.
-- `messages` – wszystkie teksty widoczne w aplikacji: `pl.json` (polski) i `uk.json` (ukraiński).
+- `messages` – wszystkie teksty widoczne w aplikacji, osobny plik dla każdego języka: `pl.json` (polski), `uk.json` (ukraiński), `ru.json` (rosyjski) i `en.json` (angielski).
 - `public` – ikony aplikacji.
 - `docs` – zasady projektu, m.in. prywatność danych.
 - `.github` – automatyczne sprawdzanie kodu i aktualizacje bibliotek.
@@ -71,8 +71,8 @@ Po `npm install` w projekcie pojawi się nowy plik `package-lock.json`. Zapisuje
 
 - Hasła, klucze i adresy baz danych trzymamy tylko w pliku `.env.local`. Ten plik nigdy nie trafia na GitHub. Wzór jest w `.env.example`.
 - Do czasu ukończenia dokumentów prawnych używamy wyłącznie zmyślonych danych testowych. Żadnych prawdziwych danych o zdrowiu.
-- Każdy tekst w aplikacji dodajemy do obu plików: `messages/pl.json` i `messages/uk.json`. GitHub sprawdza, czy niczego nie brakuje.
-- Kod piszemy po angielsku, a adresy stron i teksty dla użytkowników po polsku.
+- Każdy tekst w aplikacji dodajemy do wszystkich plików w folderze `messages`, czyli we wszystkich czterech językach. GitHub sprawdza, czy niczego nie brakuje.
+- Kod piszemy po angielsku, a adresy stron po polsku. Teksty dla użytkowników piszemy najpierw po polsku, potem tłumaczymy na pozostałe języki.
 - Szczegóły ochrony danych: [docs/prywatnosc.md](docs/prywatnosc.md).
 
 ## Bezpieczeństwo na GitHubie (jednorazowo)
