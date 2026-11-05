@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Lets the package-lock.json workflow run the checks again after its commit.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,12 +16,31 @@ concurrency:
 
 env:
   NEXT_TELEMETRY_DISABLED: "1"
+  # Test database that exists only while the checks run. It holds no real data.
+  DATABASE_URL: postgresql://krag:krag@localhost:5432/krag
+  SHADOW_DATABASE_URL: postgresql://krag:krag@localhost:5432/krag_shadow
 
 jobs:
   check:
-    name: Formatowanie, lint, tłumaczenia, typy, build i test
+    name: Formatowanie, lint, tłumaczenia, baza danych, typy, build i test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: krag
+          POSTGRES_PASSWORD: krag
+          POSTGRES_DB: krag
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U krag"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
     steps:
       - name: Pobranie kodu
         uses: actions/checkout@v7
@@ -52,11 +73,38 @@ jobs:
       - name: Tłumaczenia (te same teksty we wszystkich językach)
         run: npm run check:messages
 
+      - name: Baza danych - schemat
+        run: npx prisma validate
+
+      - name: Baza danych - czy migracje zgadzają się ze schematem
+        run: |
+          psql "$DATABASE_URL" -c "CREATE DATABASE krag_shadow"
+          set +e
+          npx prisma migrate diff \
+            --from-migrations prisma/migrations \
+            --to-schema prisma/schema.prisma \
+            --script --exit-code > migration-diff.sql
+          code=$?
+          set -e
+          if [ "$code" -eq 2 ]; then
+            echo "Brakująca migracja (SQL):"
+            cat migration-diff.sql
+            echo "::error::Schemat bazy różni się od migracji w prisma/migrations. Dodaj nową migrację."
+            exit 1
+          fi
+          exit "$code"
+
+      - name: Baza danych - migracje i dane testowe
+        run: |
+          npm run db:migrate
+          npm run db:seed
+          npm run db:seed
+
       - name: Typy (TypeScript)
         run: npm run typecheck
 
       - name: Build
         run: npm run build
 
-      - name: Test dymny (czy wszystkie strony się otwierają)
+      - name: Test dymny (strony, języki i baza danych)
         run: npm run test:smoke

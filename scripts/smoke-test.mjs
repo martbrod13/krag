@@ -1,7 +1,11 @@
-// Smoke test: starts the built app and checks that every page opens,
-// in Polish and in Ukrainian. Run `npm run build` first.
+// Smoke test: starts the built app and checks that every page opens in
+// every language and that the database answers. Run `npm run build` first.
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
+
+// Same database address as the app itself: .env.local locally, CI settings on GitHub.
+if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 
 const PORT = 3123;
 const BASE = `http://localhost:${PORT}`;
@@ -116,6 +120,19 @@ try {
     "security headers are set",
   );
   check(!home.headers.has("x-powered-by"), "the X-Powered-By header is hidden");
+
+  const health = await get("/api/health");
+  if (process.env.DATABASE_URL) {
+    check(
+      health.status === 200 && health.text.includes('"database":"ok"'),
+      "the database answers",
+    );
+  } else {
+    check(
+      health.status === 503 && health.text.includes('"database":"error"'),
+      "without a database the health check reports an error",
+    );
+  }
 } catch (error) {
   console.error(error);
   failures++;

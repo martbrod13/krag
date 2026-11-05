@@ -1,0 +1,179 @@
+// Database schema of Krąg.
+// Every model and field here must be described in docs/mapa-danych.md.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Role of a person in a care circle (krąg).
+enum CircleRole {
+  COORDINATOR // runs the circle, invites people and sets permissions
+  FAMILY // family member with the permissions given by a coordinator
+  CAREGIVER // professional caregiver or nurse
+}
+
+/// What a member of a circle may see and do.
+enum Permission {
+  PROFILE // care recipient profile: address, emergency contacts, doctor
+  HEALTH // medicines, conditions, allergies, wellbeing notes, hospital stays
+  TASKS // tasks and the day plan
+  VISITS // caregiver visits and reports
+  DOCUMENTS // discharge letters, prescriptions and other files
+  MANAGE // circle settings, invitations, paired devices and the access log
+}
+
+/// Plan of a circle. Everything is free for now; payments come in stage 7.
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+enum AuditAction {
+  VIEW
+  CREATE
+  UPDATE
+  DELETE
+}
+
+/// A user account (data map, section 1). Care recipients have no account.
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  phone         String?
+  locale        String   @default("pl")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  memberships     Membership[] @relation("MemberUser")
+  invitedMembers  Membership[] @relation("InvitedBy")
+  invitationsSent Invitation[]
+  auditEntries    AuditLog[]
+}
+
+/// A care circle: care for one person, their data and the people who can see it
+/// (data map, section 2).
+model CareCircle {
+  id        String   @id @default(cuid())
+  name      String
+  plan      Plan     @default(FREE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipient   CareRecipient?
+  memberships Membership[]
+  invitations Invitation[]
+  devices     PairedDevice[]
+  auditLog    AuditLog[]
+}
+
+/// A person's role and permissions in one circle (data map, section 2).
+model Membership {
+  id          String       @id @default(cuid())
+  circleId    String
+  userId      String
+  role        CircleRole
+  permissions Permission[]
+  invitedById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  circle    CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  user      User       @relation("MemberUser", fields: [userId], references: [id], onDelete: Cascade)
+  invitedBy User?      @relation("InvitedBy", fields: [invitedById], references: [id], onDelete: SetNull)
+
+  @@unique([circleId, userId])
+  @@index([userId])
+}
+
+/// A one-time invitation link to a circle, valid for 7 days (data map, section 2).
+/// Only a hash of the token is stored; the link itself is known only to the invited person.
+/// Used or expired invitations are deleted.
+model Invitation {
+  id          String       @id @default(cuid())
+  circleId    String
+  role        CircleRole
+  permissions Permission[]
+  email       String?
+  tokenHash   String       @unique
+  expiresAt   DateTime
+  invitedById String?
+  createdAt   DateTime     @default(now())
+
+  circle    CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  invitedBy User?      @relation(fields: [invitedById], references: [id], onDelete: SetNull)
+
+  @@index([circleId])
+}
+
+/// The person cared for, one per circle (data map, section 3).
+model CareRecipient {
+  id            String    @id @default(cuid())
+  circleId      String    @unique
+  firstName     String
+  birthDate     DateTime? @db.Date
+  city          String?
+  address       String?
+  primaryDoctor String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  circle            CareCircle         @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  emergencyContacts EmergencyContact[]
+}
+
+/// Who to call in an emergency (data map, section 3).
+model EmergencyContact {
+  id           String  @id @default(cuid())
+  recipientId  String
+  name         String
+  phone        String
+  relationship String?
+  position     Int     @default(0)
+
+  recipient CareRecipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId])
+}
+
+/// The care recipient's phone or tablet, paired with a QR code, so the simple
+/// senior screen works without an account or password (data map, section 2).
+/// Only a hash of the device token is stored. Unpaired devices are deleted.
+model PairedDevice {
+  id         String    @id @default(cuid())
+  circleId   String
+  name       String
+  tokenHash  String    @unique
+  pairedAt   DateTime  @default(now())
+  lastUsedAt DateTime?
+
+  circle       CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  auditEntries AuditLog[]
+
+  @@index([circleId])
+}
+
+/// Who opened or changed data in a circle, and when (data map, section 8).
+/// Kept for 12 months.
+model AuditLog {
+  id        String      @id @default(cuid())
+  circleId  String
+  userId    String?
+  deviceId  String?
+  action    AuditAction
+  entity    String
+  entityId  String?
+  createdAt DateTime    @default(now())
+
+  circle CareCircle    @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  user   User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  device PairedDevice? @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+
+  @@index([circleId, createdAt])
+}
