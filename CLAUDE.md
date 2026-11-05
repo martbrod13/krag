@@ -1,0 +1,18 @@
+# Krąg: notes for AI assistants
+
+Eldercare coordination app for Polish families: a family panel, a panel for professional caregivers and nurses, and a simplified senior screen. The owner works in VS Code on Windows; explain any steps for her in Polish, explicitly and one at a time.
+
+## Stack
+
+Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-intl 4 without i18n routing (locale from the `NEXT_LOCALE` cookie, then `Accept-Language`, default `pl`), ESLint 9 flat config, Prettier.
+
+## Rules
+
+- Every UI text lives in `messages/pl.json` and `messages/uk.json` with identical keys (`npm run check:messages`). Code in English; URLs and UI text in Polish.
+- Health data is a special category under GDPR (art. 9). Use only fake test data until the legal set in `docs/prywatnosc.md` is complete.
+- No trackers and no third-party requests from the browser (fonts are self-hosted through `next/font`). No location tracking of caregivers.
+- AI features only propose; a person confirms, and AI-made content is labelled.
+- Secrets only in `.env.local` (ignored by git); document variables in `.env.example`.
+- Keep render pure: no `Date.now()` or `Math.random()` while rendering (React hooks lint rules).
+- Before pushing run `npm run check` and `npm run build`; CI runs the same checks on every pull request.
+- Changes go through pull requests; the owner merges them.

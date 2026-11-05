@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Colors from the Krąg prototype. Use them as classes: bg-brand, text-muted. */
+@theme {
+  --color-canvas: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-line: #e4e0d6;
+  --color-ink: #1d2a24;
+  --color-muted: #55605a;
+  --color-brand: #1f6b57;
+  --color-brand-strong: #174f41;
+  --color-brand-soft: #e3efe9;
+  --color-warn: #8a4b0f;
+  --color-warn-soft: #fbebd9;
+  --color-info: #1d4e89;
+  --color-info-soft: #e5edf7;
+  --color-danger: #a8231a;
+  --color-danger-soft: #f8e3e1;
+
+  --radius-card: 18px;
+}
+
+@theme inline {
+  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}

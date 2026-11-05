@@ -1,0 +1,55 @@
+{
+  "Metadata": {
+    "description": "Wspólna opieka nad bliską osobą: leki, zadania i wizyty w jednym miejscu."
+  },
+  "Common": {
+    "appName": "Krąg",
+    "backToStart": "Wróć do startu",
+    "comingSoon": "Wkrótce"
+  },
+  "Home": {
+    "lead": "Wspólna opieka nad bliską osobą. Leki, zadania i wizyty w jednym miejscu.",
+    "choosePanel": "Wybierz panel",
+    "family": {
+      "title": "Panel rodziny",
+      "description": "Plan dnia, leki i zadania dla całej rodziny."
+    },
+    "caregiver": {
+      "title": "Panel opiekuna",
+      "description": "Dla opiekunek, opiekunów i pielęgniarek: wizyty i raporty."
+    },
+    "senior": {
+      "title": "Ekran seniora",
+      "description": "Duże przyciski i tylko to, co najważniejsze."
+    },
+    "foundationNote": "To fundament aplikacji. Kolejne funkcje dochodzą etap po etapie."
+  },
+  "Family": {
+    "title": "Dziś",
+    "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty."
+  },
+  "Caregiver": {
+    "title": "Mój dzień",
+    "lead": "Tu pojawią się wizyty u podopiecznych i raporty dla rodzin."
+  },
+  "Senior": {
+    "title": "Ekran seniora",
+    "greeting": "Dzień dobry!",
+    "allOk": "Wszystko OK",
+    "preview": "To podgląd. Przycisk zacznie działać w kolejnych etapach."
+  },
+  "NotFound": {
+    "title": "Nie ma takiej strony",
+    "lead": "Możliwe, że link jest nieaktualny."
+  },
+  "Error": {
+    "title": "Coś poszło nie tak",
+    "lead": "Spróbuj jeszcze raz. Jeśli błąd wróci, odśwież stronę.",
+    "retry": "Spróbuj ponownie"
+  },
+  "LanguageSwitcher": {
+    "label": "Język aplikacji",
+    "pl": "Polski",
+    "uk": "Українська"
+  }
+}

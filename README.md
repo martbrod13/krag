@@ -1,2 +1,84 @@
-# krag
-Application for people who are taking care of their parents or patients
+# Krąg
+
+Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęgniarka i sam senior widzą to samo: leki, zadania i wizyty w jednym miejscu.
+
+## Gdzie jesteśmy
+
+Etap 1 z 6: **fundament**. Aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku i po ukraińsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie. Prawdziwe funkcje dochodzą w kolejnych etapach.
+
+1. **Fundament** – szkielet aplikacji, wygląd, języki, automatyczne sprawdzanie kodu.
+2. **Baza danych i mapa danych** – co zapisujemy, gdzie i po co.
+3. **Logowanie, role i uprawnienia** – kto co widzi.
+4. **Funkcje podstawowe** – plan dnia, leki, zadania, wizyty.
+5. **Funkcje „wow”** – np. odczytywanie wypisu ze szpitala.
+6. **Dokumenty prawne i beta** – polityka prywatności, regulamin, pierwsi użytkownicy.
+
+## Pierwsze uruchomienie (Windows)
+
+Potrzebne są trzy programy: VS Code, Git i Node.js.
+
+1. Zainstaluj Node.js ze strony nodejs.org. Wybierz wersję oznaczoną **LTS**.
+2. Zainstaluj Git ze strony git-scm.com. Wszystkie opcje instalatora zostaw domyślne.
+3. Utwórz folder `C:\projekty`. Nie trzymaj projektu w OneDrive ani na Pulpicie, bo synchronizacja potrafi psuć pliki projektu.
+4. W VS Code naciśnij `Ctrl+Shift+P`, wpisz `Git: Clone` i wybierz **Clone from GitHub**. VS Code poprosi o zalogowanie do GitHuba – zgódź się.
+5. Wybierz repozytorium aplikacji, a potem folder `C:\projekty`.
+6. Gdy VS Code zapyta, czy otworzyć projekt, kliknij **Open**. Jeśli zapyta, czy ufasz autorom plików, kliknij **Yes, I trust the authors**.
+7. W prawym dolnym rogu VS Code może pojawić się propozycja instalacji polecanych rozszerzeń. Kliknij **Install**.
+8. Otwórz terminal: w menu kliknij **Terminal**, a potem **New Terminal**.
+9. Wpisz `npm install` i naciśnij Enter. Poczekaj, aż skończy (zwykle 1–3 minuty).
+10. Wpisz `npm run dev` i naciśnij Enter.
+11. Otwórz w przeglądarce adres http://localhost:3000.
+
+Aby zatrzymać aplikację, kliknij w terminal i naciśnij `Ctrl+C`.
+
+### Tylko za pierwszym razem: plik package-lock.json
+
+Po `npm install` w projekcie pojawi się nowy plik `package-lock.json`. Zapisuje on dokładne wersje wszystkich bibliotek, dzięki czemu u Ciebie i na GitHubie działa dokładnie to samo. Wyślij go na GitHub:
+
+1. Kliknij ikonę **Source Control** po lewej stronie (trzecia od góry).
+2. W polu **Message** wpisz `Dodaj package-lock.json`.
+3. Kliknij **Commit**. Jeśli VS Code zapyta o „staged changes”, kliknij **Yes**.
+4. Kliknij **Sync Changes**.
+
+## Praca na co dzień
+
+1. Claude przygotowuje zmiany i wysyła je na GitHub jako **Pull Request**.
+2. GitHub sam sprawdza kod. Przy Pull Requeście pojawi się zielony znaczek (wszystko OK) albo czerwony (coś do poprawy).
+3. Gdy znaczek jest zielony, kliknij **Merge pull request**, a potem **Confirm merge**.
+4. W VS Code kliknij **Sync Changes** w zakładce **Source Control**, żeby pobrać nową wersję.
+5. Jeśli zmienił się plik `package.json`, wpisz w terminalu `npm install`.
+6. Wpisz `npm run dev` i sprawdź zmiany w przeglądarce.
+
+## Polecenia
+
+- `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
+- `npm run check` – sprawdza formatowanie, błędy, tłumaczenia i typy (to samo, co sprawdza GitHub).
+- `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
+- `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
+- `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają.
+
+## Co gdzie jest
+
+- `src/app` – ekrany aplikacji. Nazwa folderu to adres strony, np. `rodzina` to `/rodzina`.
+- `src/components` – elementy używane w wielu miejscach: przyciski, karty, logo.
+- `src/i18n` – obsługa języków.
+- `messages` – wszystkie teksty widoczne w aplikacji: `pl.json` (polski) i `uk.json` (ukraiński).
+- `public` – ikony aplikacji.
+- `docs` – zasady projektu, m.in. prywatność danych.
+- `.github` – automatyczne sprawdzanie kodu i aktualizacje bibliotek.
+
+## Zasady
+
+- Hasła, klucze i adresy baz danych trzymamy tylko w pliku `.env.local`. Ten plik nigdy nie trafia na GitHub. Wzór jest w `.env.example`.
+- Do czasu ukończenia dokumentów prawnych używamy wyłącznie zmyślonych danych testowych. Żadnych prawdziwych danych o zdrowiu.
+- Każdy tekst w aplikacji dodajemy do obu plików: `messages/pl.json` i `messages/uk.json`. GitHub sprawdza, czy niczego nie brakuje.
+- Kod piszemy po angielsku, a adresy stron i teksty dla użytkowników po polsku.
+- Szczegóły ochrony danych: [docs/prywatnosc.md](docs/prywatnosc.md).
+
+## Bezpieczeństwo na GitHubie (jednorazowo)
+
+W repozytorium na GitHubie wejdź w **Settings**, potem w sekcję o bezpieczeństwie (**Advanced Security** albo **Code security**). Włącz **Dependabot alerts** i **Dependabot security updates**. GitHub będzie wtedy ostrzegał o dziurach w bibliotekach i sam proponował poprawki.
+
+## Licencja
+
+Wszelkie prawa zastrzeżone.

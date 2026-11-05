@@ -1,0 +1,62 @@
+name: Sprawdzenie kodu
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  check:
+    name: Formatowanie, lint, tłumaczenia, typy, build i test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Pobranie kodu
+        uses: actions/checkout@v7
+
+      - name: Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
+
+      - name: Instalacja zależności
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Formatowanie (Prettier)
+        run: |
+          npx prettier --write . --log-level warn
+          git diff --exit-code || {
+            echo "::error::Kod nie jest sformatowany. Uruchom: npm run format"
+            exit 1
+          }
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Tłumaczenia (te same klucze w PL i UK)
+        run: npm run check:messages
+
+      - name: Typy (TypeScript)
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Test dymny (czy wszystkie strony się otwierają)
+        run: npm run test:smoke
