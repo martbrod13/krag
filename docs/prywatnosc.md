@@ -30,6 +30,6 @@ Dopóki nie będzie gotowy cały komplet poniżej, w aplikacji są wyłącznie z
 - Plik `.env.local` z sekretami jest wykluczony z repozytorium.
 - Jedyne cookie zapisuje wybrany język i powstaje dopiero po kliknięciu języka. Nie służy do śledzenia.
 
-## Następny krok
+## Mapa danych
 
-Etap 2: **mapa danych**, czyli spis wszystkich danych, które zbieramy: co, po co, kto to widzi i jak długo przechowujemy. Na jej podstawie powstaną baza danych i polityka prywatności.
+Spis wszystkich danych, które zbieramy: co, po co, kto to widzi i jak długo przechowujemy, jest w [docs/mapa-danych.md](mapa-danych.md). Na jej podstawie powstaną baza danych i polityka prywatności.
