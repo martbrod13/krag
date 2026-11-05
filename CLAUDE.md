@@ -8,7 +8,7 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 
 ## Rules
 
-- Every UI text lives in `messages/pl.json` and `messages/uk.json` with identical keys (`npm run check:messages`). Code in English; URLs and UI text in Polish.
+- The app speaks Polish (default), Ukrainian, Russian and English. Every UI text lives in each file in `messages/` (`pl`, `uk`, `ru`, `en`) with identical keys, and the list in `src/i18n/config.ts` must match the files (`npm run check:messages`). Code in English; URLs in Polish; write UI text in Polish first, then translate.
 - Health data is a special category under GDPR (art. 9). Use only fake test data until the legal set in `docs/prywatnosc.md` is complete.
 - No trackers and no third-party requests from the browser (fonts are self-hosted through `next/font`). No location tracking of caregivers.
 - AI features only propose; a person confirms, and AI-made content is labelled.

@@ -58,28 +58,40 @@ try {
     check(page.status === 200 && page.text.includes(text), `${path} opens`);
   }
 
-  const ukrainian = await get("/", { "accept-language": "uk-UA,uk;q=0.9" });
-  check(
-    ukrainian.text.includes("Оберіть панель") &&
-      ukrainian.text.includes('lang="uk"'),
-    "a browser set to Ukrainian gets Ukrainian",
-  );
+  // [browser language, expected app language, text on the start screen]
+  const browserLanguages = [
+    ["uk-UA,uk;q=0.9", "uk", "Оберіть панель"],
+    ["ru-RU,ru;q=0.9", "ru", "Выберите панель"],
+    ["en-GB,en;q=0.9", "en", "Choose a panel"],
+    ["de-DE,de;q=0.9", "pl", "Wybierz panel"],
+  ];
+  for (const [acceptLanguage, lang, text] of browserLanguages) {
+    const page = await get("/", { "accept-language": acceptLanguage });
+    check(
+      page.text.includes(text) && page.text.includes(`lang="${lang}"`),
+      `a browser set to "${acceptLanguage}" gets "${lang}"`,
+    );
+  }
 
   const saved = await get("/", {
     "accept-language": "uk-UA,uk;q=0.9",
-    cookie: "NEXT_LOCALE=pl",
+    cookie: "NEXT_LOCALE=en",
   });
   check(
-    saved.text.includes("Wybierz panel"),
+    saved.text.includes("Choose a panel"),
     "the language chosen in the app wins over the browser language",
   );
 
-  const english = await get("/", { "accept-language": "en-US,en;q=0.9" });
-  check(
-    english.text.includes("Wybierz panel") &&
-      english.text.includes('lang="pl"'),
-    "other languages fall back to Polish",
-  );
+  const greetings = {
+    pl: "Dzień dobry!",
+    uk: "Добрий день!",
+    ru: "Добрый день!",
+    en: "Hello!",
+  };
+  for (const [locale, greeting] of Object.entries(greetings)) {
+    const page = await get("/senior", { cookie: `NEXT_LOCALE=${locale}` });
+    check(page.text.includes(greeting), `/senior opens in "${locale}"`);
+  }
 
   const missing = await get("/nie-ma-takiej-strony", polish);
   check(

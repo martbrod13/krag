@@ -50,6 +50,8 @@
   "LanguageSwitcher": {
     "label": "Мова застосунку",
     "pl": "Polski",
-    "uk": "Українська"
+    "uk": "Українська",
+    "ru": "Русский",
+    "en": "English"
   }
 }
