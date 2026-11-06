@@ -4,14 +4,15 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 1 z 6: **fundament**. Aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku, ukraińsku, rosyjsku i angielsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie. Prawdziwe funkcje dochodzą w kolejnych etapach.
+Etap 2 z 7: **mapa danych i baza danych**. Fundament jest gotowy: aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku, ukraińsku, rosyjsku i angielsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie.
 
-1. **Fundament** – szkielet aplikacji, wygląd, języki, automatyczne sprawdzanie kodu.
-2. **Baza danych i mapa danych** – co zapisujemy, gdzie i po co.
-3. **Logowanie, role i uprawnienia** – kto co widzi.
+1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
+2. **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
+3. **Logowanie, role i uprawnienia** – kto co widzi, zaproszenia do kręgu.
 4. **Funkcje podstawowe** – plan dnia, leki, zadania, wizyty.
 5. **Funkcje „wow”** – np. odczytywanie wypisu ze szpitala.
 6. **Dokumenty prawne i beta** – polityka prywatności, regulamin, pierwsi użytkownicy.
+7. **Płatności** – pakiet premium. Na razie wszystko jest darmowe.
 
 ## Pierwsze uruchomienie (Windows)
 
