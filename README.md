@@ -47,21 +47,45 @@ Po `npm install` w projekcie pojawi się nowy plik `package-lock.json`. Zapisuje
 3. Gdy znaczek jest zielony, kliknij **Merge pull request**, a potem **Confirm merge**.
 4. W VS Code kliknij **Sync Changes** w zakładce **Source Control**, żeby pobrać nową wersję.
 5. Jeśli zmienił się plik `package.json`, wpisz w terminalu `npm install`.
-6. Wpisz `npm run dev` i sprawdź zmiany w przeglądarce.
+6. Jeśli w folderze `prisma/migrations` jest coś nowego, wpisz `npm run db:migrate`.
+7. Wpisz `npm run dev` i sprawdź zmiany w przeglądarce.
+
+## Baza danych (Neon)
+
+Aplikacja zapisuje dane w bazie PostgreSQL w Neon, w projekcie `krag` (serwery we Frankfurcie). Dopóki nie ma dokumentów prawnych, są w niej wyłącznie zmyślone dane testowe.
+
+### Jednorazowo: połączenie z bazą
+
+1. W Neon otwórz projekt `krag` i kliknij **Connect**.
+2. Wyłącz przełącznik **Connection pooling** i skopiuj adres, który zaczyna się od `postgresql://`.
+3. W VS Code kliknij prawym przyciskiem myszy w puste miejsce w lewym panelu z plikami i wybierz **New File...**. Nazwij plik `.env.local`. Musi leżeć w głównym folderze projektu, obok `package.json`.
+4. Wpisz w nim jedną linię i wklej adres między cudzysłowy: `DATABASE_URL="tu-wklej-adres"`. Zapisz plik (`Ctrl+S`). Ten plik nie pojawi się w **Source Control** i tak ma być: hasło do bazy nie trafi na GitHub.
+5. W terminalu wpisz `npm install`, a potem `npm run db:migrate`. To polecenie zakłada tabele w bazie.
+6. Wpisz `npm run db:seed`. To polecenie wgrywa zmyślone dane testowe: rodzinę Kowalskich i ich mamę Halinę.
+7. Wpisz `npm run dev` i otwórz w przeglądarce http://localhost:3000/api/health. Jeśli widzisz `"database":"ok"`, aplikacja łączy się z bazą.
+
+### Podgląd bazy
+
+Wpisz `npm run db:studio`. W przeglądarce otworzy się Prisma Studio z tabelami i danymi testowymi. Aby je zamknąć, kliknij w terminal i naciśnij `Ctrl+C`.
 
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
-- `npm run check` – sprawdza formatowanie, błędy, tłumaczenia i typy (to samo, co sprawdza GitHub).
+- `npm run check` – sprawdza formatowanie, błędy, tłumaczenia, schemat bazy i typy (to samo, co sprawdza GitHub).
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
-- `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają.
+- `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
+- `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
+- `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
+- `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.
 
 ## Co gdzie jest
 
 - `src/app` – ekrany aplikacji. Nazwa folderu to adres strony, np. `rodzina` to `/rodzina`.
 - `src/components` – elementy używane w wielu miejscach: przyciski, karty, logo.
 - `src/i18n` – obsługa języków.
+- `src/lib` – wspólny kod, np. połączenie z bazą danych.
+- `prisma` – schemat bazy danych, migracje (kolejne zmiany w tabelach) i zmyślone dane testowe.
 - `messages` – wszystkie teksty widoczne w aplikacji, osobny plik dla każdego języka: `pl.json` (polski), `uk.json` (ukraiński), `ru.json` (rosyjski) i `en.json` (angielski).
 - `public` – ikony aplikacji.
 - `docs` – zasady projektu, m.in. prywatność danych.
