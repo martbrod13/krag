@@ -33,21 +33,30 @@ const FAMILY: Permission[] = [
 // Everything a caregiver needs for care; documents only when the family allows.
 const CAREGIVER: Permission[] = ["PROFILE", "HEALTH", "TASKS", "VISITS"];
 
+// Test people can sign in with their email; in development the code is
+// printed in the terminal.
 const people = {
   ania: {
     name: "Ania Kowalska",
     email: "ania.kowalska@example.com",
+    emailVerified: true,
     phone: "+48 100 000 001",
   },
   tomek: {
     name: "Tomek Kowalski",
     email: "tomek.kowalski@example.com",
+    emailVerified: true,
     phone: "+48 100 000 002",
   },
-  kasia: { name: "Kasia Nowak", email: "kasia.nowak@example.com" },
+  kasia: {
+    name: "Kasia Nowak",
+    email: "kasia.nowak@example.com",
+    emailVerified: true,
+  },
   ewa: {
     name: "Ewa Wiśniewska",
     email: "ewa.wisniewska@example.com",
+    emailVerified: true,
     phone: "+48 100 000 004",
     locale: "uk",
   },

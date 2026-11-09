@@ -5,7 +5,8 @@
   "Common": {
     "appName": "Krąg",
     "backToStart": "Back to start",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "signOut": "Sign out"
   },
   "Home": {
     "lead": "Shared care for a loved one. Medicines, tasks and visits in one place.",
@@ -22,15 +23,57 @@
       "title": "Senior screen",
       "description": "Big buttons and only what matters most."
     },
-    "foundationNote": "This is the foundation of the app. More features are added step by step."
+    "foundationNote": "This is the foundation of the app. More features are added step by step.",
+    "greeting": "Hi, {name}!",
+    "signIn": "Sign in or create an account",
+    "signInHint": "All you need is your email and a one-time code. No password."
+  },
+  "Login": {
+    "title": "Sign in",
+    "lead": "Enter your email address and we’ll send you a 6-digit code. No password. If you don’t have an account yet, we’ll create one right away.",
+    "emailLabel": "Email address",
+    "sendCode": "Send code",
+    "codeSent": "We sent a code to {email}. It’s valid for 10 minutes.",
+    "codeLabel": "Code from the email",
+    "signIn": "Sign in",
+    "resend": "Send a new code",
+    "changeEmail": "Change email",
+    "devHint": "Test mode: emails aren’t sent yet. You’ll find the code in the VS Code terminal where npm run dev is running.",
+    "errors": {
+      "invalidEmail": "Please check the email address.",
+      "invalidCode": "That code isn’t right. Check the digits and try again.",
+      "expiredCode": "The code has expired. Send a new one.",
+      "tooManyAttempts": "Too many attempts. Send a new code.",
+      "rateLimited": "Too many tries in a short time. Wait a minute and try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "Welcome": {
+    "title": "Welcome to Krąg!",
+    "lead": "What’s your first name? That’s how others in your circle will see you.",
+    "nameLabel": "First name",
+    "continue": "Continue",
+    "nameRequired": "Please enter your first name."
   },
   "Family": {
     "title": "Today",
-    "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits."
+    "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits.",
+    "circlesTitle": "Your circles",
+    "noCircles": "You’re not in any circle yet. Creating circles and invitations comes in the next step."
   },
   "Caregiver": {
     "title": "My day",
-    "lead": "Visits to the people you care for and reports for their families will appear here."
+    "lead": "Visits to the people you care for and reports for their families will appear here.",
+    "peopleTitle": "People you care for",
+    "noPeople": "When a family invites you to their circle, the person you care for will appear here."
+  },
+  "Circles": {
+    "roles": {
+      "COORDINATOR": "Circle coordinator",
+      "FAMILY": "Family",
+      "CAREGIVER": "Professional caregiver"
+    },
+    "recipientWithAge": "{name}, {age}"
   },
   "Senior": {
     "title": "Senior screen",
