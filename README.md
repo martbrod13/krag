@@ -51,6 +51,8 @@ Po `npm install` w projekcie pojawi się nowy plik `package-lock.json`. Zapisuje
 6. Jeśli w folderze `prisma/migrations` jest coś nowego, wpisz `npm run db:migrate`.
 7. Wpisz `npm run dev` i sprawdź zmiany w przeglądarce.
 
+Jeśli zapomnisz o `npm install` albo o pliku `.env.local`, `npm run dev` sam to wykryje i napisze po polsku, co zrobić.
+
 ## Baza danych (Neon)
 
 Aplikacja zapisuje dane w bazie PostgreSQL w Neon, w projekcie `krag` (serwery we Frankfurcie). Dopóki nie ma dokumentów prawnych, są w niej wyłącznie zmyślone dane testowe.
