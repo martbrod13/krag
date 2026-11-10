@@ -4,11 +4,11 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 2 z 7: **mapa danych i baza danych**. Fundament jest gotowy: aplikacja się uruchamia, ma trzy panele (rodzina, opiekun, senior), działa po polsku, ukraińsku, rosyjsku i angielsku, a GitHub automatycznie sprawdza każdą zmianę w kodzie.
+Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych i baza danych w Neon. Teraz dochodzi logowanie kodem z e-maila.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
-2. **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
-3. **Logowanie, role i uprawnienia** – kto co widzi, zaproszenia do kręgu.
+2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
+3. **Logowanie, role i uprawnienia** – logowanie kodem z e-maila, zakładanie kręgu, zaproszenia, ekran seniora przez kod QR, ustawienia kręgu.
 4. **Funkcje podstawowe** – plan dnia, leki, zadania, wizyty.
 5. **Funkcje „wow”** – np. odczytywanie wypisu ze szpitala.
 6. **Dokumenty prawne i beta** – polityka prywatności, regulamin, pierwsi użytkownicy.
@@ -68,6 +68,20 @@ Aplikacja zapisuje dane w bazie PostgreSQL w Neon, w projekcie `krag` (serwery w
 ### Podgląd bazy
 
 Wpisz `npm run db:studio`. W przeglądarce otworzy się Prisma Studio z tabelami i danymi testowymi. Aby je zamknąć, kliknij w terminal i naciśnij `Ctrl+C`.
+
+## Logowanie
+
+Logujemy się jednorazowym 6-cyfrowym kodem z e-maila, bez hasła. Konta i sesje są w naszej bazie danych.
+
+Na razie aplikacja nie wysyła prawdziwych e-maili (dostawcę wybierzemy przed betą). Kod pojawia się w terminalu VS Code, w którym działa `npm run dev`.
+
+### Jak przetestować
+
+1. Wpisz `npm run dev` i otwórz http://localhost:3000.
+2. Kliknij **Zaloguj się albo załóż konto** i wpisz e-mail osoby z danych testowych, np. `ania.kowalska@example.com` (koordynatorka kręgu „Mama Halina”) albo `ewa.wisniewska@example.com` (opiekunka).
+3. Kliknij **Wyślij kod**. W terminalu VS Code pojawi się linia `Kod logowania dla ...: 123456`.
+4. Przepisz kod i kliknij **Zaloguj się**. W panelu rodziny albo opiekuna zobaczysz krąg „Mama Halina”.
+5. Możesz też wpisać dowolny inny adres e-mail. Wtedy aplikacja założy nowe konto i zapyta o imię.
 
 ## Polecenia
 

@@ -5,7 +5,8 @@
   "Common": {
     "appName": "Krąg",
     "backToStart": "Wróć do startu",
-    "comingSoon": "Wkrótce"
+    "comingSoon": "Wkrótce",
+    "signOut": "Wyloguj się"
   },
   "Home": {
     "lead": "Wspólna opieka nad bliską osobą. Leki, zadania i wizyty w jednym miejscu.",
@@ -22,15 +23,57 @@
       "title": "Ekran seniora",
       "description": "Duże przyciski i tylko to, co najważniejsze."
     },
-    "foundationNote": "To fundament aplikacji. Kolejne funkcje dochodzą etap po etapie."
+    "foundationNote": "To fundament aplikacji. Kolejne funkcje dochodzą etap po etapie.",
+    "greeting": "Cześć, {name}!",
+    "signIn": "Zaloguj się albo załóż konto",
+    "signInHint": "Wystarczy e-mail i jednorazowy kod. Bez hasła."
+  },
+  "Login": {
+    "title": "Zaloguj się",
+    "lead": "Wpisz adres e-mail, a wyślemy Ci 6-cyfrowy kod. Bez hasła. Jeśli nie masz jeszcze konta, założymy je od razu.",
+    "emailLabel": "Adres e-mail",
+    "sendCode": "Wyślij kod",
+    "codeSent": "Wysłaliśmy kod na adres {email}. Jest ważny 10 minut.",
+    "codeLabel": "Kod z e-maila",
+    "signIn": "Zaloguj się",
+    "resend": "Wyślij nowy kod",
+    "changeEmail": "Zmień e-mail",
+    "devHint": "Tryb testowy: e-maile jeszcze nie wychodzą. Kod znajdziesz w terminalu VS Code, w którym działa npm run dev.",
+    "errors": {
+      "invalidEmail": "Sprawdź adres e-mail.",
+      "invalidCode": "Ten kod jest nieprawidłowy. Sprawdź cyfry i spróbuj jeszcze raz.",
+      "expiredCode": "Kod wygasł. Wyślij nowy kod.",
+      "tooManyAttempts": "Za dużo prób. Wyślij nowy kod.",
+      "rateLimited": "Za dużo prób w krótkim czasie. Odczekaj minutę i spróbuj ponownie.",
+      "generic": "Coś poszło nie tak. Spróbuj jeszcze raz."
+    }
+  },
+  "Welcome": {
+    "title": "Witaj w Kręgu!",
+    "lead": "Jak masz na imię? Tak zobaczą Cię inne osoby w kręgu.",
+    "nameLabel": "Imię",
+    "continue": "Dalej",
+    "nameRequired": "Wpisz swoje imię."
   },
   "Family": {
     "title": "Dziś",
-    "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty."
+    "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty.",
+    "circlesTitle": "Twoje kręgi",
+    "noCircles": "Nie należysz jeszcze do żadnego kręgu. Zakładanie kręgu i zaproszenia dodamy w następnym kroku."
   },
   "Caregiver": {
     "title": "Mój dzień",
-    "lead": "Tu pojawią się wizyty u podopiecznych i raporty dla rodzin."
+    "lead": "Tu pojawią się wizyty u podopiecznych i raporty dla rodzin.",
+    "peopleTitle": "Twoi podopieczni",
+    "noPeople": "Gdy rodzina zaprosi Cię do swojego kręgu, Twój podopieczny pojawi się tutaj."
+  },
+  "Circles": {
+    "roles": {
+      "COORDINATOR": "Koordynator kręgu",
+      "FAMILY": "Rodzina",
+      "CAREGIVER": "Opiekun zawodowy"
+    },
+    "recipientWithAge": "{name}, {age, plural, one {# rok} few {# lata} many {# lat} other {# roku}}"
   },
   "Senior": {
     "title": "Ekran seniora",

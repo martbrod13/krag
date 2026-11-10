@@ -25,3 +25,10 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Migrations live in `prisma/migrations`. After changing `prisma/schema.prisma`, add a migration. If you cannot run Prisma locally, push the change: the CI step "Baza danych - czy migracje zgadzają się ze schematem" prints the SQL of the missing migration.
 - `prisma/seed.ts` holds only made-up test data and must stay idempotent.
 - When `package.json` changes on a branch, the `lockfile.yml` workflow updates `package-lock.json` and reruns CI.
+
+## Sign-in
+
+- Better Auth (`src/lib/auth.ts`) with the email OTP plugin: 6-digit codes, valid 10 minutes, 3 attempts, stored hashed. Accounts and sessions live in our database (`User`, `Session`, `Account`, `Verification`).
+- Codes are sent by `src/lib/email.ts`. No email provider yet: in development the code is printed in the terminal; in production sending fails until a provider is configured before the beta. `KRAG_TEST_CODE_LOG` (used only by the smoke test) writes codes to a file.
+- In server components use `getSession()` and `requireUser(path)` from `src/lib/session.ts`. Redirect targets go through `safeNextPath`.
+- Production needs `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL`.

@@ -19,6 +19,8 @@ env:
   # Test database that exists only while the checks run. It holds no real data.
   DATABASE_URL: postgresql://krag:krag@localhost:5432/krag
   SHADOW_DATABASE_URL: postgresql://krag:krag@localhost:5432/krag_shadow
+  # Secret used only by these checks, never by a real deployment.
+  BETTER_AUTH_SECRET: ci-only-secret-never-used-in-production-0123456789
 
 jobs:
   check:

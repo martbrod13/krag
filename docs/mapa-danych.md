@@ -18,7 +18,7 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 
 ### 1. Konto użytkownika
 
-- **Co:** imię, adres e-mail, numer telefonu (nieobowiązkowy), wybrany język, data założenia konta.
+- **Co:** imię, adres e-mail, informacja, czy adres jest potwierdzony, numer telefonu (nieobowiązkowy), wybrany język, data założenia konta. Jest też miejsce na zdjęcie profilowe, na razie nieużywane. Logujemy się jednorazowym kodem z e-maila, więc nie zapisujemy żadnych haseł.
 - **Po co:** logowanie, zaproszenia do kręgu, powiadomienia.
 - **Kto widzi:** sam użytkownik. Imię widzą też osoby z jego kręgów, a telefon tylko wtedy, gdy użytkownik go poda.
 - **Jak długo:** do usunięcia konta.
@@ -77,17 +77,17 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 8. Dziennik dostępu i bezpieczeństwa
 
-- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu. Przy logowaniu: data, rodzaj urządzenia i adres IP.
+- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu. Przy logowaniu zapisujemy sesję: datę, rodzaj urządzenia (przeglądarkę) i adres IP. Kod logowania zapisujemy tylko jako skrót (hash): działa raz, przez 10 minut, i przestaje działać po 3 błędnych próbach.
 - **Po co:** bezpieczeństwo i wykrywanie nadużyć. Koordynator widzi, kto oglądał dane podopiecznego.
 - **Kto widzi:** dziennik dostępu widzą koordynatorzy kręgu. Dziennik logowań widzi tylko sam użytkownik i administrator aplikacji.
-- **Jak długo:** dziennik dostępu 12 miesięcy, dziennik logowań 90 dni.
+- **Jak długo:** dziennik dostępu 12 miesięcy, dziennik logowań 90 dni. Sesja kończy się po wylogowaniu albo po 30 dniach bez używania. Kod logowania usuwamy po użyciu albo wygaśnięciu.
 - **Podstawa:** prawnie uzasadniony interes, czyli bezpieczeństwo danych (art. 6 ust. 1 lit. f i art. 32 RODO).
 
 ### 9. Pliki cookie
 
-- **Co:** wybrany język. Od etapu 3 także cookie logowania (sesja).
+- **Co:** wybrany język i cookie logowania (sesja).
 - **Po co:** działanie aplikacji. Nie używamy cookie reklamowych ani analitycznych.
-- **Jak długo:** język 12 miesięcy, sesja do wylogowania albo wygaśnięcia.
+- **Jak długo:** język 12 miesięcy, sesja do wylogowania albo 30 dni bez używania.
 
 ### 10. Płatności (etap 7)
 
@@ -116,7 +116,7 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 
 - **Neon** – baza danych (Frankfurt). Od etapu 2.
 - **Hosting aplikacji** – do wyboru przed betą, region UE.
-- **Wysyłka e-maili** (kody logowania, zaproszenia) – do wyboru w etapie 3, najlepiej z serwerami w UE.
+- **Wysyłka e-maili** (kody logowania, zaproszenia) – do wyboru przed betą, najlepiej z serwerami w UE. Do tego czasu kody logowania nie wychodzą z serwera: w trybie testowym widać je tylko w terminalu.
 - **AI do odczytu dokumentów** – planowo Mistral (Francja) i Claude przez AWS Bedrock (Frankfurt). Etap 5.
 - **Stripe** – płatności. Etap 7.
 

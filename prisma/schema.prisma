@@ -46,15 +46,73 @@ model User {
   name          String
   email         String   @unique
   emailVerified Boolean  @default(false)
+  /// Profile photo. Required by the sign-in library; not used yet.
+  image         String?
   phone         String?
   locale        String   @default("pl")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  sessions        Session[]
+  accounts        Account[]
   memberships     Membership[] @relation("MemberUser")
   invitedMembers  Membership[] @relation("InvitedBy")
   invitationsSent Invitation[]
   auditEntries    AuditLog[]
+}
+
+// The next three models are managed by the sign-in library (Better Auth).
+
+/// A signed-in browser or phone (data map, section 8).
+/// Ends on sign-out or after 30 days without use.
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// How a user signs in (data map, section 1). Krąg uses one-time email codes,
+/// so there are no passwords or tokens from other sites in this table.
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// One-time sign-in codes, stored only as a hash (data map, section 8).
+/// A code works once, for 10 minutes, and stops after 3 wrong attempts.
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
 }
 
 /// A care circle: care for one person, their data and the people who can see it

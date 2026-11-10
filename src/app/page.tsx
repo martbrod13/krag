@@ -1,11 +1,16 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/brand/logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { PanelLink } from "@/components/panel-link";
+import { SignOutButton } from "@/components/sign-out-button";
+import { ButtonLink } from "@/components/ui/button";
+import { getSession } from "@/lib/session";
 
-export default function HomePage() {
-  const t = useTranslations("Home");
-  const common = useTranslations("Common");
+export default async function HomePage() {
+  const t = await getTranslations("Home");
+  const common = await getTranslations("Common");
+  const session = await getSession();
+  const name = session?.user.name.trim();
 
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-8 px-5 py-10">
@@ -19,29 +24,49 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section aria-labelledby="choose-panel" className="flex flex-col gap-3">
-        <h2
-          id="choose-panel"
-          className="text-sm font-bold tracking-wide text-muted uppercase"
-        >
-          {t("choosePanel")}
-        </h2>
-        <PanelLink
-          href="/rodzina"
-          title={t("family.title")}
-          description={t("family.description")}
-        />
-        <PanelLink
-          href="/opiekun"
-          title={t("caregiver.title")}
-          description={t("caregiver.description")}
-        />
-        <PanelLink
-          href="/senior"
-          title={t("senior.title")}
-          description={t("senior.description")}
-        />
-      </section>
+      {session ? (
+        <section aria-labelledby="choose-panel" className="flex flex-col gap-3">
+          {name ? (
+            <p className="text-2xl font-extrabold">{t("greeting", { name })}</p>
+          ) : null}
+          <h2
+            id="choose-panel"
+            className="text-sm font-bold tracking-wide text-muted uppercase"
+          >
+            {t("choosePanel")}
+          </h2>
+          <PanelLink
+            href="/rodzina"
+            title={t("family.title")}
+            description={t("family.description")}
+          />
+          <PanelLink
+            href="/opiekun"
+            title={t("caregiver.title")}
+            description={t("caregiver.description")}
+          />
+          <PanelLink
+            href="/senior"
+            title={t("senior.title")}
+            description={t("senior.description")}
+          />
+          <div className="pt-2">
+            <SignOutButton />
+          </div>
+        </section>
+      ) : (
+        <section className="flex flex-col gap-3">
+          <ButtonLink href="/logowanie" size="lg">
+            {t("signIn")}
+          </ButtonLink>
+          <p className="text-muted">{t("signInHint")}</p>
+          <PanelLink
+            href="/senior"
+            title={t("senior.title")}
+            description={t("senior.description")}
+          />
+        </section>
+      )}
 
       <footer className="mt-auto flex flex-col gap-6">
         <LanguageSwitcher />
