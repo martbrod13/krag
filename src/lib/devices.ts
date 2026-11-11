@@ -107,9 +107,8 @@ export async function getPairingStatus(
   return pairing.expiresAt <= new Date() ? "expired" : "waiting";
 }
 
-export type PairResult =
-  | { status: "paired"; token: string; circleId: string }
-  | { status: "invalid" };
+type Paired = { status: "paired"; token: string; circleId: string };
+export type PairResult = Paired | { status: "invalid" };
 
 /**
  * Pairs the device that opened the QR code: uses up the code and creates the
