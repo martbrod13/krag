@@ -45,9 +45,12 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 - **Co:** leki, dawki i godziny przyjmowania, informacja, czy lek został podany, wizyty lekarskie, choroby i alergie (do koperty życia), notatki o samopoczuciu, pobyty w szpitalu.
-- **Po co:** wspólne prowadzenie opieki przez rodzinę i opiekuna zawodowego.
-- **Kto widzi:** osoby z kręgu, które mają uprawnienie do danych o zdrowiu. Opiekun zawodowy domyślnie widzi leki, plan dnia oraz choroby i alergie, bo bez nich nie da się bezpiecznie opiekować podopiecznym.
-- **Jak długo:** do usunięcia kręgu. Każdy wpis można usunąć wcześniej.
+- **Leki (od etapu 4):** nazwa leku z dawką (np. „Metformina 500 mg”), godziny i ilość (np. 8:00, 1 tabletka) albo informacja, że lek jest brany doraźnie, dni tygodnia, pierwszy i ostatni dzień brania, jak brać (np. „po jedzeniu”), czy przypominać o leku na ekranie seniora, kto lek dodał i kto go ostatnio zmienił. Przy każdej wziętej dawce zapisujemy potwierdzenie: który lek, dzień i godzina dawki, kiedy ją potwierdzono i kto: osoba z kręgu albo senior na swoim ekranie. Dni i godziny są w czasie polskim.
+- **Po co:** wspólne prowadzenie opieki przez rodzinę i opiekuna zawodowego. Rodzina widzi, czy leki zostały wzięte, a senior dostaje przypomnienie na swoim ekranie.
+- **Kto widzi:** osoby z kręgu, które mają uprawnienie do danych o zdrowiu. Opiekun zawodowy domyślnie widzi leki, plan dnia oraz choroby i alergie, bo bez nich nie da się bezpiecznie opiekować podopiecznym. Połączone urządzenie podopiecznego widzi dzisiejsze leki z włączonym przypomnieniem i może potwierdzić, że zostały wzięte.
+- **Kto zmienia (leki):** każdy z uprawnieniem do danych o zdrowiu może dodawać i zmieniać leki, potwierdzać dawki i cofać potwierdzenia. Usunąć lek razem z jego historią może osoba, która go dodała, albo koordynator.
+- **Jak długo:** do usunięcia kręgu. Każdy wpis można usunąć wcześniej. Lek trzymamy do jego usunięcia, a potwierdzenia dawek 12 miesięcy, starsze usuwamy (decyzja 8).
+- **Uwaga:** nazwy leku nie kopiujemy do dziennika dostępu: dziennik pokazuje ją, dopóki lek istnieje.
 - **Podstawa:** wyraźna zgoda podopiecznego albo jego przedstawiciela prawnego (art. 9 ust. 2 lit. a RODO). Do potwierdzenia z prawnikiem.
 
 ### 5. Zadania i plan dnia
@@ -124,7 +127,7 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 ## Prawa użytkowników
 
 - **Usunięcie konta:** w każdej chwili, w ustawieniach. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
-- **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
+- **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, zadania, leki z potwierdzeniami dawek, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
 - **Pobranie danych:** przycisk „Pobierz moje dane” (art. 20 RODO), w etapie 4.
 - **Wycofanie zgody:** w każdej chwili. Wtedy usuwamy dane o zdrowiu podopiecznego.
 
@@ -145,5 +148,6 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 5. Dziennik dostępu trzymamy 12 miesięcy, a dziennik logowań 90 dni.
 6. Kod QR do połączenia ekranu seniora działa jeden raz przez 30 minut. Urządzenie zostaje połączone, dopóki koordynator go nie odłączy albo przez 400 dni nikt go nie użyje.
 7. W kręgu zawsze jest co najmniej jeden koordynator. Ostatni koordynator nie może opuścić kręgu ani zmienić swojej roli, dopóki nie zrobi koordynatorem kogoś innego.
+8. Potwierdzenia wziętych dawek leków trzymamy 12 miesięcy. Tyle wystarczy, żeby rodzina i lekarz widzieli, czy leki są brane regularnie. Starsze potwierdzenia usuwamy.
 
-Punkty 4, 5, 6 i 7 to propozycje, które można jeszcze zmienić.
+Punkty 4, 5, 6, 7 i 8 to propozycje, które można jeszcze zmienić.

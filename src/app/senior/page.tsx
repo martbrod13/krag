@@ -5,8 +5,9 @@ import { AutoRefresh } from "@/components/senior/auto-refresh";
 import { SeniorScreen } from "@/components/senior/senior-screen";
 import { ButtonLink } from "@/components/ui/button";
 import { listContacts } from "@/lib/contacts";
-import { todayInPoland } from "@/lib/dates";
+import { timeInPoland, todayInPoland } from "@/lib/dates";
 import { recordDeviceVisit } from "@/lib/devices";
+import { getDoses, slotsOf } from "@/lib/medications";
 import { getPairedDevice } from "@/lib/senior-device";
 import { getSeniorPlan } from "@/lib/tasks";
 
@@ -50,16 +51,22 @@ export default async function SeniorPage() {
     );
   }
 
-  const [contacts, plan] = await Promise.all([
+  const today = todayInPoland();
+  const [contacts, plan, doses] = await Promise.all([
     listContacts(device.circleId),
-    getSeniorPlan(device.circleId, todayInPoland()),
+    getSeniorPlan(device.circleId, today),
+    getDoses(device.circleId, today, { seniorOnly: true }),
   ]);
   await recordDeviceVisit(device);
 
   return (
     <>
       <AutoRefresh seconds={REFRESH_SECONDS} />
-      <SeniorScreen contacts={contacts} plan={plan} />
+      <SeniorScreen
+        contacts={contacts}
+        plan={plan}
+        medicines={slotsOf(doses, timeInPoland())}
+      />
     </>
   );
 }

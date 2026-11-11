@@ -18,7 +18,7 @@
       "seniorInitial": "H",
       "doctor": "10:00 Doctor",
       "claim": "I’ll take it!",
-      "done": "Shopping done",
+      "done": "Meds taken",
       "visit": "Coming on Saturday"
     },
     "howTitle": "How it works",
@@ -44,18 +44,18 @@
       },
       "senior": {
         "title": "Senior screen",
-        "text": "The date, the time, today’s plan and big buttons to call loved ones."
+        "text": "The date, the time, today’s medicines and plan, and big buttons to call loved ones."
       },
-      "numbers": {
-        "title": "Important numbers",
-        "text": "Always at hand for the senior, the family and the caregiver."
+      "meds": {
+        "title": "Medicines",
+        "text": "Times and doses in one place. The senior confirms them with one tap, and the family sees what’s been taken."
       },
       "languages": {
         "title": "Four languages",
         "text": "Polish, Ukrainian, Russian and English. Everyone picks their own."
       }
     },
-    "soon": "Coming soon: medication reminders and caregiver visits.",
+    "soon": "Coming soon: caregiver visits with a report after each one.",
     "privacyTitle": "We take health data seriously",
     "privacy": {
       "noAds": "No ads and no tracking.",
@@ -75,7 +75,8 @@
     "empty": "You’re not in any circle yet. Create one for someone you care for, or ask your family for an invitation.",
     "newCircle": "Create a circle",
     "circleDeleted": "The circle has been deleted with all its data.",
-    "todayCount": "{count, plural, =0 {Nothing to do today} one {Still to do today: # task} other {Still to do today: # tasks}}"
+    "todayCount": "{count, plural, =0 {Nothing to do today} one {Still to do today: # task} other {Still to do today: # tasks}}",
+    "missedDoses": "Unconfirmed doses: {count}"
   },
   "Login": {
     "title": "Sign in",
@@ -386,9 +387,16 @@
       "deleteTask": "deleted a task",
       "claimTask": "took a task: {name}",
       "doneTask": "done: {name}",
-      "undoneTask": "marked as not done: {name}"
+      "undoneTask": "marked as not done: {name}",
+      "viewMedications": "viewed medicines",
+      "createMedication": "added a medicine: {name}",
+      "updateMedication": "changed a medicine: {name}",
+      "deleteMedication": "deleted a medicine",
+      "takeDose": "confirmed a dose: {name}",
+      "undoDose": "took back a dose confirmation: {name}"
     },
-    "deletedTask": "deleted task"
+    "deletedTask": "deleted task",
+    "deletedMedication": "deleted medicine"
   },
   "Plan": {
     "title": "Plan and tasks",
@@ -440,6 +448,75 @@
       "notFound": "This task no longer exists."
     }
   },
+  "Medications": {
+    "title": "Medicines",
+    "lead": "Medicines with their times and doses. The senior confirms them with one tap on their screen, and family or the caregiver can do it here.",
+    "add": "Add a medicine",
+    "empty": "No medicines yet. Add the first one: the senior gets a reminder on their screen, and you see whether it was taken.",
+    "emptyShort": "No medicines yet.",
+    "allLink": "All medicines",
+    "today": "Today, {date}",
+    "nothingToday": "No medicines at set times today.",
+    "recentTitle": "Doses confirmed in the last days",
+    "recentCount": "{taken} of {planned}",
+    "allTitle": "Medicine list",
+    "endedTitle": "Finished",
+    "everyDay": "Every day",
+    "onDays": "Only on: {days}",
+    "asNeeded": "As needed",
+    "startsOn": "From {date}",
+    "endsOn": "Last day: {date}",
+    "seniorReminder": "Reminder on the senior screen",
+    "takenBySenior": "Taken at {time} (senior screen)",
+    "takenBy": "Taken at {time} ({name})",
+    "missed": "Not confirmed",
+    "markTaken": "Mark as taken: {name} at {time}",
+    "markNotTaken": "Undo “taken”: {name} at {time}",
+    "someone": "someone"
+  },
+  "MedicationForm": {
+    "newTitle": "New medicine",
+    "editTitle": "Change medicine",
+    "back": "Back to medicines",
+    "name": "Medicine and strength",
+    "namePlaceholder": "e.g. Metformin 500 mg",
+    "when": "When to take it?",
+    "atTimes": "At set times",
+    "asNeeded": "As needed",
+    "asNeededHint": "When needed, e.g. for pain. No reminders.",
+    "time": "Time",
+    "amount": "How much?",
+    "amountPlaceholder": "e.g. 1 tablet",
+    "clearTime": "Clear time {number}",
+    "addTime": "Add a time",
+    "days": "On which days?",
+    "everyDay": "Every day",
+    "chosenDays": "On chosen days",
+    "startDate": "From",
+    "endDate": "Last day",
+    "datesHint": "Enter a last day for, e.g., an antibiotic. Leave it empty for a medicine taken long term.",
+    "note": "How to take it?",
+    "notePlaceholder": "e.g. after food, with water",
+    "showToSenior": "Remind on the senior screen",
+    "showToSeniorHint": "At its time the medicine appears on the senior screen with a big “Taken” button.",
+    "add": "Add medicine",
+    "save": "Save changes",
+    "lastChange": "Last change: {name}, {date}",
+    "deleteHint": "No longer taken? Instead of deleting it, enter a last day: the history stays.",
+    "delete": "Delete medicine",
+    "confirmDelete": "Yes, delete the medicine and its history",
+    "errors": {
+      "nameRequired": "Enter the name of the medicine.",
+      "timeRequired": "Enter at least one time or choose “As needed”.",
+      "timeInvalid": "Enter a time, e.g. 08:00.",
+      "timeTwice": "The same time is entered twice.",
+      "dayRequired": "Tick at least one day of the week.",
+      "dateInvalid": "Enter a real date.",
+      "endBeforeStart": "The last day can’t be before the first one.",
+      "notAllowed": "You don’t have access to medicines in this circle.",
+      "notFound": "This medicine no longer exists."
+    }
+  },
   "Senior": {
     "title": "Senior screen",
     "goodMorning": "Good morning!",
@@ -457,7 +534,12 @@
     "noAccount": "The senior doesn’t need an account or a password.",
     "home": "Go to the home page",
     "planTitle": "Today",
-    "planDone": "done"
+    "planDone": "done",
+    "medsTitle": "Today’s medicines",
+    "medsDue": "Time for your medicines",
+    "medsTake": "Taken",
+    "medsTaken": "Taken at {time}",
+    "medsDoseTaken": "taken"
   },
   "SeniorPair": {
     "metaTitle": "Pair the senior screen",

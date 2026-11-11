@@ -1,8 +1,9 @@
 import type { CircleRole, Permission } from "@/generated/prisma/client";
 import { logAccess } from "@/lib/audit";
 import { type Contact, contactFields, contactOrder } from "@/lib/contacts";
-import { todayInPoland } from "@/lib/dates";
+import { timeInPoland, todayInPoland } from "@/lib/dates";
 import { db } from "@/lib/db";
+import { countMissedDoses } from "@/lib/medications";
 import { DEFAULT_PERMISSIONS } from "@/lib/permissions";
 import { countOpenTasks, type OpenTaskCounts } from "@/lib/tasks";
 
@@ -18,6 +19,8 @@ export type MyCircle = {
   } | null;
   /** Open tasks today and late ones; only for people who see tasks. */
   tasks: OpenTaskCounts | null;
+  /** Today's doses not confirmed in time; only with access to health data. */
+  missedDoses: number | null;
 };
 
 /** Full years between the birth date and today (dates compared in UTC). */
@@ -50,14 +53,17 @@ export async function getMyCircles(userId: string): Promise<MyCircle[]> {
     },
   });
 
-  const taskCounts = await countOpenTasks(
+  const circlesWith = (permission: Permission) =>
     memberships
-      .filter((membership) => membership.permissions.includes("TASKS"))
-      .map((membership) => membership.circle.id),
-    todayInPoland(),
-  );
+      .filter((membership) => membership.permissions.includes(permission))
+      .map((membership) => membership.circle.id);
+  const today = todayInPoland();
+  const [taskCounts, missedDoses] = await Promise.all([
+    countOpenTasks(circlesWith("TASKS"), today),
+    countMissedDoses(circlesWith("HEALTH"), today, timeInPoland()),
+  ]);
 
-  const today = new Date();
+  const now = new Date();
   return memberships.map(({ role, permissions, circle }) => {
     const recipient = circle.recipient;
     const seesProfile = permissions.includes("PROFILE");
@@ -66,12 +72,13 @@ export async function getMyCircles(userId: string): Promise<MyCircle[]> {
       name: circle.name,
       role,
       tasks: taskCounts.get(circle.id) ?? null,
+      missedDoses: missedDoses.get(circle.id) ?? null,
       recipient: recipient
         ? {
             firstName: recipient.firstName,
             age:
               seesProfile && recipient.birthDate
-                ? ageInYears(recipient.birthDate, today)
+                ? ageInYears(recipient.birthDate, now)
                 : null,
             city: seesProfile ? recipient.city : null,
           }

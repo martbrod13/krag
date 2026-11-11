@@ -10,7 +10,8 @@ import { ConfirmButton } from "@/components/ui/confirm-button";
 import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
 import { telHref } from "@/lib/contacts";
-import { todayInPoland } from "@/lib/dates";
+import { timeInPoland, todayInPoland } from "@/lib/dates";
+import { countMedications, getDoses } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
 import { getPlan } from "@/lib/tasks";
 import {
@@ -18,6 +19,7 @@ import {
   leaveCircleAction,
   unpairDeviceAction,
 } from "../actions";
+import { DoseItem } from "./leki/dose-item";
 import { TaskItem } from "./plan/task-item";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,7 +34,9 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
   if (!circle) notFound();
 
   const seesProfile = circle.permissions.includes("PROFILE");
-  if (circle.recipient && seesProfile) {
+  const seesHealth = circle.permissions.includes("HEALTH");
+  // One entry for opening the care recipient's data: profile or medicines.
+  if ((circle.recipient && seesProfile) || seesHealth) {
     await logAccess({
       circleId: circle.id,
       userId: user.id,
@@ -42,12 +46,16 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
   }
 
   const today = todayInPoland();
-  const plan = circle.permissions.includes("TASKS")
-    ? await getPlan(circle.id, today)
-    : null;
+  const now = timeInPoland();
+  const [plan, doses, medicationCount] = await Promise.all([
+    circle.permissions.includes("TASKS") ? getPlan(circle.id, today) : null,
+    seesHealth ? getDoses(circle.id, today) : null,
+    seesHealth ? countMedications(circle.id) : 0,
+  ]);
 
   const t = await getTranslations("Circles");
   const planText = await getTranslations("Plan");
+  const meds = await getTranslations("Medications");
   const common = await getTranslations("Common");
   const format = await getFormatter();
   const recipient = circle.recipient;
@@ -112,6 +120,46 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
           >
             {planText("addToday")}
           </ButtonLink>
+        </section>
+      ) : null}
+
+      {doses ? (
+        <section aria-labelledby="meds" className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="meds" className="text-xl font-extrabold">
+              {meds("title")}
+            </h2>
+            <Link
+              href={`/krag/${circle.id}/leki`}
+              className="flex min-h-11 items-center font-bold text-brand hover:underline"
+            >
+              {meds("allLink")}
+            </Link>
+          </div>
+          {doses.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {doses.map((dose) => (
+                <DoseItem
+                  key={`${dose.medicationId} ${dose.time}`}
+                  dose={dose}
+                  circleId={circle.id}
+                  now={now}
+                />
+              ))}
+            </ul>
+          ) : medicationCount > 0 ? (
+            <p className="text-muted">{meds("nothingToday")}</p>
+          ) : (
+            <>
+              <p className="text-muted">{meds("emptyShort")}</p>
+              <ButtonLink
+                href={`/krag/${circle.id}/leki/nowy`}
+                variant="secondary"
+              >
+                {meds("add")}
+              </ButtonLink>
+            </>
+          )}
         </section>
       ) : null}
 

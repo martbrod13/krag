@@ -55,14 +55,17 @@ model User {
 
   sessions        Session[]
   accounts        Account[]
-  memberships     Membership[]    @relation("MemberUser")
-  invitedMembers  Membership[]    @relation("InvitedBy")
+  memberships     Membership[]       @relation("MemberUser")
+  invitedMembers  Membership[]       @relation("InvitedBy")
   invitationsSent Invitation[]
   devicePairings  DevicePairing[]
   pairedDevices   PairedDevice[]
-  tasksCreated    Task[]          @relation("TaskCreator")
-  tasksAssigned   Task[]          @relation("TaskAssignee")
-  tasksDone       Task[]          @relation("TaskDoneBy")
+  tasksCreated    Task[]             @relation("TaskCreator")
+  tasksAssigned   Task[]             @relation("TaskAssignee")
+  tasksDone       Task[]             @relation("TaskDoneBy")
+  medsCreated     Medication[]       @relation("MedicationCreator")
+  medsUpdated     Medication[]       @relation("MedicationEditor")
+  medsConfirmed   MedicationIntake[]
   auditEntries    AuditLog[]
 }
 
@@ -135,6 +138,7 @@ model CareCircle {
   pairings    DevicePairing[]
   devices     PairedDevice[]
   tasks       Task[]
+  medications Medication[]
   auditLog    AuditLog[]
 }
 
@@ -235,6 +239,73 @@ model Task {
   doneBy    User?      @relation("TaskDoneBy", fields: [doneById], references: [id], onDelete: SetNull)
 
   @@index([circleId, date])
+}
+
+/// A medicine the care recipient takes (data map, section 4). Health data:
+/// only people with the HEALTH permission see it, and its name is never
+/// copied into the access log. Days are Polish time.
+model Medication {
+  id           String    @id @default(cuid())
+  circleId     String
+  /// The medicine and its strength, e.g. "Metformina 500 mg".
+  name         String
+  /// How to take it, e.g. "po jedzeniu".
+  note         String?
+  /// Days of the week, 1 = Monday … 7 = Sunday; empty means every day.
+  weekdays     Int[]
+  /// The first and the last day of taking it; without a last day it goes on.
+  startDate    DateTime  @db.Date
+  endDate      DateTime? @db.Date
+  /// Remind the senior on the senior screen at the medicine's times.
+  showToSenior Boolean   @default(true)
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  circle    CareCircle         @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  createdBy User?              @relation("MedicationCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy User?              @relation("MedicationEditor", fields: [updatedById], references: [id], onDelete: SetNull)
+  times     MedicationTime[]
+  intakes   MedicationIntake[]
+
+  @@index([circleId])
+}
+
+/// When to take a medicine and how much, e.g. 08:00 and "1 tabletka"
+/// (data map, section 4). A medicine without times is taken when needed.
+model MedicationTime {
+  id           String  @id @default(cuid())
+  medicationId String
+  /// "HH:MM" in Polish time.
+  time         String
+  /// e.g. "1 tabletka", "½ tabletki", "10 kropli".
+  amount       String?
+
+  medication Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+
+  @@unique([medicationId, time])
+}
+
+/// A dose that was taken, confirmed by a person from the circle or by the
+/// senior on the senior screen (data map, section 4). Kept for 12 months
+/// (data map, decision 8).
+model MedicationIntake {
+  id            String   @id @default(cuid())
+  medicationId  String
+  /// The day and the planned time ("HH:MM") of the dose, Polish time.
+  date          DateTime @db.Date
+  time          String
+  takenAt       DateTime @default(now())
+  /// The person who confirmed it; null when the senior did.
+  confirmedById String?
+  /// Confirmed on the senior's paired phone or tablet.
+  bySenior      Boolean  @default(false)
+
+  medication  Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  confirmedBy User?      @relation(fields: [confirmedById], references: [id], onDelete: SetNull)
+
+  @@unique([medicationId, date, time])
 }
 
 /// A one-time QR code that pairs the care recipient's phone or tablet with a

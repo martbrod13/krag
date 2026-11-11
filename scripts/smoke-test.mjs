@@ -261,6 +261,12 @@ try {
       "the paired tablet shows the senior screen with call buttons",
     );
     check(
+      seniorScreen.text.includes("Leki na dziś") &&
+        seniorScreen.text.includes("Metformina 500 mg") &&
+        !seniorScreen.text.includes("Paracetamol"),
+      "the senior screen shows today's medicines with a reminder",
+    );
+    check(
       (seniorScreen.headers.get("set-cookie") ?? "").includes("krag_device="),
       "every visit renews the tablet's cookie",
     );
@@ -314,6 +320,7 @@ try {
         circle.text.includes("Tablet mamy") &&
         circle.text.includes("dr Jan Testowy") &&
         circle.text.includes("Cały plan") &&
+        circle.text.includes("Wszystkie leki") &&
         circle.text.includes("Opuść krąg"),
       "the circle page shows the senior, people, numbers and the tablet",
     );
@@ -327,6 +334,8 @@ try {
       ["/krag/demo-krag-kowalscy/dane", "dr Jan Testowy"],
       ["/krag/demo-krag-kowalscy/plan", "Kupić żarówki do łazienki"],
       ["/krag/demo-krag-kowalscy/plan/nowe", "Co trzeba zrobić?"],
+      ["/krag/demo-krag-kowalscy/leki", "Paracetamol 500 mg"],
+      ["/krag/demo-krag-kowalscy/leki/nowy", "Nazwa leku i dawka"],
       ["/krag/demo-krag-kowalscy/dziennik", "założenie kręgu"],
       ["/krag/nowy", "Nowy krąg"],
     ];
