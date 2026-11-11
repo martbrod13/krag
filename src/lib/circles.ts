@@ -77,10 +77,8 @@ export type NewCircleInput = {
   city: string | null;
 };
 
-export type NewCircleError =
-  | "nameRequired"
-  | "firstNameRequired"
-  | "birthDateInvalid";
+type MissingFieldError = "nameRequired" | "firstNameRequired";
+export type NewCircleError = MissingFieldError | "birthDateInvalid";
 
 /** Checks the "new circle" form. Text is trimmed and shortened to safe lengths. */
 export function parseNewCircle(
