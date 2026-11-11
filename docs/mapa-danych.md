@@ -36,7 +36,7 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 
 - **Co:** imię, data urodzenia, miasto, adres (nieobowiązkowy, potrzebny opiekunowi do wizyt), kontakty alarmowe (imię, numer telefonu i kim ta osoba jest dla podopiecznego, np. „córka”), lekarz prowadzący (nieobowiązkowy).
 - **Po co:** plan opieki, wizyty opiekuna, koperta życia, przypomnienia o urodzinach, sprawdzanie świadczeń zależnych od wieku. Kontakty alarmowe są też na ekranie seniora jako duże przyciski „Zadzwoń”.
-- **Kto widzi:** osoby z kręgu, także opiekun zawodowy, bo adres i kontakty alarmowe są mu potrzebne do wizyt i w nagłych sytuacjach. Kontakty alarmowe widzi też połączone urządzenie podopiecznego. Zmieniają je koordynatorzy.
+- **Kto widzi:** osoby z kręgu, także opiekun zawodowy, bo adres i kontakty alarmowe są mu potrzebne do wizyt i w nagłych sytuacjach. Kontakty alarmowe widzi też połączone urządzenie podopiecznego. Dane podopiecznego i kontakty alarmowe zmieniają koordynatorzy.
 - **Jak długo:** do usunięcia kręgu.
 - **Podstawa:** do ustalenia z prawnikiem. Dane wpisuje rodzina, ale dotyczą podopiecznego, więc potrzebna jest jego zgoda albo zgoda jego przedstawiciela prawnego.
 
@@ -123,7 +123,7 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 ## Prawa użytkowników
 
 - **Usunięcie konta:** w każdej chwili, w ustawieniach. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
-- **Usunięcie kręgu:** koordynator może usunąć cały krąg ze wszystkimi danymi.
+- **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
 - **Pobranie danych:** przycisk „Pobierz moje dane” (art. 20 RODO), w etapie 4.
 - **Wycofanie zgody:** w każdej chwili. Wtedy usuwamy dane o zdrowiu podopiecznego.
 

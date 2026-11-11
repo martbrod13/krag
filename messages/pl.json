@@ -61,7 +61,8 @@
     "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty.",
     "circlesTitle": "Twoje kręgi",
     "noCircles": "Nie należysz jeszcze do żadnego kręgu. Załóż krąg dla bliskiej osoby albo poproś rodzinę o zaproszenie.",
-    "newCircle": "Załóż krąg"
+    "newCircle": "Załóż krąg",
+    "circleDeleted": "Krąg został usunięty razem ze wszystkimi danymi."
   },
   "Caregiver": {
     "title": "Mój dzień",
@@ -103,7 +104,9 @@
     "leaveLead": "Stracisz dostęp do danych tego kręgu. Wrócić można tylko z nowym zaproszeniem.",
     "leave": "Opuść krąg",
     "confirmLeave": "Tak, opuszczam krąg",
-    "onlyCoordinatorLeave": "Jesteś jedynym koordynatorem tego kręgu. Zanim go opuścisz, zrób koordynatorem kogoś innego w ustawieniach kręgu."
+    "onlyCoordinatorLeave": "Jesteś jedynym koordynatorem tego kręgu. Zanim go opuścisz, zrób koordynatorem kogoś innego w ustawieniach kręgu.",
+    "editRecipient": "Edytuj",
+    "doctor": "Lekarz prowadzący: {doctor}"
   },
   "NewCircle": {
     "title": "Nowy krąg",
@@ -119,6 +122,17 @@
       "firstNameRequired": "Wpisz imię.",
       "birthDateInvalid": "Sprawdź datę urodzenia."
     }
+  },
+  "CircleData": {
+    "title": "Dane podopiecznego",
+    "lead": "Zmiany zobaczą wszyscy w kręgu, którzy mają dostęp do danych podopiecznego.",
+    "address": "Adres (nieobowiązkowo)",
+    "addressHint": "Przyda się opiekunce, która przychodzi do domu.",
+    "addressPlaceholder": "np. ul. Lipowa 5/2, 90-001 Łódź",
+    "doctor": "Lekarz prowadzący (nieobowiązkowo)",
+    "doctorPlaceholder": "np. dr Anna Nowak, Przychodnia Zdrowie",
+    "save": "Zapisz zmiany",
+    "notAllowed": "Tylko koordynator może zmieniać dane podopiecznego."
   },
   "Invite": {
     "title": "Zaproś do kręgu",
@@ -295,8 +309,16 @@
     "errors": {
       "notAllowed": "Tylko koordynator może zmieniać ustawienia kręgu.",
       "notFound": "Tej osoby nie ma już w kręgu.",
-      "lastCoordinator": "W kręgu musi zostać co najmniej jeden koordynator."
-    }
+      "lastCoordinator": "W kręgu musi zostać co najmniej jeden koordynator.",
+      "nameMismatch": "Wpisana nazwa nie zgadza się z nazwą kręgu."
+    },
+    "dataTitle": "Dane podopiecznego",
+    "dataLead": "Nazwa kręgu, imię, data urodzenia, adres i lekarz prowadzący.",
+    "editData": "Zmień dane",
+    "deleteTitle": "Usuń krąg",
+    "deleteLead": "Usuniemy krąg ze wszystkimi danymi: dane podopiecznego, ważne numery, zaproszenia, połączone urządzenia i dziennik dostępu. Osoby z kręgu stracą do niego dostęp, ale ich konta zostaną. Tego nie da się cofnąć.",
+    "deleteConfirm": "Aby potwierdzić, wpisz nazwę kręgu: {name}",
+    "delete": "Usuń krąg na zawsze"
   },
   "AccessLog": {
     "title": "Dziennik dostępu",
@@ -321,7 +343,9 @@
       "unpairDevice": "odłączenie urządzenia „{name}”",
       "addContact": "dodanie ważnego numeru",
       "removeContact": "usunięcie ważnego numeru",
-      "other": "inna zmiana"
+      "other": "inna zmiana",
+      "updateRecipient": "zmiana danych podopiecznego",
+      "renameCircle": "zmiana nazwy kręgu"
     }
   },
   "Senior": {

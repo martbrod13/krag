@@ -4,11 +4,11 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { NewCircleError } from "@/lib/circles";
+import type { CircleFormError } from "@/lib/circles";
 import { createCircleAction } from "../actions";
 
 export type NewCircleState = {
-  error?: NewCircleError;
+  error?: CircleFormError;
   /** What was typed, shown again after an error. */
   values?: Record<string, string>;
 };

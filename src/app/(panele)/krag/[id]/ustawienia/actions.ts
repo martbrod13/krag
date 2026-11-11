@@ -2,10 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { hasPermission } from "@/lib/circles";
+import {
+  confirmsCircleName,
+  deleteCircle,
+  getCircleForMember,
+  hasPermission,
+} from "@/lib/circles";
 import { removeMember, updateMember } from "@/lib/members";
 import { isRole } from "@/lib/permissions";
 import { currentUserId } from "@/lib/session";
+import type { DeleteCircleState } from "./delete-circle-form";
 import type { MemberFormResult } from "./member-form";
 
 // The circle page and the settings both show the circle's people.
@@ -62,4 +68,21 @@ export async function removeMemberAction(formData: FormData) {
     await removeMember({ circleId, memberId, userId });
   }
   refresh(circleId);
+}
+
+/** Deletes the whole circle once the coordinator has typed its name. */
+export async function deleteCircleAction(
+  _previous: DeleteCircleState,
+  formData: FormData,
+): Promise<DeleteCircleState> {
+  const userId = await currentUserId();
+  const circleId = String(formData.get("circleId") ?? "");
+  const circle = await getCircleForMember(circleId, userId);
+  if (!circle?.permissions.includes("MANAGE")) return { error: "notAllowed" };
+
+  const typed = String(formData.get("confirmName") ?? "");
+  if (!confirmsCircleName(typed, circle.name)) return { error: "nameMismatch" };
+
+  await deleteCircle(circleId);
+  redirect("/rodzina?usunieto=1");
 }

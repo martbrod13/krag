@@ -10,6 +10,7 @@ import { getCircleForMember } from "@/lib/circles";
 import { listMembers } from "@/lib/members";
 import { requireUser } from "@/lib/session";
 import { removeMemberAction } from "./actions";
+import { DeleteCircleForm } from "./delete-circle-form";
 import { MemberForm } from "./member-form";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -149,12 +150,31 @@ export default async function SettingsPage({
       </section>
 
       <Card className="flex flex-col gap-3">
+        <h2 className="text-xl font-extrabold">{t("dataTitle")}</h2>
+        <p className="text-muted">{t("dataLead")}</p>
+        <ButtonLink href={`/krag/${id}/dane`} variant="secondary">
+          {t("editData")}
+        </ButtonLink>
+      </Card>
+
+      <Card className="flex flex-col gap-3">
         <h2 className="text-xl font-extrabold">{t("logTitle")}</h2>
         <p className="text-muted">{t("logLead")}</p>
         <ButtonLink href={`/krag/${id}/dziennik`} variant="secondary">
           {t("openLog")}
         </ButtonLink>
       </Card>
+
+      <section
+        aria-labelledby="delete"
+        className="flex flex-col gap-3 rounded-card border border-danger/40 p-5"
+      >
+        <h2 id="delete" className="text-xl font-extrabold text-danger">
+          {t("deleteTitle")}
+        </h2>
+        <p className="text-muted">{t("deleteLead")}</p>
+        <DeleteCircleForm circleId={circle.id} circleName={circle.name} />
+      </section>
     </>
   );
 }

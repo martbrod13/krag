@@ -4,11 +4,11 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami i ekran seniora łączony kodem QR. Teraz dochodzą ustawienia kręgu: role, uprawnienia i dziennik dostępu. Na koniec etapu zostanie edycja danych podopiecznego i usuwanie kręgu.
+Etap 3 z 7, **logowanie, role i uprawnienia**, jest gotowy. Mamy fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapę danych, bazę danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu: role, uprawnienia, dziennik dostępu, dane podopiecznego i usuwanie kręgu. Następny jest etap 4, czyli codzienne funkcje.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
-3. **Logowanie, role i uprawnienia** – logowanie kodem z e-maila, zakładanie kręgu, zaproszenia, ekran seniora przez kod QR, ustawienia kręgu.
+3. ✅ **Logowanie, role i uprawnienia** – logowanie kodem z e-maila, zakładanie kręgu, zaproszenia, ekran seniora przez kod QR, ustawienia kręgu.
 4. **Funkcje podstawowe** – plan dnia, leki, zadania, wizyty.
 5. **Funkcje „wow”** – np. odczytywanie wypisu ze szpitala.
 6. **Dokumenty prawne i beta** – polityka prywatności, regulamin, pierwsi użytkownicy.
@@ -121,6 +121,8 @@ Prawdziwym telefonem zeskanujesz kod, gdy aplikacja będzie w internecie (przed 
 
 Koordynator decyduje, kto jest w kręgu i co widzi, np. czy opiekunka widzi dokumenty. Może też usunąć kogoś z kręgu. Każdy może sam opuścić krąg, ale w kręgu zawsze zostaje co najmniej jeden koordynator. Dziennik dostępu pokazuje, kto i kiedy oglądał albo zmieniał dane.
 
+Koordynator zmienia też dane podopiecznego (adres, lekarz prowadzący, data urodzenia) i może usunąć cały krąg ze wszystkimi danymi. Żeby nikt nie zrobił tego przez pomyłkę, trzeba wpisać nazwę kręgu.
+
 ### Jak przetestować
 
 1. Zaloguj się jako `ania.kowalska@example.com`, otwórz krąg „Mama Halina” i kliknij **Ustawienia kręgu**.
@@ -128,6 +130,10 @@ Koordynator decyduje, kto jest w kręgu i co widzi, np. czy opiekunka widzi doku
 3. Kliknij **Tomek Kowalski**, wybierz rolę **Koordynator** i zapisz. Teraz krąg ma dwóch koordynatorów.
 4. Wróć do kręgu i zjedź na dół strony. Pod **Opuść krąg** jest teraz przycisk. Wcześniej Ania była jedynym koordynatorem i zamiast przycisku była informacja, że najpierw trzeba wyznaczyć następcę.
 5. Wróć do ustawień i kliknij **Otwórz dziennik dostępu**. Zobaczysz, kto i kiedy oglądał dane mamy, kto co zmieniał i kiedy „Tablet mamy” otwierał ekran seniora.
+6. Na stronie kręgu, przy **Pod opieką**, kliknij **Edytuj**. Zmień np. adres albo lekarza i kliknij **Zapisz zmiany**.
+7. Usuwanie wypróbuj na nowym kręgu. W **Panelu rodziny** kliknij **Załóż krąg** i załóż np. „Test”. W jego ustawieniach, na samym dole, wpisz `Test` i kliknij **Usuń krąg na zawsze**.
+
+Krąg testowy „Mama Halina” możesz w każdej chwili odtworzyć poleceniem `npm run db:seed`.
 
 ## Polecenia
 

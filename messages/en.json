@@ -61,7 +61,8 @@
     "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits.",
     "circlesTitle": "Your circles",
     "noCircles": "You’re not in any circle yet. Create one for someone you care for, or ask your family for an invitation.",
-    "newCircle": "Create a circle"
+    "newCircle": "Create a circle",
+    "circleDeleted": "The circle has been deleted with all its data."
   },
   "Caregiver": {
     "title": "My day",
@@ -103,7 +104,9 @@
     "leaveLead": "You will lose access to this circle’s data. You can only come back with a new invitation.",
     "leave": "Leave the circle",
     "confirmLeave": "Yes, leave",
-    "onlyCoordinatorLeave": "You are this circle’s only coordinator. Before you leave, make someone else a coordinator in the circle settings."
+    "onlyCoordinatorLeave": "You are this circle’s only coordinator. Before you leave, make someone else a coordinator in the circle settings.",
+    "editRecipient": "Edit",
+    "doctor": "Doctor: {doctor}"
   },
   "NewCircle": {
     "title": "New circle",
@@ -119,6 +122,17 @@
       "firstNameRequired": "Please enter a first name.",
       "birthDateInvalid": "Please check the date of birth."
     }
+  },
+  "CircleData": {
+    "title": "Senior’s details",
+    "lead": "Everyone in the circle who can see the senior’s details will see the changes.",
+    "address": "Address (optional)",
+    "addressHint": "Useful for a caregiver who visits at home.",
+    "addressPlaceholder": "e.g. ul. Lipowa 5/2, 90-001 Łódź",
+    "doctor": "Doctor (optional)",
+    "doctorPlaceholder": "e.g. Dr Anna Nowak, Zdrowie Clinic",
+    "save": "Save changes",
+    "notAllowed": "Only a coordinator can change the senior’s details."
   },
   "Invite": {
     "title": "Invite to the circle",
@@ -295,8 +309,16 @@
     "errors": {
       "notAllowed": "Only a coordinator can change the circle settings.",
       "notFound": "This person is no longer in the circle.",
-      "lastCoordinator": "The circle must keep at least one coordinator."
-    }
+      "lastCoordinator": "The circle must keep at least one coordinator.",
+      "nameMismatch": "The name you typed does not match the circle’s name."
+    },
+    "dataTitle": "Senior’s details",
+    "dataLead": "The circle’s name, first name, date of birth, address and doctor.",
+    "editData": "Change the details",
+    "deleteTitle": "Delete the circle",
+    "deleteLead": "We will delete the circle with all its data: the senior’s details, important numbers, invitations, paired devices and the access log. People in the circle will lose access to it, but their accounts will stay. This cannot be undone.",
+    "deleteConfirm": "To confirm, type the circle’s name: {name}",
+    "delete": "Delete the circle for good"
   },
   "AccessLog": {
     "title": "Access log",
@@ -321,7 +343,9 @@
       "unpairDevice": "unpaired the device “{name}”",
       "addContact": "added an important number",
       "removeContact": "removed an important number",
-      "other": "another change"
+      "other": "another change",
+      "updateRecipient": "changed the senior’s details",
+      "renameCircle": "renamed the circle"
     }
   },
   "Senior": {

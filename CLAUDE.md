@@ -36,6 +36,7 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 ## Circles and permissions
 
 - A circle (`CareCircle`) is care for one person. Default permissions per role live in `src/lib/permissions.ts` (the data map decisions); never hard-code them elsewhere.
+- The circle form (`parseCircleForm`) is shared by creating a circle and editing the care recipient's data (`updateCircle`, coordinators only, each changed part logged). `deleteCircle` removes the circle with everything in it through database cascades; the settings ask the coordinator to type the circle's name first (`confirmsCircleName`).
 - Read circle data through `getCircleForMember` (`src/lib/circles.ts`): it returns null for non-members and hides profile details without the `PROFILE` permission. Server actions must check permissions again (e.g. `MANAGE` before inviting).
 - Invitations (`src/lib/invitations.ts`): one-time links valid 7 days; only a SHA-256 hash of the token is stored and the link is shown once.
 - Roles and permissions change through `updateMember`; people are removed or leave through `removeMember` (`src/lib/members.ts`). Both lock the circle's coordinators, so a circle always keeps at least one (data map, decision 7). `MANAGE` comes only with the coordinator role; `EDITABLE_PERMISSIONS` (`src/lib/permissions.ts`, safe to import in client components) lists what a coordinator can switch for others.
