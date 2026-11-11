@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami i nowa strona startowa. Teraz kolej na leki, potem wizyty opiekunki i pobieranie swoich danych.
+Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami, nowa strona startowa i leki. Teraz kolej na wizyty opiekunki, a potem na pobieranie swoich danych.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -162,6 +162,23 @@ Na komputerze strony są szersze, a na telefonie układają się w jedną kolumn
 3. Kliknij krąg, a potem **← Moje kręgi** na górze strony, żeby wrócić.
 4. Wyloguj się i zaloguj jako `ewa.wisniewska@example.com`. Krąg „Mama Halina” jest w części **Twoi podopieczni**.
 
+## Leki
+
+Lista leków podopiecznego z godzinami i dawkami, np. „Metformina 500 mg, o 8:00 i 20:00, po 1 tabletce”. Lek może być brany codziennie, w wybrane dni tygodnia albo doraźnie, czyli w razie potrzeby. Przy antybiotyku wpisuje się ostatni dzień brania.
+
+Na ekranie seniora są „Leki na dziś”, ułożone według godzin. Przy każdej godzinie jest duży przycisk **Wzięte**: jedno dotknięcie potwierdza wszystkie leki z tej godziny. Przycisk pojawia się najwcześniej 2 godziny przed czasem. Rodzina i opiekunka widzą w kręgu, co już wzięte, mogą same oznaczyć dawkę jako wziętą i cofnąć pomyłkę. Dawka, której nikt nie potwierdził przez godzinę od jej czasu, jest oznaczona jako niepotwierdzona, także na stronie startowej.
+
+Leki widzą tylko osoby z uprawnieniem do danych o zdrowiu. Potwierdzenia dawek trzymamy 12 miesięcy.
+
+### Jak przetestować
+
+1. Wpisz `npm run db:seed`. W danych testowych jest kilka leków i potwierdzone dawki z ostatnich dni.
+2. Zaloguj się jako `ania.kowalska@example.com` i otwórz krąg „Mama Halina”. W sekcji **Leki** są dzisiejsze dawki. Kliknij kółko przy dawce: dawka jest wzięta. Kliknij jeszcze raz, żeby to cofnąć.
+3. Kliknij **Wszystkie leki**. Zobaczysz dawki na dziś, potwierdzone dawki z ostatnich dni (jednego dnia brakuje wieczornej dawki) i listę leków. Antybiotyk jest w części **Zakończone**.
+4. Kliknij **Dodaj lek**. Wpisz np. `Witamina C`, godzinę za kilka minut i `1 tabletka`. Zostaw zaznaczone **Przypominaj na ekranie seniora** i kliknij **Dodaj lek**.
+5. Wróć do kręgu i w sekcji **Ekran seniora** kliknij **Zobacz podgląd**. W **Leki na dziś** przy tej godzinie jest duży przycisk **Wzięte**. W podglądzie przycisk tylko pokazuje, co widzi senior.
+6. Jeśli masz połączone okno prywatne z ekranem seniora (patrz **Ekran seniora** wyżej), kliknij w nim **Wzięte**. W kręgu przy tej dawce pojawi się „Wzięte o … (ekran seniora)”.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -169,8 +186,8 @@ Na komputerze strony są szersze, a na telefonie układają się w jedną kolumn
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu i plan dnia (uruchamia je GitHub na bazie testowej).
-- `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia i leki (uruchamia je GitHub na bazie testowej).
+- `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych i odświeża klienta bazy danych w kodzie aplikacji.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.
 

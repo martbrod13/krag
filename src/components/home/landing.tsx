@@ -4,7 +4,7 @@ import { CareCircle } from "@/components/home/care-circle";
 import {
   CalendarIcon,
   GlobeIcon,
-  PhoneIcon,
+  PillIcon,
   ShieldIcon,
   TabletIcon,
 } from "@/components/icons";
@@ -16,8 +16,8 @@ const steps = ["create", "invite", "pair"] as const;
 
 const features = [
   { key: "plan", icon: <CalendarIcon className="size-7" /> },
+  { key: "meds", icon: <PillIcon className="size-7" /> },
   { key: "senior", icon: <TabletIcon className="size-7" /> },
-  { key: "numbers", icon: <PhoneIcon className="size-7" /> },
   { key: "languages", icon: <GlobeIcon className="size-7" /> },
 ] as const;
 

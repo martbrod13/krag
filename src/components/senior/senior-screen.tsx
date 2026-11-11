@@ -1,14 +1,20 @@
 import { useTranslations } from "next-intl";
+import { confirmSeniorDosesAction } from "@/app/senior/actions";
 import { CheckIcon, PhoneIcon } from "@/components/icons";
 import { SeniorClock } from "@/components/senior/senior-clock";
+import { buttonClasses } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { type Contact, telHref } from "@/lib/contacts";
 import { cx } from "@/lib/cx";
+import type { DoseSlot } from "@/lib/medications";
 import type { TaskView } from "@/lib/tasks";
 
 type SeniorScreenProps = {
   contacts: Contact[];
   /** Today's tasks the family chose to show on the senior screen. */
   plan: TaskView[];
+  /** Today's medicines with a reminder, by time. */
+  medicines: DoseSlot[];
   /** In the family's preview the buttons only show what the senior sees. */
   preview?: boolean;
 };
@@ -17,12 +23,13 @@ const buttonClass =
   "flex min-h-24 w-full items-center gap-5 rounded-3xl bg-brand px-5 py-4 text-left text-white";
 
 /**
- * What the senior sees: the date and time, today's plan and big buttons to
- * call family.
+ * What the senior sees: the date and time, today's medicines with one big
+ * "taken" button per time, today's plan and big buttons to call family.
  */
 export function SeniorScreen({
   contacts,
   plan,
+  medicines,
   preview = false,
 }: SeniorScreenProps) {
   const t = useTranslations("Senior");
@@ -31,6 +38,96 @@ export function SeniorScreen({
     <div className="flex flex-col gap-8">
       {preview ? null : <h1 className="sr-only">{t("title")}</h1>}
       <SeniorClock />
+
+      {medicines.length > 0 ? (
+        <section aria-labelledby="meds-title" className="flex flex-col gap-4">
+          <h2 id="meds-title" className="text-2xl font-extrabold">
+            {t("medsTitle")}
+          </h2>
+          <ul className="flex flex-col gap-3">
+            {medicines.map((slot) => {
+              const open = slot.state === "due" || slot.state === "soon";
+              const takeLabel = (
+                <>
+                  <CheckIcon className="size-9" />
+                  <span>
+                    <span className="sr-only">{slot.time} </span>
+                    {t("medsTake")}
+                  </span>
+                </>
+              );
+              return (
+                <li
+                  key={slot.time}
+                  className={cx(
+                    "flex flex-col gap-4 rounded-3xl border-2 bg-surface p-5",
+                    open ? "border-brand" : "border-line",
+                    slot.state === "taken" && "opacity-60",
+                  )}
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <span className="text-3xl font-extrabold tabular-nums">
+                      {slot.time}
+                    </span>
+                    {slot.state === "due" ? (
+                      <span className="text-xl font-extrabold text-brand">
+                        {t("medsDue")}
+                      </span>
+                    ) : null}
+                    {slot.state === "taken" ? (
+                      <span className="flex items-center gap-2 text-xl font-extrabold text-brand">
+                        <CheckIcon className="size-7" />
+                        {t("medsTaken", { time: slot.takenAt ?? slot.time })}
+                      </span>
+                    ) : null}
+                  </div>
+                  <ul className="flex flex-col gap-2">
+                    {slot.doses.map((dose) => (
+                      <li key={dose.medicationId} className="flex gap-3">
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="text-2xl font-extrabold break-words">
+                            {dose.name}
+                          </span>
+                          {dose.amount || dose.note ? (
+                            <span className="text-xl break-words text-muted">
+                              {[dose.amount, dose.note]
+                                .filter(Boolean)
+                                .join(", ")}
+                            </span>
+                          ) : null}
+                        </span>
+                        {dose.taken && slot.state !== "taken" ? (
+                          <span className="shrink-0 text-brand">
+                            <CheckIcon className="size-8" />
+                            <span className="sr-only">
+                              {t("medsDoseTaken")}
+                            </span>
+                          </span>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                  {open && preview ? (
+                    <div
+                      className={cx(buttonClasses({ size: "xl" }), "w-full")}
+                    >
+                      {takeLabel}
+                    </div>
+                  ) : null}
+                  {open && !preview ? (
+                    <form action={confirmSeniorDosesAction}>
+                      <input type="hidden" name="time" value={slot.time} />
+                      <SubmitButton size="xl" className="w-full">
+                        {takeLabel}
+                      </SubmitButton>
+                    </form>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
 
       {plan.length > 0 ? (
         <section aria-labelledby="plan-title" className="flex flex-col gap-4">

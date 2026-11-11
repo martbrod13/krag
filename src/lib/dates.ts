@@ -20,6 +20,31 @@ export function todayInPoland(now = new Date()) {
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
+const timeParts = new Intl.DateTimeFormat("en-GB", {
+  timeZone: PLAN_TIME_ZONE,
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+/** The time in Poland, e.g. "08:05". */
+export function timeInPoland(now = new Date()) {
+  const parts = Object.fromEntries(
+    timeParts.formatToParts(now).map((part) => [part.type, part.value]),
+  );
+  return `${parts.hour}:${parts.minute}`;
+}
+
+/** Minutes since midnight of a time written as HH:MM. */
+export function minutesOf(time: string) {
+  return Number(time.slice(0, 2)) * 60 + Number(time.slice(3, 5));
+}
+
+/** Day of the week: 1 = Monday … 7 = Sunday. */
+export function weekdayOf(day: string) {
+  return dayToDate(day).getUTCDay() || 7;
+}
+
 /** A day as the database stores it (@db.Date): midnight UTC. */
 export function dayToDate(day: string) {
   return new Date(`${day}T00:00:00Z`);

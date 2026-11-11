@@ -18,7 +18,7 @@
       "seniorInitial": "H",
       "doctor": "10:00 Lekarz",
       "claim": "Biorę to!",
-      "done": "Zakupy zrobione",
+      "done": "Leki wzięte",
       "visit": "Przyjadę w sobotę"
     },
     "howTitle": "Jak to działa",
@@ -44,18 +44,18 @@
       },
       "senior": {
         "title": "Ekran seniora",
-        "text": "Data, godzina, plan na dziś i duże przyciski do dzwonienia do bliskich."
+        "text": "Data, godzina, leki i plan na dziś oraz duże przyciski do dzwonienia do bliskich."
       },
-      "numbers": {
-        "title": "Ważne numery",
-        "text": "Zawsze pod ręką: dla seniora, rodziny i opiekunki."
+      "meds": {
+        "title": "Leki",
+        "text": "Godziny i dawki w jednym miejscu. Senior potwierdza leki jednym dotknięciem, a rodzina widzi, co już wzięte."
       },
       "languages": {
         "title": "Cztery języki",
         "text": "Polski, ukraiński, rosyjski i angielski. Każdy wybiera swój."
       }
     },
-    "soon": "Wkrótce: leki z przypomnieniem i wizyty opiekunki.",
+    "soon": "Wkrótce: wizyty opiekunki z raportem po każdej wizycie.",
     "privacyTitle": "Dane o zdrowiu traktujemy poważnie",
     "privacy": {
       "noAds": "Bez reklam i bez śledzenia.",
@@ -75,7 +75,8 @@
     "empty": "Nie należysz jeszcze do żadnego kręgu. Załóż krąg dla bliskiej osoby albo poproś rodzinę o zaproszenie.",
     "newCircle": "Załóż krąg",
     "circleDeleted": "Krąg został usunięty razem ze wszystkimi danymi.",
-    "todayCount": "{count, plural, =0 {Na dziś nic do zrobienia} one {Dziś do zrobienia: # zadanie} few {Dziś do zrobienia: # zadania} many {Dziś do zrobienia: # zadań} other {Dziś do zrobienia: # zadania}}"
+    "todayCount": "{count, plural, =0 {Na dziś nic do zrobienia} one {Dziś do zrobienia: # zadanie} few {Dziś do zrobienia: # zadania} many {Dziś do zrobienia: # zadań} other {Dziś do zrobienia: # zadania}}",
+    "missedDoses": "Niepotwierdzone leki: {count}"
   },
   "Login": {
     "title": "Zaloguj się",
@@ -386,9 +387,16 @@
       "deleteTask": "usunięcie zadania",
       "claimTask": "wzięcie zadania: {name}",
       "doneTask": "zrobione: {name}",
-      "undoneTask": "cofnięcie „zrobione”: {name}"
+      "undoneTask": "cofnięcie „zrobione”: {name}",
+      "viewMedications": "oglądanie leków",
+      "createMedication": "dodanie leku: {name}",
+      "updateMedication": "zmiana leku: {name}",
+      "deleteMedication": "usunięcie leku",
+      "takeDose": "potwierdzenie dawki: {name}",
+      "undoDose": "cofnięcie potwierdzenia dawki: {name}"
     },
-    "deletedTask": "usunięte zadanie"
+    "deletedTask": "usunięte zadanie",
+    "deletedMedication": "usunięty lek"
   },
   "Plan": {
     "title": "Plan i zadania",
@@ -440,6 +448,75 @@
       "notFound": "Tego zadania już nie ma."
     }
   },
+  "Medications": {
+    "title": "Leki",
+    "lead": "Leki z godzinami i dawkami. Senior potwierdza je jednym dotknięciem na swoim ekranie, a rodzina i opiekunka mogą to zrobić tutaj.",
+    "add": "Dodaj lek",
+    "empty": "Nie ma jeszcze żadnych leków. Dodaj pierwszy lek: senior dostanie przypomnienie na swoim ekranie, a Ty zobaczysz, czy lek został wzięty.",
+    "emptyShort": "Nie ma jeszcze żadnych leków.",
+    "allLink": "Wszystkie leki",
+    "today": "Dziś, {date}",
+    "nothingToday": "Na dziś nie ma leków o stałych godzinach.",
+    "recentTitle": "Potwierdzone dawki w ostatnich dniach",
+    "recentCount": "{taken} z {planned}",
+    "allTitle": "Lista leków",
+    "endedTitle": "Zakończone",
+    "everyDay": "Codziennie",
+    "onDays": "Tylko w dni: {days}",
+    "asNeeded": "Doraźnie, w razie potrzeby",
+    "startsOn": "Od {date}",
+    "endsOn": "Ostatni dzień: {date}",
+    "seniorReminder": "Przypomnienie na ekranie seniora",
+    "takenBySenior": "Wzięte o {time} (ekran seniora)",
+    "takenBy": "Wzięte o {time} ({name})",
+    "missed": "Nie potwierdzono",
+    "markTaken": "Oznacz jako wzięte: {name} o {time}",
+    "markNotTaken": "Cofnij „wzięte”: {name} o {time}",
+    "someone": "ktoś"
+  },
+  "MedicationForm": {
+    "newTitle": "Nowy lek",
+    "editTitle": "Zmień lek",
+    "back": "Wróć do leków",
+    "name": "Nazwa leku i dawka",
+    "namePlaceholder": "np. Metformina 500 mg",
+    "when": "Kiedy brać?",
+    "atTimes": "O stałych godzinach",
+    "asNeeded": "Doraźnie",
+    "asNeededHint": "W razie potrzeby, np. przy bólu. Bez przypomnień.",
+    "time": "Godzina",
+    "amount": "Ile?",
+    "amountPlaceholder": "np. 1 tabletka",
+    "clearTime": "Wyczyść godzinę {number}",
+    "addTime": "Dodaj godzinę",
+    "days": "W jakie dni?",
+    "everyDay": "Codziennie",
+    "chosenDays": "W wybrane dni",
+    "startDate": "Od kiedy",
+    "endDate": "Ostatni dzień",
+    "datesHint": "Ostatni dzień wpisz np. przy antybiotyku. Przy leku branym na stałe zostaw to pole puste.",
+    "note": "Jak brać?",
+    "notePlaceholder": "np. po jedzeniu, popić wodą",
+    "showToSenior": "Przypominaj na ekranie seniora",
+    "showToSeniorHint": "O tej porze lek pojawi się na ekranie seniora z dużym przyciskiem „Wzięte”.",
+    "add": "Dodaj lek",
+    "save": "Zapisz zmiany",
+    "lastChange": "Ostatnia zmiana: {name}, {date}",
+    "deleteHint": "Lek nie jest już brany? Zamiast go usuwać, wpisz ostatni dzień: historia zostanie.",
+    "delete": "Usuń lek",
+    "confirmDelete": "Tak, usuń lek i jego historię",
+    "errors": {
+      "nameRequired": "Wpisz nazwę leku.",
+      "timeRequired": "Wpisz co najmniej jedną godzinę albo wybierz „Doraźnie”.",
+      "timeInvalid": "Wpisz godzinę, np. 08:00.",
+      "timeTwice": "Ta sama godzina jest wpisana dwa razy.",
+      "dayRequired": "Zaznacz co najmniej jeden dzień tygodnia.",
+      "dateInvalid": "Wpisz prawdziwą datę.",
+      "endBeforeStart": "Ostatni dzień nie może być wcześniej niż pierwszy.",
+      "notAllowed": "Nie masz dostępu do leków w tym kręgu.",
+      "notFound": "Tego leku już nie ma."
+    }
+  },
   "Senior": {
     "title": "Ekran seniora",
     "goodMorning": "Dzień dobry!",
@@ -457,7 +534,12 @@
     "noAccount": "Senior nie potrzebuje konta ani hasła.",
     "home": "Przejdź do strony głównej",
     "planTitle": "Dziś",
-    "planDone": "zrobione"
+    "planDone": "zrobione",
+    "medsTitle": "Leki na dziś",
+    "medsDue": "Pora na leki",
+    "medsTake": "Wzięte",
+    "medsTaken": "Wzięte o {time}",
+    "medsDoseTaken": "wzięte"
   },
   "SeniorPair": {
     "metaTitle": "Połącz ekran seniora",

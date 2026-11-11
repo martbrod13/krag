@@ -6,7 +6,8 @@ import { SeniorScreen } from "@/components/senior/senior-screen";
 import { ButtonLink } from "@/components/ui/button";
 import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
-import { todayInPoland } from "@/lib/dates";
+import { timeInPoland, todayInPoland } from "@/lib/dates";
+import { getDoses, slotsOf } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
 import { getSeniorPlan } from "@/lib/tasks";
 
@@ -34,10 +35,14 @@ export default async function PreviewPage({
     entity: "CareRecipient",
   });
 
-  // Tasks only for people who may see the plan.
-  const plan = circle.permissions.includes("TASKS")
-    ? await getSeniorPlan(circle.id, todayInPoland())
-    : [];
+  // Tasks and medicines only for people who may see them.
+  const today = todayInPoland();
+  const [plan, doses] = await Promise.all([
+    circle.permissions.includes("TASKS") ? getSeniorPlan(circle.id, today) : [],
+    circle.permissions.includes("HEALTH")
+      ? getDoses(circle.id, today, { seniorOnly: true })
+      : [],
+  ]);
   const t = await getTranslations("Preview");
   const manages = circle.permissions.includes("MANAGE");
 
@@ -55,7 +60,12 @@ export default async function PreviewPage({
       </div>
 
       <div className="rounded-[2rem] border-4 border-ink/80 bg-canvas px-4 py-6">
-        <SeniorScreen contacts={contacts} plan={plan} preview />
+        <SeniorScreen
+          contacts={contacts}
+          plan={plan}
+          medicines={slotsOf(doses, timeInPoland())}
+          preview
+        />
       </div>
 
       {manages ? (

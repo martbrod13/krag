@@ -13,6 +13,8 @@ export function CircleCard({ circle }: { circle: MyCircle }) {
   const plan = useTranslations("Plan");
   const recipient = circle.recipient;
   const tasks = circle.tasks;
+  // Doses still not confirmed an hour after their time.
+  const missedDoses = circle.missedDoses ?? 0;
 
   return (
     <Link
@@ -37,14 +39,21 @@ export function CircleCard({ circle }: { circle: MyCircle }) {
             ) : null}
           </span>
         ) : null}
-        {tasks ? (
+        {tasks || missedDoses ? (
           <span className="flex flex-wrap gap-x-3 gap-y-1 font-bold">
-            <span className="text-brand">
-              {home("todayCount", { count: tasks.today })}
-            </span>
-            {tasks.overdue > 0 ? (
+            {tasks ? (
+              <span className="text-brand">
+                {home("todayCount", { count: tasks.today })}
+              </span>
+            ) : null}
+            {tasks && tasks.overdue > 0 ? (
               <span className="text-danger">
                 {plan("overdueCount", { count: tasks.overdue })}
+              </span>
+            ) : null}
+            {missedDoses ? (
+              <span className="text-warn">
+                {home("missedDoses", { count: missedDoses })}
               </span>
             ) : null}
           </span>

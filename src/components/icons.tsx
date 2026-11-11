@@ -38,6 +38,23 @@ export function CalendarIcon({ className }: IconProps) {
   );
 }
 
+/** A capsule: medicines. */
+export function PillIcon({ className }: IconProps) {
+  return (
+    <svg {...strokeProps} className={className}>
+      <rect
+        x="2.5"
+        y="8"
+        width="19"
+        height="8"
+        rx="4"
+        transform="rotate(-45 12 12)"
+      />
+      <path d="m9.2 9.2 5.6 5.6" />
+    </svg>
+  );
+}
+
 /** A tablet: the senior's screen. */
 export function TabletIcon({ className }: IconProps) {
   return (

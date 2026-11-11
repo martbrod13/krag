@@ -29,10 +29,19 @@ const EVENTS = {
   "UPDATE TaskAssignee": "claimTask",
   "CREATE TaskDone": "doneTask",
   "DELETE TaskDone": "undoneTask",
+  "VIEW Medication": "viewMedications",
+  "CREATE Medication": "createMedication",
+  "UPDATE Medication": "updateMedication",
+  "DELETE Medication": "deleteMedication",
+  "CREATE MedicationIntake": "takeDose",
+  "DELETE MedicationIntake": "undoDose",
 } as const;
 
 /** Entries about one task: their entityId is the task's id. */
 const TASK_ENTITIES = new Set(["Task", "TaskAssignee", "TaskDone"]);
+
+/** Entries about one medicine: their entityId is the medicine's id. */
+const MEDICATION_ENTITIES = new Set(["Medication", "MedicationIntake"]);
 
 type KnownEvent = (typeof EVENTS)[keyof typeof EVENTS];
 
@@ -44,11 +53,16 @@ export type AccessLogEntry = {
   event: AccessEvent;
   /** Who did it: a person or the senior's device; null for a deleted account. */
   actor: string | null;
-  /** The person, device or task the entry is about, if any. */
+  /** The person, device, task or medicine the entry is about, if any. */
   subject: string | null;
-  /** What `subject` names; a deleted task has kind "task" but no subject. */
-  subjectKind: "person" | "device" | "task" | null;
+  /**
+   * What `subject` names; a deleted task or medicine keeps its kind but has
+   * no subject.
+   */
+  subjectKind: SubjectKind | null;
 };
+
+type SubjectKind = "person" | "device" | "task" | "medication";
 
 type Row = {
   action: AuditAction;
@@ -101,15 +115,18 @@ export async function getAccessLog(circleId: string, page = 1) {
   const pageRows = rows.slice(0, ACCESS_LOG_PAGE_SIZE);
 
   // Names of the people whom membership changes were about, and the
-  // current text of the tasks. Neither is copied into the log itself.
+  // current text of the tasks and names of the medicines. None of it is
+  // copied into the log itself.
   const memberIds = new Set<string>();
   const taskIds = new Set<string>();
+  const medicationIds = new Set<string>();
   for (const row of pageRows) {
     if (!row.entityId) continue;
     if (row.entity === "Membership") memberIds.add(row.entityId);
     if (TASK_ENTITIES.has(row.entity)) taskIds.add(row.entityId);
+    if (MEDICATION_ENTITIES.has(row.entity)) medicationIds.add(row.entityId);
   }
-  const [people, tasks] = await Promise.all([
+  const [people, tasks, medications] = await Promise.all([
     memberIds.size
       ? db.user.findMany({
           where: { id: { in: [...memberIds] } },
@@ -122,9 +139,16 @@ export async function getAccessLog(circleId: string, page = 1) {
           select: { id: true, title: true },
         })
       : [],
+    medicationIds.size
+      ? db.medication.findMany({
+          where: { id: { in: [...medicationIds] }, circleId },
+          select: { id: true, name: true },
+        })
+      : [],
   ]);
   const nameOf = new Map(people.map((person) => [person.id, person.name]));
   const titleOf = new Map(tasks.map((task) => [task.id, task.title]));
+  const medicationOf = new Map(medications.map((item) => [item.id, item.name]));
 
   const entries: AccessLogEntry[] = pageRows.map((row) => {
     const deviceName = row.deviceName ?? row.device?.name ?? null;
@@ -132,23 +156,30 @@ export async function getAccessLog(circleId: string, page = 1) {
     const entityId = row.entityId ?? "";
 
     let subject: string | null = null;
-    let subjectKind: AccessLogEntry["subjectKind"] = null;
+    let subjectKind: SubjectKind | null = null;
     if (row.entity === "Membership") {
       subject = nameOf.get(entityId) ?? null;
       subjectKind = "person";
     } else if (TASK_ENTITIES.has(row.entity) && row.entityId) {
       subject = titleOf.get(entityId) ?? null;
       subjectKind = "task";
+    } else if (MEDICATION_ENTITIES.has(row.entity) && row.entityId) {
+      subject = medicationOf.get(entityId) ?? null;
+      subjectKind = "medication";
     } else if (event !== "seniorScreen" && deviceName) {
       subject = deviceName;
       subjectKind = "device";
     }
 
+    // The senior's device opens the senior screen and confirms doses itself.
+    const byDevice =
+      !row.userId && (event === "seniorScreen" || event === "takeDose");
+
     return {
       id: row.id,
       createdAt: row.createdAt,
       event,
-      actor: row.user?.name ?? (event === "seniorScreen" ? deviceName : null),
+      actor: row.user?.name ?? (byDevice ? deviceName : null),
       subject,
       subjectKind,
     };
