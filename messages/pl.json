@@ -59,7 +59,8 @@
     "title": "Dziś",
     "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty.",
     "circlesTitle": "Twoje kręgi",
-    "noCircles": "Nie należysz jeszcze do żadnego kręgu. Zakładanie kręgu i zaproszenia dodamy w następnym kroku."
+    "noCircles": "Nie należysz jeszcze do żadnego kręgu. Załóż krąg dla bliskiej osoby albo poproś rodzinę o zaproszenie.",
+    "newCircle": "Załóż krąg"
   },
   "Caregiver": {
     "title": "Mój dzień",
@@ -73,7 +74,77 @@
       "FAMILY": "Rodzina",
       "CAREGIVER": "Opiekun zawodowy"
     },
-    "recipientWithAge": "{name}, {age, plural, one {# rok} few {# lata} many {# lat} other {# roku}}"
+    "recipientWithAge": "{name}, {age, plural, one {# rok} few {# lata} many {# lat} other {# roku}}",
+    "pageTitle": "Twój krąg",
+    "backToPanel": "Wróć do panelu",
+    "recipientTitle": "Pod opieką",
+    "membersTitle": "Osoby w kręgu",
+    "you": "Ty",
+    "invite": "Zaproś osobę",
+    "pendingTitle": "Oczekujące zaproszenia",
+    "validUntil": "ważne do {date}",
+    "cancelInvitation": "Anuluj"
+  },
+  "NewCircle": {
+    "title": "Nowy krąg",
+    "lead": "Krąg to opieka nad jedną osobą. Po założeniu zaprosisz do niego rodzinę i opiekunkę.",
+    "name": "Nazwa kręgu",
+    "nameHint": "np. Mama Halina",
+    "firstName": "Imię osoby, którą się opiekujecie",
+    "birthDate": "Data urodzenia (nieobowiązkowo)",
+    "city": "Miasto (nieobowiązkowo)",
+    "create": "Załóż krąg",
+    "errors": {
+      "nameRequired": "Wpisz nazwę kręgu.",
+      "firstNameRequired": "Wpisz imię.",
+      "birthDateInvalid": "Sprawdź datę urodzenia."
+    }
+  },
+  "Invite": {
+    "title": "Zaproś do kręgu",
+    "lead": "Wybierz rolę. Dostaniesz link, który działa jeden raz przez 7 dni. Wyślij go tej osobie, np. przez WhatsAppa albo SMS.",
+    "roleLabel": "Kogo zapraszasz?",
+    "roles": {
+      "FAMILY": {
+        "title": "Członek rodziny",
+        "description": "Widzi plan dnia, leki, zadania, wizyty i dokumenty."
+      },
+      "CAREGIVER": {
+        "title": "Opiekunka, opiekun albo pielęgniarka",
+        "description": "Widzi to, czego potrzebuje do opieki: adres, kontakty alarmowe, leki, choroby i alergie, plan dnia i zadania. Dokumenty dopiero za Twoją zgodą."
+      },
+      "COORDINATOR": {
+        "title": "Drugi koordynator",
+        "description": "Może to samo co Ty, także zapraszać osoby i zmieniać uprawnienia."
+      }
+    },
+    "createLink": "Utwórz link",
+    "linkReady": "Link jest gotowy. Wyślij go teraz: ze względów bezpieczeństwa pokazujemy go tylko raz.",
+    "linkLabel": "Link z zaproszeniem",
+    "share": "Udostępnij",
+    "copy": "Kopiuj link",
+    "copied": "Skopiowano!",
+    "done": "Gotowe",
+    "another": "Utwórz kolejny link",
+    "shareTitle": "Zaproszenie do Kręgu",
+    "shareText": "Zapraszam Cię do kręgu „{circle}” w aplikacji Krąg:",
+    "errors": {
+      "roleRequired": "Wybierz rolę.",
+      "notAllowed": "Tylko koordynator może zapraszać osoby do kręgu."
+    }
+  },
+  "Join": {
+    "title": "Zaproszenie do kręgu",
+    "lead": "{inviter} zaprasza Cię do kręgu „{circle}”. Twoja rola: {role}.",
+    "leadNoInviter": "Zaproszenie do kręgu „{circle}”. Twoja rola: {role}.",
+    "signInToJoin": "Zaloguj się, aby dołączyć",
+    "signInHint": "Nie masz konta? Wystarczy e-mail i jednorazowy kod.",
+    "join": "Dołącz do kręgu",
+    "alreadyMember": "Już należysz do tego kręgu.",
+    "openCircle": "Otwórz krąg",
+    "invalidTitle": "To zaproszenie już nie działa",
+    "invalidLead": "Link wygasł albo ktoś już go użył. Poproś osobę, która Cię zaprosiła, o nowy link.",
+    "home": "Przejdź do strony głównej"
   },
   "Senior": {
     "title": "Ekran seniora",

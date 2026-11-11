@@ -85,6 +85,19 @@ Na razie aplikacja nie wysyła prawdziwych e-maili (dostawcę wybierzemy przed b
 4. Przepisz kod i kliknij **Zaloguj się**. W panelu rodziny albo opiekuna zobaczysz krąg „Mama Halina”.
 5. Możesz też wpisać dowolny inny adres e-mail. Wtedy aplikacja założy nowe konto i zapyta o imię.
 
+## Kręgi i zaproszenia
+
+Krąg to opieka nad jedną osobą. Kto zakłada krąg, zostaje jego koordynatorem.
+
+### Jak przetestować
+
+1. Zaloguj się jako `ania.kowalska@example.com` i w **Panelu rodziny** kliknij krąg „Mama Halina”. Zobaczysz podopieczną i osoby w kręgu.
+2. Kliknij **Zaproś osobę**, wybierz rolę i kliknij **Utwórz link**. Skopiuj link.
+3. Wyloguj się. Najlepiej otwórz link w oknie prywatnym przeglądarki (`Ctrl+Shift+N`), żeby nie mieszać kont.
+4. Kliknij **Zaloguj się, aby dołączyć**, wpisz dowolny nowy e-mail i kod z terminala, podaj imię i kliknij **Dołącz do kręgu**.
+5. Nowa osoba jest w kręgu z wybraną rolą. Link już nie zadziała drugi raz.
+6. Własny krąg założysz przyciskiem **Załóż krąg** w **Panelu rodziny**.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -92,6 +105,7 @@ Na razie aplikacja nie wysyła prawdziwych e-maili (dostawcę wybierzemy przed b
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
+- `npm run test:db` – testy kręgów i zaproszeń na bazie danych (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.
@@ -103,6 +117,7 @@ Na razie aplikacja nie wysyła prawdziwych e-maili (dostawcę wybierzemy przed b
 - `src/i18n` – obsługa języków.
 - `src/lib` – wspólny kod, np. połączenie z bazą danych.
 - `prisma` – schemat bazy danych, migracje (kolejne zmiany w tabelach) i zmyślone dane testowe.
+- `tests` – testy logiki na bazie danych.
 - `messages` – wszystkie teksty widoczne w aplikacji, osobny plik dla każdego języka: `pl.json` (polski), `uk.json` (ukraiński), `ru.json` (rosyjski) i `en.json` (angielski).
 - `public` – ikony aplikacji.
 - `docs` – zasady projektu, m.in. prywatność danych.
