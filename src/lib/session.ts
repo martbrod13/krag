@@ -15,6 +15,13 @@ export function safeNextPath(value: unknown, fallback = "/") {
   return value;
 }
 
+/** The signed-in user's id for server actions; others go to sign in. */
+export async function currentUserId() {
+  const session = await getSession();
+  if (!session) redirect("/logowanie");
+  return session.user.id;
+}
+
 /** Returns the signed-in user, or sends the visitor to sign in first. */
 export async function requireUser(currentPath: string) {
   const session = await getSession();

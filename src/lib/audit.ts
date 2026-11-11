@@ -4,7 +4,10 @@ import { db } from "@/lib/db";
 
 type AuditEntry = {
   circleId: string;
-  userId: string;
+  /** The person who opened or changed the data. */
+  userId?: string | null;
+  /** The care recipient's paired phone or tablet (senior screen). */
+  deviceId?: string;
   action: AuditAction;
   entity: string;
   entityId?: string;

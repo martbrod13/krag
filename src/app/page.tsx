@@ -1,15 +1,24 @@
+import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/brand/logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { PanelLink } from "@/components/panel-link";
 import { SignOutButton } from "@/components/sign-out-button";
 import { ButtonLink } from "@/components/ui/button";
+import { getPairedDevice } from "@/lib/senior-device";
 import { getSession } from "@/lib/session";
 
 export default async function HomePage() {
+  const session = await getSession();
+  if (!session) {
+    // The senior's paired phone or tablet opens straight to the senior screen,
+    // also from the icon on the home screen.
+    const { device } = await getPairedDevice();
+    if (device) redirect("/senior");
+  }
+
   const t = await getTranslations("Home");
   const common = await getTranslations("Common");
-  const session = await getSession();
   const name = session?.user.name.trim();
 
   return (

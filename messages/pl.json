@@ -6,7 +6,8 @@
     "appName": "Krąg",
     "backToStart": "Wróć do startu",
     "comingSoon": "Wkrótce",
-    "signOut": "Wyloguj się"
+    "signOut": "Wyloguj się",
+    "cancel": "Anuluj"
   },
   "Home": {
     "lead": "Wspólna opieka nad bliską osobą. Leki, zadania i wizyty w jednym miejscu.",
@@ -83,7 +84,20 @@
     "invite": "Zaproś osobę",
     "pendingTitle": "Oczekujące zaproszenia",
     "validUntil": "ważne do {date}",
-    "cancelInvitation": "Anuluj"
+    "cancelInvitation": "Anuluj",
+    "contactsTitle": "Ważne numery",
+    "editContacts": "Edytuj",
+    "callContact": "Zadzwoń: {name}",
+    "noContacts": "Nie ma jeszcze żadnych numerów.",
+    "noContactsManage": "Dodaj numery do bliskich. Senior zobaczy je na swoim ekranie jako duże przyciski do dzwonienia.",
+    "seniorTitle": "Ekran seniora",
+    "seniorLead": "Prosty ekran na telefonie albo tablecie seniora: data, godzina i duże przyciski do dzwonienia do bliskich. Senior nie potrzebuje konta ani hasła.",
+    "pairDevice": "Połącz telefon lub tablet",
+    "seniorPreview": "Zobacz podgląd",
+    "devicePaired": "połączone {date}",
+    "deviceLastUsed": "ostatnio używane {date}",
+    "unpair": "Odłącz",
+    "confirmUnpair": "Tak, odłącz"
   },
   "NewCircle": {
     "title": "Nowy krąg",
@@ -146,11 +160,103 @@
     "invalidLead": "Link wygasł albo ktoś już go użył. Poproś osobę, która Cię zaprosiła, o nowy link.",
     "home": "Przejdź do strony głównej"
   },
+  "Contacts": {
+    "title": "Ważne numery",
+    "lead": "Senior widzi te numery na swoim ekranie jako duże przyciski do dzwonienia. Opiekunka ma je pod ręką w nagłej sytuacji.",
+    "empty": "Nie ma jeszcze żadnych numerów.",
+    "remove": "Usuń",
+    "confirmRemove": "Tak, usuń",
+    "addTitle": "Dodaj numer",
+    "name": "Imię albo nazwa",
+    "namePlaceholder": "np. Ania",
+    "phone": "Numer telefonu",
+    "phonePlaceholder": "np. 600 100 200",
+    "relationship": "Kim jest dla seniora? (nieobowiązkowo)",
+    "relationshipPlaceholder": "np. córka, sąsiadka",
+    "add": "Dodaj numer",
+    "added": "Dodano. Senior zobaczy ten numer na swoim ekranie.",
+    "full": "Na ekranie seniora mieści się {max, plural, one {# numer} few {# numery} many {# numerów} other {# numeru}}. Usuń któryś, aby dodać nowy.",
+    "preview": "Zobacz, jak to wygląda u seniora",
+    "errors": {
+      "nameRequired": "Wpisz imię albo nazwę.",
+      "phoneInvalid": "Sprawdź numer telefonu. Wystarczą cyfry, np. 600 100 200.",
+      "tooMany": "Na ekranie seniora nie zmieści się więcej numerów. Usuń któryś, aby dodać nowy.",
+      "notAllowed": "Tylko koordynator może zmieniać numery."
+    }
+  },
+  "PairDevice": {
+    "title": "Połącz telefon lub tablet",
+    "lead": "Senior nie potrzebuje konta ani hasła. Pokażesz kod QR, telefon albo tablet seniora zeskanuje go aparatem i od razu otworzy prosty ekran.",
+    "nameLabel": "Jak nazwać to urządzenie? (nieobowiązkowo)",
+    "namePlaceholder": "np. Telefon mamy",
+    "defaultName": "Ekran seniora",
+    "showCode": "Pokaż kod QR",
+    "qrLabel": "Kod QR do połączenia ekranu seniora",
+    "waiting": "Czekam na połączenie…",
+    "step1": "Na telefonie albo tablecie seniora otwórz aparat i skieruj go na kod.",
+    "step2": "Dotknij linku, który się pojawi, a potem przycisku „Połącz”.",
+    "validUntil": "Kod działa jeden raz, do {time}.",
+    "paired": "Połączono! „{name}” pokazuje już ekran seniora.",
+    "expired": "Kod wygasł.",
+    "newCode": "Pokaż nowy kod",
+    "done": "Gotowe",
+    "another": "Połącz kolejne urządzenie",
+    "remoteTitle": "Senior jest daleko?",
+    "remoteLead": "Wyślij link na jego telefon, np. SMS-em albo przez WhatsAppa. Działa tak samo jak kod QR.",
+    "linkLabel": "Link do połączenia ekranu seniora",
+    "share": "Udostępnij",
+    "copy": "Kopiuj link",
+    "copied": "Skopiowano!",
+    "shareTitle": "Ekran seniora w Kręgu",
+    "shareText": "Twój ekran w kręgu „{circle}”. Otwórz ten link na swoim telefonie i dotknij „Połącz”:",
+    "errors": {
+      "notAllowed": "Tylko koordynator może łączyć urządzenia."
+    }
+  },
+  "Preview": {
+    "title": "Podgląd ekranu seniora",
+    "lead": "Tak wygląda ekran na telefonie albo tablecie seniora. Data i godzina zmieniają się same, a nowe numery pojawiają się w ciągu minuty.",
+    "pair": "Połącz telefon lub tablet",
+    "editContacts": "Zmień numery"
+  },
   "Senior": {
     "title": "Ekran seniora",
-    "greeting": "Dzień dobry!",
-    "allOk": "Wszystko OK",
-    "preview": "To podgląd. Przycisk zacznie działać w kolejnych etapach."
+    "goodMorning": "Dzień dobry!",
+    "goodAfternoon": "Dzień dobry!",
+    "goodEvening": "Dobry wieczór!",
+    "callTitle": "Zadzwoń do bliskich",
+    "call": "Zadzwoń:",
+    "noContacts": "Tu pojawią się numery do bliskich. Rodzina doda je w aplikacji.",
+    "notPairedLead": "Ten telefon albo tablet nie jest jeszcze połączony z kręgiem.",
+    "unpairedLead": "Ten telefon albo tablet został odłączony od kręgu. Poproś rodzinę o nowy kod QR.",
+    "howTitle": "Jak połączyć?",
+    "howStep1": "Osoba z rodziny otwiera Krąg na swoim telefonie, wybiera krąg i dotyka „Połącz telefon lub tablet”.",
+    "howStep2": "Na tym urządzeniu otwórz aparat i skieruj go na kod QR.",
+    "howStep3": "Dotknij linku, który się pojawi, a potem przycisku „Połącz”.",
+    "noAccount": "Senior nie potrzebuje konta ani hasła.",
+    "home": "Przejdź do strony głównej"
+  },
+  "SeniorPair": {
+    "metaTitle": "Połącz ekran seniora",
+    "title": "Połączyć to urządzenie z kręgiem „{circle}”?",
+    "lead": "Będzie pokazywać prosty ekran seniora: datę, godzinę i duże przyciski do dzwonienia do bliskich. Bez logowania i haseł.",
+    "pair": "Połącz",
+    "note": "W kręgu będzie widoczne jako „{device}”. Rodzina może je w każdej chwili odłączyć.",
+    "invalidTitle": "Ten kod już nie działa",
+    "invalidLead": "Kod QR działa jeden raz przez 30 minut. Poproś osobę z rodziny o nowy kod.",
+    "alreadyTitle": "To urządzenie jest już połączone",
+    "alreadyLead": "Kod został już użyty. Ekran seniora jest gotowy.",
+    "openScreen": "Przejdź do ekranu seniora"
+  },
+  "SeniorReady": {
+    "title": "Gotowe!",
+    "lead": "To urządzenie pokazuje teraz ekran seniora. Nie trzeba się logować.",
+    "installTitle": "Ostatni krok: ikona na ekranie głównym",
+    "installLead": "Dzięki niej senior otworzy swój ekran jednym dotknięciem, jak zwykłą aplikację.",
+    "installButton": "Dodaj ikonę na ekran główny",
+    "android": "Android: dotknij menu przeglądarki (trzy kropki) i wybierz „Dodaj do ekranu głównego”.",
+    "iphone": "iPhone i iPad: dotknij przycisku Udostępnij (kwadrat ze strzałką w górę) i wybierz „Do ekranu początkowego”.",
+    "open": "Przejdź do ekranu seniora"
   },
   "NotFound": {
     "title": "Nie ma takiej strony",

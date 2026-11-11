@@ -1,16 +1,11 @@
-import { createHash, randomBytes } from "node:crypto";
 import type { CircleRole } from "@/generated/prisma/client";
 import { logAccess } from "@/lib/audit";
 import { db } from "@/lib/db";
 import { DEFAULT_PERMISSIONS } from "@/lib/permissions";
+import { hashToken, newToken } from "@/lib/tokens";
 
 /** An invitation link works once, for 7 days (docs/mapa-danych.md). */
 export const INVITATION_DAYS = 7;
-
-/** Only this hash is stored; the token itself exists only in the link. */
-export function hashToken(token: string) {
-  return createHash("sha256").update(token).digest("hex");
-}
 
 /**
  * Creates a one-time invitation and returns its token. The caller must
@@ -21,7 +16,7 @@ export async function createInvitation(params: {
   invitedById: string;
   role: CircleRole;
 }) {
-  const token = randomBytes(32).toString("base64url");
+  const token = newToken();
   const expiresAt = new Date(Date.now() + INVITATION_DAYS * 24 * 3600 * 1000);
 
   const invitation = await db.$transaction(async (tx) => {

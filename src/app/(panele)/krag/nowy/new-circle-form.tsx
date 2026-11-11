@@ -7,11 +7,16 @@ import { Input } from "@/components/ui/input";
 import type { NewCircleError } from "@/lib/circles";
 import { createCircleAction } from "../actions";
 
-export type NewCircleState = { error?: NewCircleError };
+export type NewCircleState = {
+  error?: NewCircleError;
+  /** What was typed, shown again after an error. */
+  values?: Record<string, string>;
+};
 
 export function NewCircleForm() {
   const t = useTranslations("NewCircle");
   const [state, formAction, pending] = useActionState(createCircleAction, {});
+  const values = state.values;
 
   return (
     <form action={formAction} className="flex flex-col gap-5">
@@ -22,19 +27,35 @@ export function NewCircleForm() {
           required
           maxLength={80}
           placeholder={t("nameHint")}
+          defaultValue={values?.name}
         />
       </label>
       <label className="flex flex-col gap-2">
         <span className="font-bold">{t("firstName")}</span>
-        <Input name="firstName" required maxLength={60} />
+        <Input
+          name="firstName"
+          required
+          maxLength={60}
+          defaultValue={values?.firstName}
+        />
       </label>
       <label className="flex flex-col gap-2">
         <span className="font-bold">{t("birthDate")}</span>
-        <Input name="birthDate" type="date" min="1900-01-01" />
+        <Input
+          name="birthDate"
+          type="date"
+          min="1900-01-01"
+          defaultValue={values?.birthDate}
+        />
       </label>
       <label className="flex flex-col gap-2">
         <span className="font-bold">{t("city")}</span>
-        <Input name="city" maxLength={80} autoComplete="address-level2" />
+        <Input
+          name="city"
+          maxLength={80}
+          autoComplete="address-level2"
+          defaultValue={values?.city}
+        />
       </label>
       <Button type="submit" size="lg" disabled={pending}>
         {t("create")}

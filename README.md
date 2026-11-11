@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych i baza danych w Neon. Teraz dochodzi logowanie kodem z e-maila.
+Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami i ekran seniora łączony kodem QR. Do końca etapu zostały ustawienia kręgu.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -98,6 +98,25 @@ Krąg to opieka nad jedną osobą. Kto zakłada krąg, zostaje jego koordynatore
 5. Nowa osoba jest w kręgu z wybraną rolą. Link już nie zadziała drugi raz.
 6. Własny krąg założysz przyciskiem **Załóż krąg** w **Panelu rodziny**.
 
+## Ekran seniora
+
+Senior nie ma konta ani hasła. Koordynator pokazuje kod QR, telefon albo tablet seniora skanuje go aparatem i od razu ma prosty ekran: datę, godzinę i duże przyciski do dzwonienia do bliskich. Numery na te przyciski koordynator wpisuje w sekcji **Ważne numery**.
+
+Kod QR działa jeden raz przez 30 minut. Połączone urządzenie zostaje połączone, dopóki koordynator go nie odłączy.
+
+### Jak przetestować
+
+1. Zaloguj się jako `ania.kowalska@example.com` i otwórz krąg „Mama Halina”.
+2. W sekcji **Ekran seniora** kliknij **Zobacz podgląd**. Tak wygląda ekran mamy.
+3. Wróć do kręgu. Przy **Ważne numery** kliknij **Edytuj** i dodaj dowolny numer. Od razu zobaczysz go w podglądzie.
+4. Wróć do kręgu, kliknij **Połącz telefon lub tablet**, wpisz nazwę, np. `Telefon mamy`, i kliknij **Pokaż kod QR**.
+5. Pod kodem, w części **Senior jest daleko?**, kliknij **Kopiuj link**. Otwórz okno prywatne przeglądarki (`Ctrl+Shift+N`) i wklej link. Okno prywatne udaje telefon mamy.
+6. W oknie prywatnym kliknij **Połącz**, a potem **Przejdź do ekranu seniora**.
+7. W pierwszym oknie po kilku sekundach pojawi się **Połączono!**. Kliknij **Gotowe**: w sekcji **Ekran seniora** jest nowe urządzenie.
+8. Kliknij przy nim **Odłącz**, a potem **Tak, odłącz**. Odśwież okno prywatne: ekran napisze, że urządzenie zostało odłączone.
+
+Prawdziwym telefonem zeskanujesz kod, gdy aplikacja będzie w internecie (przed betą). Teraz działa tylko na Twoim komputerze i telefon jej nie widzi.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -105,7 +124,7 @@ Krąg to opieka nad jedną osobą. Kto zakłada krąg, zostaje jego koordynatore
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy kręgów i zaproszeń na bazie danych (uruchamia je GitHub na bazie testowej).
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia i ekran seniora (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.

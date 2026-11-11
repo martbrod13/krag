@@ -22,13 +22,17 @@ Dopóki nie będzie gotowy cały komplet poniżej, w aplikacji są wyłącznie z
 6. **Sekrety poza kodem** – hasła i klucze są tylko w `.env.local` i w ustawieniach serwera, nigdy w repozytorium.
 7. **Dziennik dostępu** – od etapu logowania zapisujemy, kto i kiedy otwierał dane podopiecznego.
 
-## Co już działa (etap 1)
+## Co już działa
 
 - Czcionka jest pobierana podczas budowania aplikacji i serwowana z naszego serwera, więc przeglądarka użytkownika nie łączy się z Google.
 - Nagłówki bezpieczeństwa: wymuszone HTTPS, zakaz osadzania aplikacji w cudzych stronach, ograniczone informacje o źródle wejścia.
 - Strona nie ma dostępu do lokalizacji. Aparat (zdjęcie wypisu) i mikrofon (notatki głosowe) może używać tylko nasza strona.
 - Plik `.env.local` z sekretami jest wykluczony z repozytorium.
-- Jedyne cookie zapisuje wybrany język i powstaje dopiero po kliknięciu języka. Nie służy do śledzenia.
+- Cookie są tylko trzy: wybrany język (powstaje dopiero po kliknięciu języka), sesja logowania i klucz połączonego ekranu seniora. Żadne nie służy do śledzenia.
+- Logujemy się jednorazowym kodem z e-maila, bez haseł. Kod działa raz, przez 10 minut.
+- Senior nie ma konta ani hasła. Jego telefon albo tablet łączy koordynator kodem QR, który działa raz przez 30 minut, i może go w każdej chwili odłączyć.
+- Linki z zaproszeniami, kody QR i klucze urządzeń zapisujemy w bazie tylko jako skróty (hash). Nawet ktoś, kto zobaczy bazę, nie otworzy dzięki nim żadnego kręgu.
+- Dziennik dostępu zapisuje, kto i kiedy oglądał albo zmieniał dane podopiecznego.
 
 ## Mapa danych
 

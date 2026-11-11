@@ -58,6 +58,8 @@ model User {
   memberships     Membership[] @relation("MemberUser")
   invitedMembers  Membership[] @relation("InvitedBy")
   invitationsSent Invitation[]
+  devicePairings  DevicePairing[]
+  pairedDevices   PairedDevice[]
   auditEntries    AuditLog[]
 }
 
@@ -127,6 +129,7 @@ model CareCircle {
   recipient   CareRecipient?
   memberships Membership[]
   invitations Invitation[]
+  pairings    DevicePairing[]
   devices     PairedDevice[]
   auditLog    AuditLog[]
 }
@@ -186,7 +189,8 @@ model CareRecipient {
   emergencyContacts EmergencyContact[]
 }
 
-/// Who to call in an emergency (data map, section 3).
+/// Who to call in an emergency (data map, section 3). The senior screen shows
+/// these numbers as big "call" buttons, in the order of position.
 model EmergencyContact {
   id           String  @id @default(cuid())
   recipientId  String
@@ -200,6 +204,26 @@ model EmergencyContact {
   @@index([recipientId])
 }
 
+/// A one-time QR code that pairs the care recipient's phone or tablet with a
+/// circle (data map, section 2). It works once, for 30 minutes, and only a
+/// hash of the code is stored. It is kept until it expires, so the family's
+/// screen can show that pairing worked.
+model DevicePairing {
+  id          String    @id @default(cuid())
+  circleId    String
+  deviceName  String
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdById String?
+  createdAt   DateTime  @default(now())
+
+  circle    CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  createdBy User?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([circleId])
+}
+
 /// The care recipient's phone or tablet, paired with a QR code, so the simple
 /// senior screen works without an account or password (data map, section 2).
 /// Only a hash of the device token is stored. Unpaired devices are deleted.
@@ -208,10 +232,12 @@ model PairedDevice {
   circleId   String
   name       String
   tokenHash  String    @unique
+  pairedById String?
   pairedAt   DateTime  @default(now())
   lastUsedAt DateTime?
 
   circle       CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  pairedBy     User?      @relation(fields: [pairedById], references: [id], onDelete: SetNull)
   auditEntries AuditLog[]
 
   @@index([circleId])

@@ -40,3 +40,11 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Invitations (`src/lib/invitations.ts`): one-time links valid 7 days; only a SHA-256 hash of the token is stored and the link is shown once.
 - Log access with `logAccess` (`src/lib/audit.ts`): views of the care recipient's data and every change.
 - Business logic stays free of Next.js request APIs so `tests/*.test.ts` (`npm run test:db`, Node test runner via tsx) can run it against the CI database.
+
+## Senior screen
+
+- The senior has no account. A coordinator shows a one-time QR code (`DevicePairing`, 30 minutes, only a hash stored) on `/krag/[id]/polacz`. The device opens `/senior/polacz/[token]` and pairs only after a tap on "Połącz": link previews in chat apps open links too, so a GET never uses up a code.
+- A paired device (`PairedDevice`) keeps a secret token in the httpOnly cookie `krag_device` (`src/lib/device-cookie.ts`); only its hash is stored. `src/proxy.ts` renews the cookie on every visit. Read the device with `getPairedDevice()` from `src/lib/senior-device.ts`; on the start page a paired device without a session goes straight to `/senior`.
+- Logic: `src/lib/devices.ts` (pairing, unpairing, visits) and `src/lib/contacts.ts` (the emergency contacts shown as call buttons). Only coordinators (`MANAGE`) pair devices and change the numbers.
+- A visit to the senior screen goes into the access log at most once an hour (`recordDeviceVisit`).
+- Keep the senior screen calm: big text, few elements, nothing that signs out or deletes. Time-dependent text (clock, greeting) renders on the device only (`useSyncExternalStore` with a `null` server snapshot).
