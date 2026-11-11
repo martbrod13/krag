@@ -102,7 +102,7 @@ jobs:
           npm run db:seed
           npm run db:seed
 
-      - name: Testy na bazie (kręgi, zaproszenia, ekran seniora)
+      - name: Testy na bazie (kręgi, ekran seniora, ustawienia)
         run: npm run test:db
 
       - name: Typy (TypeScript)

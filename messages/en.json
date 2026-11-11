@@ -97,7 +97,13 @@
     "devicePaired": "paired {date}",
     "deviceLastUsed": "last used {date}",
     "unpair": "Unpair",
-    "confirmUnpair": "Yes, unpair"
+    "confirmUnpair": "Yes, unpair",
+    "settings": "Circle settings",
+    "leaveTitle": "Leave the circle",
+    "leaveLead": "You will lose access to this circle’s data. You can only come back with a new invitation.",
+    "leave": "Leave the circle",
+    "confirmLeave": "Yes, leave",
+    "onlyCoordinatorLeave": "You are this circle’s only coordinator. Before you leave, make someone else a coordinator in the circle settings."
   },
   "NewCircle": {
     "title": "New circle",
@@ -218,6 +224,105 @@
     "lead": "This is what the senior’s phone or tablet shows. The date and time update by themselves, and new numbers appear within a minute.",
     "pair": "Pair a phone or tablet",
     "editContacts": "Edit numbers"
+  },
+  "Settings": {
+    "title": "Circle settings",
+    "lead": "Decide who is in the circle and what each person sees.",
+    "peopleTitle": "People in the circle",
+    "peopleLead": "Tap a person to change their role or what they see.",
+    "you": "you",
+    "seesAll": "Sees everything and manages the circle.",
+    "sees": "Sees {list}.",
+    "seesNothing": "Sees only the senior’s first name and the people in the circle.",
+    "roleLabel": "Role",
+    "roles": {
+      "COORDINATOR": {
+        "title": "Coordinator",
+        "description": "Sees everything, invites people, pairs devices and changes permissions."
+      },
+      "FAMILY": {
+        "title": "Family member",
+        "description": "Sees what you allow. By default everything except the circle settings."
+      },
+      "CAREGIVER": {
+        "title": "Caregiver or nurse",
+        "description": "Sees what they need for care. Documents only with your consent."
+      }
+    },
+    "permissionsLabel": "What they see",
+    "permissions": {
+      "PROFILE": {
+        "title": "Senior’s details",
+        "short": "the senior’s details",
+        "description": "Age, address and important numbers."
+      },
+      "HEALTH": {
+        "title": "Health and medication",
+        "short": "health and medication",
+        "description": "Medication, conditions and allergies."
+      },
+      "TASKS": {
+        "title": "Tasks and daily plan",
+        "short": "tasks",
+        "description": "What needs doing and when."
+      },
+      "VISITS": {
+        "title": "Visits and reports",
+        "short": "visits",
+        "description": "Caregivers’ visits and their reports."
+      },
+      "DOCUMENTS": {
+        "title": "Documents",
+        "short": "documents",
+        "description": "Hospital discharge letters, prescriptions and other documents."
+      },
+      "MANAGE": {
+        "title": "Circle settings",
+        "short": "the circle settings",
+        "description": "Inviting people, pairing devices and permissions."
+      }
+    },
+    "coordinatorSeesAll": "A coordinator always sees everything.",
+    "save": "Save changes",
+    "saved": "Saved.",
+    "remove": "Remove from the circle",
+    "confirmRemove": "Yes, remove",
+    "onlyCoordinator": "You are the only coordinator, so your role stays as it is. Once you make someone else a coordinator, it can be changed.",
+    "upcoming": "Health, tasks, visits and documents come to the app in the next stage. What you set now will apply then.",
+    "logTitle": "Access log",
+    "logLead": "Who viewed or changed data in this circle, and when.",
+    "openLog": "Open the access log",
+    "errors": {
+      "notAllowed": "Only a coordinator can change the circle settings.",
+      "notFound": "This person is no longer in the circle.",
+      "lastCoordinator": "The circle must keep at least one coordinator."
+    }
+  },
+  "AccessLog": {
+    "title": "Access log",
+    "lead": "Who viewed or changed data in this circle, and when. Entries are kept for 12 months.",
+    "empty": "The log is empty so far.",
+    "unknownActor": "Deleted account",
+    "newer": "Newer entries",
+    "older": "Older entries",
+    "pages": "Log pages",
+    "events": {
+      "viewRecipient": "viewed the senior’s details",
+      "seniorScreen": "opened the senior screen",
+      "createCircle": "created the circle",
+      "createInvitation": "created an invitation",
+      "cancelInvitation": "cancelled an invitation",
+      "join": "joined the circle",
+      "leave": "left the circle",
+      "changeMember": "changed role or permissions: {name}",
+      "removeMember": "removed from the circle: {name}",
+      "createPairing": "created a QR code for “{name}”",
+      "pairDevice": "paired the device “{name}”",
+      "unpairDevice": "unpaired the device “{name}”",
+      "addContact": "added an important number",
+      "removeContact": "removed an important number",
+      "other": "another change"
+    }
   },
   "Senior": {
     "title": "Senior screen",

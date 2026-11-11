@@ -155,7 +155,20 @@ async function main() {
       },
       {
         circleId: circle.id,
+        userId: tomek.id,
+        action: "CREATE",
+        entity: "Membership",
+        entityId: tomek.id,
+      },
+      {
+        circleId: circle.id,
         userId: ewa.id,
+        action: "VIEW",
+        entity: "CareRecipient",
+      },
+      {
+        circleId: circle.id,
+        deviceName: "Tablet mamy",
         action: "VIEW",
         entity: "CareRecipient",
       },

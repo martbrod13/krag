@@ -246,14 +246,18 @@ model PairedDevice {
 /// Who opened or changed data in a circle, and when (data map, section 8).
 /// Kept for 12 months.
 model AuditLog {
-  id        String      @id @default(cuid())
-  circleId  String
-  userId    String?
-  deviceId  String?
-  action    AuditAction
-  entity    String
-  entityId  String?
-  createdAt DateTime    @default(now())
+  id         String      @id @default(cuid())
+  circleId   String
+  userId     String?
+  deviceId   String?
+  /// The device's name at the time ("Tablet mamy"), so the log stays
+  /// readable after the device is unpaired (data map, section 8).
+  deviceName String?
+  action     AuditAction
+  entity     String
+  /// For Membership entries: the member's user id.
+  entityId   String?
+  createdAt  DateTime    @default(now())
 
   circle CareCircle    @relation(fields: [circleId], references: [id], onDelete: Cascade)
   user   User?         @relation(fields: [userId], references: [id], onDelete: SetNull)

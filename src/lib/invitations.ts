@@ -102,7 +102,7 @@ export async function acceptInvitation(
     });
     if (used.count === 0) return { status: "invalid" };
 
-    const membership = await tx.membership.create({
+    await tx.membership.create({
       data: {
         circleId: invitation.circleId,
         userId,
@@ -110,7 +110,6 @@ export async function acceptInvitation(
         permissions: invitation.permissions,
         invitedById: invitation.invitedById,
       },
-      select: { id: true },
     });
     await logAccess(
       {
@@ -118,7 +117,7 @@ export async function acceptInvitation(
         userId,
         action: "CREATE",
         entity: "Membership",
-        entityId: membership.id,
+        entityId: userId,
       },
       tx,
     );

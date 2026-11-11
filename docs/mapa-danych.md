@@ -28,8 +28,8 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 
 - **Co:** nazwa kręgu, osoby w kręgu, ich role i uprawnienia, kto kogo zaprosił, zaproszenia, połączone urządzenia podopiecznego (np. „tablet mamy”): nazwa nadana przez rodzinę, kto i kiedy połączył urządzenie, kiedy było ostatnio używane. Do tego jednorazowe kody QR, którymi rodzina łączy urządzenie. Kod QR i tajny klucz urządzenia zapisujemy tylko jako skrót (hash).
 - **Po co:** żeby każdy widział tylko dane swoich kręgów i tylko w zakresie, na który pozwolił koordynator. Połączone urządzenie pozwala podopiecznemu korzystać z prostego ekranu bez konta i hasła.
-- **Kto widzi:** osoby z kręgu. Połączone urządzenia widzą koordynatorzy: tylko oni łączą urządzenia i mogą je w każdej chwili odłączyć.
-- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy. Kod QR działa jeden raz przez 30 minut, potem go usuwamy. Odłączone urządzenie usuwamy od razu.
+- **Kto widzi:** osoby z kręgu. Połączone urządzenia widzą koordynatorzy: tylko oni łączą urządzenia i mogą je w każdej chwili odłączyć. Koordynatorzy zmieniają też role i uprawnienia osób w kręgu i mogą kogoś z kręgu usunąć. Każdy może sam opuścić krąg.
+- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy. Kod QR działa jeden raz przez 30 minut, potem go usuwamy. Odłączone urządzenie usuwamy od razu. Gdy ktoś opuści krąg albo zostanie z niego usunięty, od razu usuwamy jego członkostwo w kręgu, a jego konto zostaje.
 - **Podstawa:** wykonanie umowy (art. 6 ust. 1 lit. b RODO).
 
 ### 3. Profil podopiecznego
@@ -77,10 +77,10 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 8. Dziennik dostępu i bezpieczeństwa
 
-- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu, także kiedy połączone urządzenie podopiecznego otwierało ekran seniora (najwyżej jeden wpis na godzinę). Przy logowaniu zapisujemy sesję: datę, rodzaj urządzenia (przeglądarkę) i adres IP. Kod logowania zapisujemy tylko jako skrót (hash): działa raz, przez 10 minut, i przestaje działać po 3 błędnych próbach.
+- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu, także kiedy połączone urządzenie podopiecznego otwierało ekran seniora (najwyżej jeden wpis na godzinę). Przy wpisach o urządzeniu zapisujemy też jego nazwę z chwili zdarzenia (np. „Tablet mamy”), żeby dziennik był czytelny także po odłączeniu urządzenia. Przy zmianach w składzie kręgu zapisujemy, kogo dotyczyły. Przy logowaniu zapisujemy sesję: datę, rodzaj urządzenia (przeglądarkę) i adres IP. Kod logowania zapisujemy tylko jako skrót (hash): działa raz, przez 10 minut, i przestaje działać po 3 błędnych próbach.
 - **Po co:** bezpieczeństwo i wykrywanie nadużyć. Koordynator widzi, kto oglądał dane podopiecznego.
 - **Kto widzi:** dziennik dostępu widzą koordynatorzy kręgu. Dziennik logowań widzi tylko sam użytkownik i administrator aplikacji.
-- **Jak długo:** dziennik dostępu 12 miesięcy, dziennik logowań 90 dni. Sesja kończy się po wylogowaniu albo po 30 dniach bez używania. Kod logowania usuwamy po użyciu albo wygaśnięciu.
+- **Jak długo:** dziennik dostępu 12 miesięcy (starsze wpisy usuwamy), dziennik logowań 90 dni. Sesja kończy się po wylogowaniu albo po 30 dniach bez używania. Kod logowania usuwamy po użyciu albo wygaśnięciu.
 - **Podstawa:** prawnie uzasadniony interes, czyli bezpieczeństwo danych (art. 6 ust. 1 lit. f i art. 32 RODO).
 
 ### 9. Pliki cookie
@@ -143,5 +143,6 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 4. Zaproszenie do kręgu działa jeden raz i wygasa po 7 dniach.
 5. Dziennik dostępu trzymamy 12 miesięcy, a dziennik logowań 90 dni.
 6. Kod QR do połączenia ekranu seniora działa jeden raz przez 30 minut. Urządzenie zostaje połączone, dopóki koordynator go nie odłączy albo przez 400 dni nikt go nie użyje.
+7. W kręgu zawsze jest co najmniej jeden koordynator. Ostatni koordynator nie może opuścić kręgu ani zmienić swojej roli, dopóki nie zrobi koordynatorem kogoś innego.
 
-Punkty 4, 5 i 6 to propozycje, które można jeszcze zmienić.
+Punkty 4, 5, 6 i 7 to propozycje, które można jeszcze zmienić.

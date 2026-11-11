@@ -291,7 +291,8 @@ try {
         circle.text.includes("Ewa Wiśniewska") &&
         circle.text.includes("Zaproś osobę") &&
         circle.text.includes("Zofia Testowa") &&
-        circle.text.includes("Tablet mamy"),
+        circle.text.includes("Tablet mamy") &&
+        circle.text.includes("Opuść krąg"),
       "the circle page lists people, numbers and the paired tablet",
     );
 
@@ -300,6 +301,8 @@ try {
       ["/krag/demo-krag-kowalscy/polacz", "Pokaż kod QR"],
       ["/krag/demo-krag-kowalscy/numery", "Dodaj numer"],
       ["/krag/demo-krag-kowalscy/podglad", "Zadzwoń do bliskich"],
+      ["/krag/demo-krag-kowalscy/ustawienia", "Widzi wszystko i zarządza"],
+      ["/krag/demo-krag-kowalscy/dziennik", "założenie kręgu"],
       ["/krag/nowy", "Nowy krąg"],
     ];
     for (const [path, text] of coordinatorPages) {
