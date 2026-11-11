@@ -5,29 +5,77 @@
   "Common": {
     "appName": "Krąg",
     "backToStart": "Wróć do startu",
-    "comingSoon": "Wkrótce",
     "signOut": "Wyloguj się",
     "cancel": "Anuluj"
   },
   "Home": {
-    "lead": "Wspólna opieka nad bliską osobą. Leki, zadania i wizyty w jednym miejscu.",
-    "choosePanel": "Wybierz panel",
-    "family": {
-      "title": "Panel rodziny",
-      "description": "Plan dnia, leki i zadania dla całej rodziny."
-    },
-    "caregiver": {
-      "title": "Panel opiekuna",
-      "description": "Dla opiekunek, opiekunów i pielęgniarek: wizyty i raporty."
-    },
-    "senior": {
-      "title": "Ekran seniora",
-      "description": "Duże przyciski i tylko to, co najważniejsze."
-    },
-    "foundationNote": "To fundament aplikacji. Kolejne funkcje dochodzą etap po etapie.",
-    "greeting": "Cześć, {name}!",
+    "title": "Wspólna opieka nad bliską osobą",
+    "lead": "Rodzina, opiekunka i sam senior w jednym kręgu. Każdy wie, co jest dziś do zrobienia i kto się tym zajmie.",
     "signIn": "Zaloguj się albo załóż konto",
-    "signInHint": "Wystarczy e-mail i jednorazowy kod. Bez hasła."
+    "signInHint": "Wystarczy e-mail i jednorazowy kod. Bez hasła. Na razie wszystko jest bezpłatne.",
+    "circle": {
+      "senior": "Mama Halina",
+      "seniorInitial": "H",
+      "doctor": "10:00 Lekarz",
+      "claim": "Biorę to!",
+      "done": "Zakupy zrobione",
+      "visit": "Przyjadę w sobotę"
+    },
+    "howTitle": "Jak to działa",
+    "steps": {
+      "create": {
+        "title": "Załóż krąg",
+        "text": "Krąg to opieka nad jedną osobą, np. nad mamą."
+      },
+      "invite": {
+        "title": "Zaproś bliskich",
+        "text": "Wyślij link rodzinie i opiekunce. Każdy widzi tylko to, na co pozwolisz."
+      },
+      "pair": {
+        "title": "Połącz telefon seniora",
+        "text": "Kod QR i gotowe: duży, prosty ekran bez konta i hasła."
+      }
+    },
+    "featuresTitle": "Co jest w środku",
+    "features": {
+      "plan": {
+        "title": "Plan dnia",
+        "text": "Zadania na dziś i na kolejne dni. Jedno „Biorę to” i wiadomo, kto się czym zajmie."
+      },
+      "senior": {
+        "title": "Ekran seniora",
+        "text": "Data, godzina, plan na dziś i duże przyciski do dzwonienia do bliskich."
+      },
+      "numbers": {
+        "title": "Ważne numery",
+        "text": "Zawsze pod ręką: dla seniora, rodziny i opiekunki."
+      },
+      "languages": {
+        "title": "Cztery języki",
+        "text": "Polski, ukraiński, rosyjski i angielski. Każdy wybiera swój."
+      }
+    },
+    "soon": "Wkrótce: leki z przypomnieniem i wizyty opiekunki.",
+    "privacyTitle": "Dane o zdrowiu traktujemy poważnie",
+    "privacy": {
+      "noAds": "Bez reklam i bez śledzenia.",
+      "eu": "Baza danych jest w Unii Europejskiej.",
+      "log": "Dziennik dostępu pokazuje, kto i kiedy oglądał dane.",
+      "control": "Koordynator decyduje, kto co widzi, i może w każdej chwili usunąć krąg."
+    },
+    "seniorDevice": {
+      "title": "To telefon albo tablet seniora?",
+      "description": "Otwórz ekran seniora i połącz go kodem QR od rodziny."
+    }
+  },
+  "MyCircles": {
+    "greeting": "Cześć, {name}!",
+    "familyTitle": "Twoje kręgi",
+    "caregiverTitle": "Twoi podopieczni",
+    "empty": "Nie należysz jeszcze do żadnego kręgu. Załóż krąg dla bliskiej osoby albo poproś rodzinę o zaproszenie.",
+    "newCircle": "Załóż krąg",
+    "circleDeleted": "Krąg został usunięty razem ze wszystkimi danymi.",
+    "todayCount": "{count, plural, =0 {Na dziś nic do zrobienia} one {Dziś do zrobienia: # zadanie} few {Dziś do zrobienia: # zadania} many {Dziś do zrobienia: # zadań} other {Dziś do zrobienia: # zadania}}"
   },
   "Login": {
     "title": "Zaloguj się",
@@ -56,20 +104,6 @@
     "continue": "Dalej",
     "nameRequired": "Wpisz swoje imię."
   },
-  "Family": {
-    "title": "Dziś",
-    "lead": "Tu pojawi się plan dnia całej rodziny: leki, zadania i wizyty.",
-    "circlesTitle": "Twoje kręgi",
-    "noCircles": "Nie należysz jeszcze do żadnego kręgu. Załóż krąg dla bliskiej osoby albo poproś rodzinę o zaproszenie.",
-    "newCircle": "Załóż krąg",
-    "circleDeleted": "Krąg został usunięty razem ze wszystkimi danymi."
-  },
-  "Caregiver": {
-    "title": "Mój dzień",
-    "lead": "Tu pojawią się wizyty u podopiecznych i raporty dla rodzin.",
-    "peopleTitle": "Twoi podopieczni",
-    "noPeople": "Gdy rodzina zaprosi Cię do swojego kręgu, Twój podopieczny pojawi się tutaj."
-  },
   "Circles": {
     "roles": {
       "COORDINATOR": "Koordynator kręgu",
@@ -78,7 +112,6 @@
     },
     "recipientWithAge": "{name}, {age, plural, one {# rok} few {# lata} many {# lat} other {# roku}}",
     "pageTitle": "Twój krąg",
-    "backToPanel": "Wróć do panelu",
     "recipientTitle": "Pod opieką",
     "membersTitle": "Osoby w kręgu",
     "you": "Ty",
@@ -106,7 +139,8 @@
     "confirmLeave": "Tak, opuszczam krąg",
     "onlyCoordinatorLeave": "Jesteś jedynym koordynatorem tego kręgu. Zanim go opuścisz, zrób koordynatorem kogoś innego w ustawieniach kręgu.",
     "editRecipient": "Edytuj",
-    "doctor": "Lekarz prowadzący: {doctor}"
+    "doctor": "Lekarz prowadzący: {doctor}",
+    "backToCircles": "Moje kręgi"
   },
   "NewCircle": {
     "title": "Nowy krąg",

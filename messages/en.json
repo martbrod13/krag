@@ -5,29 +5,77 @@
   "Common": {
     "appName": "Krąg",
     "backToStart": "Back to start",
-    "comingSoon": "Coming soon",
     "signOut": "Sign out",
     "cancel": "Cancel"
   },
   "Home": {
-    "lead": "Shared care for a loved one. Medicines, tasks and visits in one place.",
-    "choosePanel": "Choose a panel",
-    "family": {
-      "title": "Family panel",
-      "description": "The day’s plan, medicines and tasks for the whole family."
-    },
-    "caregiver": {
-      "title": "Caregiver panel",
-      "description": "For caregivers and nurses: visits and reports."
-    },
-    "senior": {
-      "title": "Senior screen",
-      "description": "Big buttons and only what matters most."
-    },
-    "foundationNote": "This is the foundation of the app. More features are added step by step.",
-    "greeting": "Hi, {name}!",
+    "title": "Caring for someone close, together",
+    "lead": "Family, caregiver and the senior in one circle. Everyone knows what needs doing today and who will take care of it.",
     "signIn": "Sign in or create an account",
-    "signInHint": "All you need is your email and a one-time code. No password."
+    "signInHint": "All you need is your email and a one-time code. No password. Everything is free for now.",
+    "circle": {
+      "senior": "Mum Halina",
+      "seniorInitial": "H",
+      "doctor": "10:00 Doctor",
+      "claim": "I’ll take it!",
+      "done": "Shopping done",
+      "visit": "Coming on Saturday"
+    },
+    "howTitle": "How it works",
+    "steps": {
+      "create": {
+        "title": "Create a circle",
+        "text": "A circle is the care of one person, for example your mum."
+      },
+      "invite": {
+        "title": "Invite your people",
+        "text": "Send a link to family and the caregiver. Everyone sees only what you allow."
+      },
+      "pair": {
+        "title": "Pair the senior’s phone",
+        "text": "Scan a QR code and you’re done: a big, simple screen with no account or password."
+      }
+    },
+    "featuresTitle": "What’s inside",
+    "features": {
+      "plan": {
+        "title": "Daily plan",
+        "text": "Tasks for today and the days ahead. One “I’ll take it” and everyone knows who does what."
+      },
+      "senior": {
+        "title": "Senior screen",
+        "text": "The date, the time, today’s plan and big buttons to call loved ones."
+      },
+      "numbers": {
+        "title": "Important numbers",
+        "text": "Always at hand for the senior, the family and the caregiver."
+      },
+      "languages": {
+        "title": "Four languages",
+        "text": "Polish, Ukrainian, Russian and English. Everyone picks their own."
+      }
+    },
+    "soon": "Coming soon: medication reminders and caregiver visits.",
+    "privacyTitle": "We take health data seriously",
+    "privacy": {
+      "noAds": "No ads and no tracking.",
+      "eu": "The database is in the European Union.",
+      "log": "The access log shows who viewed the data, and when.",
+      "control": "The coordinator decides who sees what and can delete the circle at any time."
+    },
+    "seniorDevice": {
+      "title": "Is this the senior’s phone or tablet?",
+      "description": "Open the senior screen and pair it with a QR code from the family."
+    }
+  },
+  "MyCircles": {
+    "greeting": "Hi, {name}!",
+    "familyTitle": "Your circles",
+    "caregiverTitle": "People you care for",
+    "empty": "You’re not in any circle yet. Create one for someone you care for, or ask your family for an invitation.",
+    "newCircle": "Create a circle",
+    "circleDeleted": "The circle has been deleted with all its data.",
+    "todayCount": "{count, plural, =0 {Nothing to do today} one {Still to do today: # task} other {Still to do today: # tasks}}"
   },
   "Login": {
     "title": "Sign in",
@@ -56,20 +104,6 @@
     "continue": "Continue",
     "nameRequired": "Please enter your first name."
   },
-  "Family": {
-    "title": "Today",
-    "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits.",
-    "circlesTitle": "Your circles",
-    "noCircles": "You’re not in any circle yet. Create one for someone you care for, or ask your family for an invitation.",
-    "newCircle": "Create a circle",
-    "circleDeleted": "The circle has been deleted with all its data."
-  },
-  "Caregiver": {
-    "title": "My day",
-    "lead": "Visits to the people you care for and reports for their families will appear here.",
-    "peopleTitle": "People you care for",
-    "noPeople": "When a family invites you to their circle, the person you care for will appear here."
-  },
   "Circles": {
     "roles": {
       "COORDINATOR": "Circle coordinator",
@@ -78,7 +112,6 @@
     },
     "recipientWithAge": "{name}, {age}",
     "pageTitle": "Your circle",
-    "backToPanel": "Back to the panel",
     "recipientTitle": "In our care",
     "membersTitle": "People in the circle",
     "you": "you",
@@ -106,7 +139,8 @@
     "confirmLeave": "Yes, leave",
     "onlyCoordinatorLeave": "You are this circle’s only coordinator. Before you leave, make someone else a coordinator in the circle settings.",
     "editRecipient": "Edit",
-    "doctor": "Doctor: {doctor}"
+    "doctor": "Doctor: {doctor}",
+    "backToCircles": "My circles"
   },
   "NewCircle": {
     "title": "New circle",

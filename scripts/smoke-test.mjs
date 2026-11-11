@@ -75,6 +75,12 @@ async function post(path, body, cookie = "") {
   return { status: response.status, cookies, text: await response.text() };
 }
 
+function redirectsTo(page, path) {
+  if (page.status < 300 || page.status >= 400) return false;
+  const target = new URL(page.headers.get("location") ?? "", BASE);
+  return target.pathname + target.search === path;
+}
+
 function redirectsToSignIn(page, path) {
   const location = page.headers.get("location") ?? "";
   return (
@@ -140,13 +146,17 @@ try {
     check(page.status === 200 && page.text.includes(text), `${path} opens`);
   }
 
+  // The old panel addresses keep working and lead to the start page.
   for (const path of ["/rodzina", "/opiekun"]) {
     const page = await get(path, polish);
-    check(
-      redirectsToSignIn(page, path),
-      `${path} asks visitors to sign in first`,
-    );
+    check(redirectsTo(page, "/"), `${path} leads to the start page`);
   }
+
+  const circleForVisitor = await get("/krag/demo-krag-kowalscy", polish);
+  check(
+    redirectsToSignIn(circleForVisitor, "/krag/demo-krag-kowalscy"),
+    "a circle asks visitors to sign in first",
+  );
 
   // [browser language, expected app language, text on the start screen]
   const browserLanguages = [
@@ -208,6 +218,12 @@ try {
   }
 
   const home = await get("/", polish);
+  check(
+    home.text.includes("Wspólna opieka nad bliską osobą") &&
+      home.text.includes("Jak to działa") &&
+      home.text.includes("Dane o zdrowiu traktujemy poważnie"),
+    "the start page tells visitors what Krąg is",
+  );
   check(
     home.headers.get("x-frame-options") === "DENY" &&
       home.headers.get("x-content-type-options") === "nosniff",
@@ -274,12 +290,16 @@ try {
 
     // Ania from the test data: coordinator of the circle "Mama Halina".
     const ania = await signIn("ania.kowalska@example.com", true);
-    const family = await get("/rodzina", { ...polish, cookie: ania });
+    const myCircles = await get("/", { ...polish, cookie: ania });
     check(
-      family.status === 200 &&
-        family.text.includes("Mama Halina") &&
-        family.text.includes("Koordynator kręgu"),
-      "after signing in Ania sees her circle",
+      myCircles.status === 200 &&
+        myCircles.text.includes("Cześć, Ania Kowalska!") &&
+        myCircles.text.includes("Mama Halina") &&
+        myCircles.text.includes("Koordynator kręgu") &&
+        /Dziś do zrobienia: \d+ zada|Na dziś nic do zrobienia/.test(
+          myCircles.text,
+        ),
+      "after signing in Ania sees her circle with today's tasks",
     );
 
     const circle = await get("/krag/demo-krag-kowalscy", {
@@ -329,21 +349,19 @@ try {
 
     const signedOut = await post("/api/auth/sign-out", {}, ania);
     check(signedOut.status === 200, "Ania signs out");
-    const afterSignOut = await get("/rodzina", { ...polish, cookie: ania });
+    const afterSignOut = await get("/", { ...polish, cookie: ania });
     check(
-      redirectsToSignIn(afterSignOut, "/rodzina"),
-      "after signing out the panel asks to sign in again",
+      afterSignOut.status === 200 &&
+        afterSignOut.text.includes("Jak to działa"),
+      "after signing out the start page is the one for visitors",
     );
 
     // A new person gets an account and is asked for a first name.
     await sleep(10_000); // stay under the sign-in rate limit
     const newcomer = await signIn("nowa.osoba@example.com");
-    const welcome = await get("/rodzina", { ...polish, cookie: newcomer });
-    const location = welcome.headers.get("location") ?? "";
+    const welcome = await get("/", { ...polish, cookie: newcomer });
     check(
-      welcome.status >= 300 &&
-        welcome.status < 400 &&
-        location.includes("/witaj?next=%2Frodzina"),
+      redirectsTo(welcome, "/witaj?next=%2F"),
       "a new person is asked for a first name",
     );
   }

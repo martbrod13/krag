@@ -3,10 +3,16 @@ import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import type { MyCircle } from "@/lib/circles";
 
-/** One care circle: who is cared for and the user's role. Opens the circle page. */
+/**
+ * One care circle: who is cared for, the user's role and what is left to do
+ * today. Opens the circle page.
+ */
 export function CircleCard({ circle }: { circle: MyCircle }) {
   const t = useTranslations("Circles");
+  const home = useTranslations("MyCircles");
+  const plan = useTranslations("Plan");
   const recipient = circle.recipient;
+  const tasks = circle.tasks;
 
   return (
     <Link
@@ -27,7 +33,19 @@ export function CircleCard({ circle }: { circle: MyCircle }) {
                   age: recipient.age,
                 })}
             {recipient.city ? (
-              <span className="text-muted"> · {recipient.city}</span>
+              <span className="text-muted">, {recipient.city}</span>
+            ) : null}
+          </span>
+        ) : null}
+        {tasks ? (
+          <span className="flex flex-wrap gap-x-3 gap-y-1 font-bold">
+            <span className="text-brand">
+              {home("todayCount", { count: tasks.today })}
+            </span>
+            {tasks.overdue > 0 ? (
+              <span className="text-danger">
+                {plan("overdueCount", { count: tasks.overdue })}
+              </span>
             ) : null}
           </span>
         ) : null}

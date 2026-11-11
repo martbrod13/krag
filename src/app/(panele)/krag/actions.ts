@@ -69,10 +69,9 @@ export async function cancelInvitationAction(formData: FormData) {
 export async function leaveCircleAction(formData: FormData) {
   const userId = await currentUserId();
   const circleId = String(formData.get("circleId") ?? "");
-  const panel = formData.get("panel") === "/opiekun" ? "/opiekun" : "/rodzina";
 
   const result = await removeMember({ circleId, memberId: userId, userId });
-  if (result === "ok") redirect(panel);
+  if (result === "ok") redirect("/");
   revalidatePath(`/krag/${circleId}`);
 }
 

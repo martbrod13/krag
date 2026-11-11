@@ -1,11 +1,12 @@
 // Tests of the care plan against a real database: adding tasks, "I'll take
-// it", done, the day plan, the senior screen and the access log.
+// it", done, the day plan, the summary on the start page, the senior screen
+// and the access log.
 // Like the other tests, they create and remove their own made-up people.
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { after, before, describe, test } from "node:test";
 import { getAccessLog } from "@/lib/access-log";
-import { createCircle } from "@/lib/circles";
+import { createCircle, getMyCircles } from "@/lib/circles";
 import { addDays, todayInPoland } from "@/lib/dates";
 import { db } from "@/lib/db";
 import { acceptInvitation, createInvitation } from "@/lib/invitations";
@@ -13,6 +14,7 @@ import { removeMember, updateMember } from "@/lib/members";
 import {
   type TaskInput,
   claimTask,
+  countOpenTasks,
   createTask,
   deleteTask,
   getPlan,
@@ -276,6 +278,19 @@ describe("tasks", () => {
     );
   });
 
+  test("the start page counts what is left for today and what is late", async () => {
+    const counts = await countOpenTasks([circleId, "nie-ma"], today);
+    assert.deepEqual(counts.get(circleId), { today: 1, overdue: 1 });
+    assert.deepEqual(counts.get("nie-ma"), { today: 0, overdue: 0 });
+
+    assert.deepEqual(
+      (await countOpenTasks([circleId], addDays(today, 1))).get(circleId),
+      { today: 1, overdue: 2 },
+      "the next day the walk is not late: it is done",
+    );
+    assert.equal((await countOpenTasks([], today)).size, 0);
+  });
+
   test("the senior screen shows only today's tasks meant for it", async () => {
     const plan = await getSeniorPlan(circleId, today);
     assert.deepEqual(
@@ -359,6 +374,11 @@ describe("tasks", () => {
       (await listTaskPeople(circleId)).map((person) => person.name),
       ["Ania"],
     );
+
+    const [ewaCircle] = await getMyCircles(ewaId);
+    assert.equal(ewaCircle?.tasks, null, "no task summary on her start page");
+    const [aniaCircle] = await getMyCircles(aniaId);
+    assert.notEqual(aniaCircle?.tasks, null);
   });
 });
 

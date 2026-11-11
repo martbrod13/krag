@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Teraz dochodzi plan dnia i zadania, a potem leki, wizyty opiekunki i pobieranie swoich danych.
+Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami i nowa strona startowa. Teraz kolej na leki, potem wizyty opiekunki i pobieranie swoich danych.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -82,7 +82,7 @@ Na razie aplikacja nie wysyła prawdziwych e-maili (dostawcę wybierzemy przed b
 1. Wpisz `npm run dev` i otwórz http://localhost:3000.
 2. Kliknij **Zaloguj się albo załóż konto** i wpisz e-mail osoby z danych testowych, np. `ania.kowalska@example.com` (koordynatorka kręgu „Mama Halina”) albo `ewa.wisniewska@example.com` (opiekunka).
 3. Kliknij **Wyślij kod**. W terminalu VS Code pojawi się linia `Kod logowania dla ...: 123456`.
-4. Przepisz kod i kliknij **Zaloguj się**. W panelu rodziny albo opiekuna zobaczysz krąg „Mama Halina”.
+4. Przepisz kod i kliknij **Zaloguj się**. Od razu zobaczysz swoje kręgi, np. „Mama Halina”.
 5. Możesz też wpisać dowolny inny adres e-mail. Wtedy aplikacja założy nowe konto i zapyta o imię.
 
 ## Kręgi i zaproszenia
@@ -91,12 +91,12 @@ Krąg to opieka nad jedną osobą. Kto zakłada krąg, zostaje jego koordynatore
 
 ### Jak przetestować
 
-1. Zaloguj się jako `ania.kowalska@example.com` i w **Panelu rodziny** kliknij krąg „Mama Halina”. Zobaczysz podopieczną i osoby w kręgu.
+1. Zaloguj się jako `ania.kowalska@example.com` i kliknij krąg „Mama Halina”. Zobaczysz podopieczną i osoby w kręgu.
 2. Kliknij **Zaproś osobę**, wybierz rolę i kliknij **Utwórz link**. Skopiuj link.
 3. Wyloguj się. Najlepiej otwórz link w oknie prywatnym przeglądarki (`Ctrl+Shift+N`), żeby nie mieszać kont.
 4. Kliknij **Zaloguj się, aby dołączyć**, wpisz dowolny nowy e-mail i kod z terminala, podaj imię i kliknij **Dołącz do kręgu**.
 5. Nowa osoba jest w kręgu z wybraną rolą. Link już nie zadziała drugi raz.
-6. Własny krąg założysz przyciskiem **Załóż krąg** w **Panelu rodziny**.
+6. Własny krąg założysz przyciskiem **Załóż krąg** na stronie startowej.
 
 ## Ekran seniora
 
@@ -131,7 +131,7 @@ Koordynator zmienia też dane podopiecznego (adres, lekarz prowadzący, data uro
 4. Wróć do kręgu i zjedź na dół strony. Pod **Opuść krąg** jest teraz przycisk. Wcześniej Ania była jedynym koordynatorem i zamiast przycisku była informacja, że najpierw trzeba wyznaczyć następcę.
 5. Wróć do ustawień i kliknij **Otwórz dziennik dostępu**. Zobaczysz, kto i kiedy oglądał dane mamy, kto co zmieniał i kiedy „Tablet mamy” otwierał ekran seniora.
 6. Na stronie kręgu, przy **Pod opieką**, kliknij **Edytuj**. Zmień np. adres albo lekarza i kliknij **Zapisz zmiany**.
-7. Usuwanie wypróbuj na nowym kręgu. W **Panelu rodziny** kliknij **Załóż krąg** i załóż np. „Test”. W jego ustawieniach, na samym dole, wpisz `Test` i kliknij **Usuń krąg na zawsze**.
+7. Usuwanie wypróbuj na nowym kręgu. Na stronie startowej kliknij **Załóż krąg** i załóż np. „Test”. W jego ustawieniach, na samym dole, wpisz `Test` i kliknij **Usuń krąg na zawsze**.
 
 Krąg testowy „Mama Halina” możesz w każdej chwili odtworzyć poleceniem `npm run db:seed`.
 
@@ -149,6 +149,19 @@ Wspólna lista: co trzeba zrobić, kiedy i kto się tym zajmuje. Na stronie krę
 6. Wróć do kręgu i kliknij **Zobacz podgląd** w sekcji **Ekran seniora**. Pod godziną jest teraz **Dziś** ze spacerem i przyjazdem wnuczki.
 7. Kliknij nazwę zadania, żeby je zmienić albo usunąć. Usunąć może osoba, która je dodała, albo koordynator.
 
+## Strona startowa
+
+Kto nie jest zalogowany, widzi na stronie startowej, czym jest Krąg: jak zacząć w trzech krokach, co jest w środku i jak dbamy o dane o zdrowiu. Po zalogowaniu strona startowa to od razu lista Twoich kręgów. Przy każdym kręgu widać, ile zadań jest na dziś i czy są zaległe. Kręgi, w których jesteś opiekunką, są osobno, w części **Twoi podopieczni**. Telefon albo tablet seniora po połączeniu trafia od razu na ekran seniora.
+
+Na komputerze strony są szersze, a na telefonie układają się w jedną kolumnę. Stare adresy `/rodzina` i `/opiekun` prowadzą teraz na stronę startową.
+
+### Jak przetestować
+
+1. Otwórz okno prywatne przeglądarki (`Ctrl+Shift+N`) i wejdź na stronę aplikacji. Zobaczysz stronę dla nowych osób. Zwęż okno: na wąskim ekranie wszystko układa się jedno pod drugim, jak na telefonie.
+2. Zaloguj się jako `ania.kowalska@example.com`. Od razu zobaczysz krąg „Mama Halina” i ile zadań jest w nim na dziś.
+3. Kliknij krąg, a potem **← Moje kręgi** na górze strony, żeby wrócić.
+4. Wyloguj się i zaloguj jako `ewa.wisniewska@example.com`. Krąg „Mama Halina” jest w części **Twoi podopieczni**.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -163,7 +176,7 @@ Wspólna lista: co trzeba zrobić, kiedy i kto się tym zajmuje. Na stronie krę
 
 ## Co gdzie jest
 
-- `src/app` – ekrany aplikacji. Nazwa folderu to adres strony, np. `rodzina` to `/rodzina`.
+- `src/app` – ekrany aplikacji. Nazwa folderu to adres strony, np. `logowanie` to `/logowanie`.
 - `src/components` – elementy używane w wielu miejscach: przyciski, karty, logo.
 - `src/i18n` – obsługa języków.
 - `src/lib` – wspólny kod, np. połączenie z bazą danych.

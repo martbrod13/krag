@@ -6,7 +6,7 @@ type PanelLinkProps = {
   description: string;
 };
 
-/** A large, easy-to-tap card that opens one of the panels. */
+/** A large, easy-to-tap card link with a title and a short description. */
 export function PanelLink({ href, title, description }: PanelLinkProps) {
   return (
     <Link

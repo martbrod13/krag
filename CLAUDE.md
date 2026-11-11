@@ -1,6 +1,6 @@
 # Krąg: notes for AI assistants
 
-Eldercare coordination app for Polish families: a family panel, a panel for professional caregivers and nurses, and a simplified senior screen. The owner works in VS Code on Windows; explain any steps for her in Polish, explicitly and one at a time.
+Eldercare coordination app for Polish families: family members and professional caregivers or nurses share care circles, and the senior gets a simplified screen. The owner works in VS Code on Windows; explain any steps for her in Polish, explicitly and one at a time.
 
 ## Stack
 
@@ -32,6 +32,12 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Codes are sent by `src/lib/email.ts`. No email provider yet: in development the code is printed in the terminal; in production sending fails until a provider is configured before the beta. `KRAG_TEST_CODE_LOG` (used only by the smoke test) writes codes to a file.
 - In server components use `getSession()` and `requireUser(path)` from `src/lib/session.ts`. Redirect targets go through `safeNextPath`.
 - Production needs `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL`.
+
+## Start page
+
+- `/` (`src/app/page.tsx`) shows visitors the `Landing` (`src/components/home/landing.tsx`) and signed-in people `MyCircles`: their circles with today's open and overdue tasks (`countOpenTasks`), caregiver circles in their own section. There is no panel to choose; `/rodzina` and `/opiekun` only redirect to `/` so old links keep working.
+- Signed-in pages share `AppHeader` (logo back to `/`, sign out). Pages are `max-w-md`, `md:max-w-2xl` on wider screens; the landing is `max-w-5xl`.
+- The landing's care circle illustration (`care-circle.tsx`) is decorative (`aria-hidden`) and uses made-up texts from `Home.circle`.
 
 ## Circles and permissions
 
