@@ -59,7 +59,8 @@
     "title": "Today",
     "lead": "The whole family’s plan for the day will appear here: medicines, tasks and visits.",
     "circlesTitle": "Your circles",
-    "noCircles": "You’re not in any circle yet. Creating circles and invitations comes in the next step."
+    "noCircles": "You’re not in any circle yet. Create one for someone you care for, or ask your family for an invitation.",
+    "newCircle": "Create a circle"
   },
   "Caregiver": {
     "title": "My day",
@@ -73,7 +74,77 @@
       "FAMILY": "Family",
       "CAREGIVER": "Professional caregiver"
     },
-    "recipientWithAge": "{name}, {age}"
+    "recipientWithAge": "{name}, {age}",
+    "pageTitle": "Your circle",
+    "backToPanel": "Back to the panel",
+    "recipientTitle": "In our care",
+    "membersTitle": "People in the circle",
+    "you": "you",
+    "invite": "Invite someone",
+    "pendingTitle": "Pending invitations",
+    "validUntil": "valid until {date}",
+    "cancelInvitation": "Cancel"
+  },
+  "NewCircle": {
+    "title": "New circle",
+    "lead": "A circle is care for one person. Once it’s created, you can invite family and a caregiver.",
+    "name": "Circle name",
+    "nameHint": "e.g. Mum Halina",
+    "firstName": "First name of the person you care for",
+    "birthDate": "Date of birth (optional)",
+    "city": "City (optional)",
+    "create": "Create circle",
+    "errors": {
+      "nameRequired": "Please enter a circle name.",
+      "firstNameRequired": "Please enter a first name.",
+      "birthDateInvalid": "Please check the date of birth."
+    }
+  },
+  "Invite": {
+    "title": "Invite to the circle",
+    "lead": "Choose a role. You’ll get a link that works once, for 7 days. Send it to that person, e.g. on WhatsApp or by text message.",
+    "roleLabel": "Who are you inviting?",
+    "roles": {
+      "FAMILY": {
+        "title": "Family member",
+        "description": "Sees the day plan, medicines, tasks, visits and documents."
+      },
+      "CAREGIVER": {
+        "title": "Caregiver or nurse",
+        "description": "Sees what’s needed for care: the address, emergency contacts, medicines, conditions and allergies, the day plan and tasks. Documents only if you allow it."
+      },
+      "COORDINATOR": {
+        "title": "Another coordinator",
+        "description": "Can do everything you can, including inviting people and changing permissions."
+      }
+    },
+    "createLink": "Create link",
+    "linkReady": "The link is ready. Send it now: for security, we show it only once.",
+    "linkLabel": "Invitation link",
+    "share": "Share",
+    "copy": "Copy link",
+    "copied": "Copied!",
+    "done": "Done",
+    "another": "Create another link",
+    "shareTitle": "Invitation to Krąg",
+    "shareText": "I’m inviting you to the circle “{circle}” in the Krąg app:",
+    "errors": {
+      "roleRequired": "Please choose a role.",
+      "notAllowed": "Only a coordinator can invite people to the circle."
+    }
+  },
+  "Join": {
+    "title": "Invitation to a circle",
+    "lead": "{inviter} is inviting you to the circle “{circle}”. Your role: {role}.",
+    "leadNoInviter": "An invitation to the circle “{circle}”. Your role: {role}.",
+    "signInToJoin": "Sign in to join",
+    "signInHint": "No account? Your email and a one-time code are all you need.",
+    "join": "Join the circle",
+    "alreadyMember": "You’re already in this circle.",
+    "openCircle": "Open the circle",
+    "invalidTitle": "This invitation no longer works",
+    "invalidLead": "The link has expired or has already been used. Ask the person who invited you for a new one.",
+    "home": "Go to the home page"
   },
   "Senior": {
     "title": "Senior screen",

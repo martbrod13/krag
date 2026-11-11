@@ -16,6 +16,7 @@
     "format:check": "prettier --check .",
     "check:messages": "node scripts/check-messages.mjs",
     "test:smoke": "node scripts/smoke-test.mjs",
+    "test:db": "tsx --test tests/*.test.ts",
     "check": "npm run format:check && npm run lint && npm run check:messages && prisma validate && npm run typecheck",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",

@@ -3,7 +3,8 @@
 // Never put real people's data into this file.
 import { createHash, randomBytes } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, type Permission } from "../src/generated/prisma/client";
+import { PrismaClient } from "../src/generated/prisma/client";
+import { DEFAULT_PERMISSIONS } from "../src/lib/permissions";
 
 if (process.env.NODE_ENV === "production") {
   throw new Error("Test data must never be loaded into a production database.");
@@ -15,23 +16,7 @@ const db = new PrismaClient({
 
 const DEMO_CIRCLE_ID = "demo-krag-kowalscy";
 
-const COORDINATOR: Permission[] = [
-  "PROFILE",
-  "HEALTH",
-  "TASKS",
-  "VISITS",
-  "DOCUMENTS",
-  "MANAGE",
-];
-const FAMILY: Permission[] = [
-  "PROFILE",
-  "HEALTH",
-  "TASKS",
-  "VISITS",
-  "DOCUMENTS",
-];
-// Everything a caregiver needs for care; documents only when the family allows.
-const CAREGIVER: Permission[] = ["PROFILE", "HEALTH", "TASKS", "VISITS"];
+const { COORDINATOR, FAMILY, CAREGIVER } = DEFAULT_PERMISSIONS;
 
 // Test people can sign in with their email; in development the code is
 // printed in the terminal.

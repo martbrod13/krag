@@ -1,32 +1,49 @@
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import type { MyCircle } from "@/lib/circles";
 
-/** One care circle: who is cared for and what role the user has in it. */
+/** One care circle: who is cared for and the user's role. Opens the circle page. */
 export function CircleCard({ circle }: { circle: MyCircle }) {
   const t = useTranslations("Circles");
   const recipient = circle.recipient;
 
   return (
-    <Card className="flex flex-col items-start gap-2">
-      <Badge tone={circle.role === "CAREGIVER" ? "info" : "brand"}>
-        {t(`roles.${circle.role}`)}
-      </Badge>
-      <h3 className="text-xl font-extrabold">{circle.name}</h3>
-      {recipient ? (
-        <p className="text-lg">
-          {recipient.age === null
-            ? recipient.firstName
-            : t("recipientWithAge", {
-                name: recipient.firstName,
-                age: recipient.age,
-              })}
-          {recipient.city ? (
-            <span className="text-muted"> · {recipient.city}</span>
-          ) : null}
-        </p>
-      ) : null}
-    </Card>
+    <Link
+      href={`/krag/${circle.id}`}
+      className="group flex items-center gap-4 rounded-card border border-line bg-surface p-5 transition-colors hover:border-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+    >
+      <span className="flex flex-1 flex-col items-start gap-2">
+        <Badge tone={circle.role === "CAREGIVER" ? "info" : "brand"}>
+          {t(`roles.${circle.role}`)}
+        </Badge>
+        <span className="text-xl font-extrabold">{circle.name}</span>
+        {recipient ? (
+          <span className="text-lg">
+            {recipient.age === null
+              ? recipient.firstName
+              : t("recipientWithAge", {
+                  name: recipient.firstName,
+                  age: recipient.age,
+                })}
+            {recipient.city ? (
+              <span className="text-muted"> · {recipient.city}</span>
+            ) : null}
+          </span>
+        ) : null}
+      </span>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="size-6 shrink-0 text-brand transition-transform group-hover:translate-x-0.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m9 6 6 6-6 6" />
+      </svg>
+    </Link>
   );
 }

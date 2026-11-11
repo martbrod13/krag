@@ -128,6 +128,10 @@ try {
     ["/", "Zaloguj się albo załóż konto"],
     ["/logowanie", "wyślemy Ci 6-cyfrowy kod"],
     ["/senior", "Dzień dobry!"],
+    [
+      "/zaproszenie/to-nie-jest-prawdziwy-link",
+      "To zaproszenie już nie działa",
+    ],
   ];
   for (const [path, text] of pages) {
     const page = await get(path, polish);
@@ -227,6 +231,42 @@ try {
         family.text.includes("Mama Halina") &&
         family.text.includes("Koordynator kręgu"),
       "after signing in Ania sees her circle",
+    );
+
+    const circle = await get("/krag/demo-krag-kowalscy", {
+      ...polish,
+      cookie: ania,
+    });
+    check(
+      circle.status === 200 &&
+        circle.text.includes("Tomek Kowalski") &&
+        circle.text.includes("Ewa Wiśniewska") &&
+        circle.text.includes("Zaproś osobę"),
+      "the circle page lists its people and lets the coordinator invite",
+    );
+
+    const invite = await get("/krag/demo-krag-kowalscy/zapros", {
+      ...polish,
+      cookie: ania,
+    });
+    check(
+      invite.status === 200 && invite.text.includes("Kogo zapraszasz?"),
+      "the invite page opens for the coordinator",
+    );
+
+    const newCircle = await get("/krag/nowy", { ...polish, cookie: ania });
+    check(
+      newCircle.status === 200 && newCircle.text.includes("Nowy krąg"),
+      "the new circle page opens",
+    );
+
+    const otherCircle = await get("/krag/nie-ma-takiego-kregu", {
+      ...polish,
+      cookie: ania,
+    });
+    check(
+      otherCircle.status === 404,
+      "a circle the user is not in cannot be opened",
     );
 
     const signedOut = await post("/api/auth/sign-out", {}, ania);

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CircleCard } from "@/components/circle-card";
 import { Badge } from "@/components/ui/badge";
+import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getMyCircles } from "@/lib/circles";
 import { requireUser } from "@/lib/session";
@@ -32,6 +33,13 @@ export default async function FamilyPage() {
         ) : (
           <p className="text-lg text-muted">{t("noCircles")}</p>
         )}
+        <ButtonLink
+          href="/krag/nowy"
+          size="lg"
+          variant={circles.length > 0 ? "secondary" : "primary"}
+        >
+          {t("newCircle")}
+        </ButtonLink>
       </section>
 
       <Card className="flex flex-col items-start gap-3">

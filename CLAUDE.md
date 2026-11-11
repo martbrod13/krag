@@ -32,3 +32,11 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Codes are sent by `src/lib/email.ts`. No email provider yet: in development the code is printed in the terminal; in production sending fails until a provider is configured before the beta. `KRAG_TEST_CODE_LOG` (used only by the smoke test) writes codes to a file.
 - In server components use `getSession()` and `requireUser(path)` from `src/lib/session.ts`. Redirect targets go through `safeNextPath`.
 - Production needs `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL`.
+
+## Circles and permissions
+
+- A circle (`CareCircle`) is care for one person. Default permissions per role live in `src/lib/permissions.ts` (the data map decisions); never hard-code them elsewhere.
+- Read circle data through `getCircleForMember` (`src/lib/circles.ts`): it returns null for non-members and hides profile details without the `PROFILE` permission. Server actions must check permissions again (e.g. `MANAGE` before inviting).
+- Invitations (`src/lib/invitations.ts`): one-time links valid 7 days; only a SHA-256 hash of the token is stored and the link is shown once.
+- Log access with `logAccess` (`src/lib/audit.ts`): views of the care recipient's data and every change.
+- Business logic stays free of Next.js request APIs so `tests/*.test.ts` (`npm run test:db`, Node test runner via tsx) can run it against the CI database.
