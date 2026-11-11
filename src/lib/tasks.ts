@@ -362,3 +362,43 @@ export async function deleteTask(params: {
     return "deleted";
   });
 }
+
+export type OpenTaskCounts = { today: number; overdue: number };
+
+/**
+ * How many tasks are still to do today, and how many are late, per circle:
+ * the short summary on the circle cards.
+ */
+export async function countOpenTasks(
+  circleIds: string[],
+  today: string,
+): Promise<Map<string, OpenTaskCounts>> {
+  const counts = new Map<string, OpenTaskCounts>(
+    circleIds.map((id) => [id, { today: 0, overdue: 0 }]),
+  );
+  if (circleIds.length === 0) return counts;
+
+  const todayDate = dayToDate(today);
+  const open = { circleId: { in: circleIds }, doneAt: null };
+  const [onToday, late] = await Promise.all([
+    db.task.groupBy({
+      by: ["circleId"],
+      where: { ...open, date: todayDate },
+      _count: { _all: true },
+    }),
+    db.task.groupBy({
+      by: ["circleId"],
+      where: { ...open, date: { lt: todayDate } },
+      _count: { _all: true },
+    }),
+  ]);
+  for (const row of onToday) {
+    const entry = counts.get(row.circleId);
+    if (entry) entry.today = row._count._all;
+  }
+  for (const row of late) {
+    const entry = counts.get(row.circleId);
+    if (entry) entry.overdue = row._count._all;
+  }
+  return counts;
+}

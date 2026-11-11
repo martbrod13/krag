@@ -53,7 +53,6 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
   const recipient = circle.recipient;
   const contacts = circle.contacts;
   const manages = circle.permissions.includes("MANAGE");
-  const panel = circle.role === "CAREGIVER" ? "/opiekun" : "/rodzina";
   const onlyCoordinator =
     circle.role === "COORDINATOR" &&
     circle.members.filter((member) => member.role === "COORDINATOR").length <=
@@ -61,8 +60,8 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
 
   return (
     <>
-      <Link href={panel} className="font-bold text-brand hover:underline">
-        ← {t("backToPanel")}
+      <Link href="/" className="font-bold text-brand hover:underline">
+        ← {t("backToCircles")}
       </Link>
 
       <div className="flex flex-col items-start gap-2">
@@ -369,7 +368,6 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
             <p className="text-muted">{t("leaveLead")}</p>
             <form action={leaveCircleAction}>
               <input type="hidden" name="circleId" value={circle.id} />
-              <input type="hidden" name="panel" value={panel} />
               <ConfirmButton
                 label={t("leave")}
                 confirmLabel={t("confirmLeave")}

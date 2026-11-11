@@ -84,5 +84,5 @@ export async function deleteCircleAction(
   if (!confirmsCircleName(typed, circle.name)) return { error: "nameMismatch" };
 
   await deleteCircle(circleId);
-  redirect("/rodzina?usunieto=1");
+  redirect("/?usunieto=1");
 }

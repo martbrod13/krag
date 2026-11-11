@@ -1,8 +1,10 @@
 import type { CircleRole, Permission } from "@/generated/prisma/client";
 import { logAccess } from "@/lib/audit";
 import { type Contact, contactFields, contactOrder } from "@/lib/contacts";
+import { todayInPoland } from "@/lib/dates";
 import { db } from "@/lib/db";
 import { DEFAULT_PERMISSIONS } from "@/lib/permissions";
+import { countOpenTasks, type OpenTaskCounts } from "@/lib/tasks";
 
 export type MyCircle = {
   id: string;
@@ -14,6 +16,8 @@ export type MyCircle = {
     age: number | null;
     city: string | null;
   } | null;
+  /** Open tasks today and late ones; only for people who see tasks. */
+  tasks: OpenTaskCounts | null;
 };
 
 /** Full years between the birth date and today (dates compared in UTC). */
@@ -26,13 +30,10 @@ export function ageInYears(birthDate: Date, today: Date) {
   return birthdayPassed ? age : age - 1;
 }
 
-/** Circles the user belongs to, newest first, optionally only with one role. */
-export async function getMyCircles(
-  userId: string,
-  role?: CircleRole,
-): Promise<MyCircle[]> {
+/** Circles the user belongs to, newest first, for "My circles". */
+export async function getMyCircles(userId: string): Promise<MyCircle[]> {
   const memberships = await db.membership.findMany({
-    where: { userId, ...(role ? { role } : {}) },
+    where: { userId },
     orderBy: { createdAt: "desc" },
     select: {
       role: true,
@@ -49,6 +50,13 @@ export async function getMyCircles(
     },
   });
 
+  const taskCounts = await countOpenTasks(
+    memberships
+      .filter((membership) => membership.permissions.includes("TASKS"))
+      .map((membership) => membership.circle.id),
+    todayInPoland(),
+  );
+
   const today = new Date();
   return memberships.map(({ role, permissions, circle }) => {
     const recipient = circle.recipient;
@@ -57,6 +65,7 @@ export async function getMyCircles(
       id: circle.id,
       name: circle.name,
       role,
+      tasks: taskCounts.get(circle.id) ?? null,
       recipient: recipient
         ? {
             firstName: recipient.firstName,
