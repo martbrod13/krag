@@ -22,7 +22,7 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 
 - Prisma 7 with the `prisma-client` generator: the client is generated into `src/generated/prisma` (ignored by git, created by `npm install` through `postinstall`). Import it as `@/generated/prisma/client`; use `db` from `src/lib/db.ts` in app code.
 - PostgreSQL on Neon (project `krag`, Frankfurt). Prisma commands read `DATABASE_URL` from `.env.local` through `prisma.config.ts`.
-- Migrations live in `prisma/migrations`. After changing `prisma/schema.prisma`, add a migration. If you cannot run Prisma locally, push the change: the CI step "Baza danych - czy migracje zgadzają się ze schematem" prints the SQL of the missing migration.
+- Migrations live in `prisma/migrations`. After changing `prisma/schema.prisma`, add a migration. `npm run db:migrate` applies migrations and regenerates the client, so after a schema change the owner runs only that. If you cannot run Prisma locally, push the change: the CI step "Baza danych - czy migracje zgadzają się ze schematem" prints the SQL of the missing migration.
 - `prisma/seed.ts` holds only made-up test data and must stay idempotent.
 - When `package.json` changes on a branch, the `lockfile.yml` workflow updates `package-lock.json` and reruns CI.
 

@@ -187,7 +187,7 @@ Leki widzą tylko osoby z uprawnieniem do danych o zdrowiu. Potwierdzenia dawek 
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
 - `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia i leki (uruchamia je GitHub na bazie testowej).
-- `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
+- `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych i odświeża klienta bazy danych w kodzie aplikacji.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.
 
