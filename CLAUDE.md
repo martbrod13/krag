@@ -43,6 +43,13 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Log access with `logAccess` (`src/lib/audit.ts`): views of the care recipient's data and every change. For `Membership` entries `entityId` is the member's user id; device entries carry `deviceName`, so the log stays readable after unpairing. `getAccessLog` (`src/lib/access-log.ts`) turns entries into readable events and deletes entries older than 12 months.
 - Business logic stays free of Next.js request APIs so `tests/*.test.ts` (`npm run test:db`, Node test runner via tsx) can run it against the CI database.
 
+## Plan and tasks
+
+- Tasks (`src/lib/tasks.ts`, data map section 5) have an optional day (`@db.Date`) and time (`"HH:MM"`), both Polish time. Use `src/lib/dates.ts` (`todayInPoland`, `addDays`, `dayToDate`, `dayForDisplay`), never the server's own day.
+- Anyone with `TASKS` adds tasks, takes them ("Biorę to", `claimTask`) and marks them done; the person who added a task or a coordinator deletes it. Leaving the circle puts the person's open tasks back in the pool.
+- Access log entities: `Task` (VIEW, CREATE, UPDATE, DELETE), `TaskAssignee` (taking a task), `TaskDone` (CREATE = done, DELETE = not done again); `entityId` is the task id. Task text may reveal health: it is read from the task when the log is shown, never copied into it.
+- The senior screen shows today's tasks marked `showToSenior`.
+
 ## Senior screen
 
 - The senior has no account. A coordinator shows a one-time QR code (`DevicePairing`, 30 minutes, only a hash stored) on `/krag/[id]/polacz`. The device opens `/senior/polacz/[token]` and pairs only after a tap on "Połącz": link previews in chat apps open links too, so a GET never uses up a code.

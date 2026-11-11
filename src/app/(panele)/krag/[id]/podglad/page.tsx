@@ -6,7 +6,9 @@ import { SeniorScreen } from "@/components/senior/senior-screen";
 import { ButtonLink } from "@/components/ui/button";
 import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
+import { todayInPoland } from "@/lib/dates";
 import { requireUser } from "@/lib/session";
+import { getSeniorPlan } from "@/lib/tasks";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Preview");
@@ -32,6 +34,10 @@ export default async function PreviewPage({
     entity: "CareRecipient",
   });
 
+  // Tasks only for people who may see the plan.
+  const plan = circle.permissions.includes("TASKS")
+    ? await getSeniorPlan(circle.id, todayInPoland())
+    : [];
   const t = await getTranslations("Preview");
   const manages = circle.permissions.includes("MANAGE");
 
@@ -49,7 +55,7 @@ export default async function PreviewPage({
       </div>
 
       <div className="rounded-[2rem] border-4 border-ink/80 bg-canvas px-4 py-6">
-        <SeniorScreen contacts={contacts} preview />
+        <SeniorScreen contacts={contacts} plan={plan} preview />
       </div>
 
       {manages ? (

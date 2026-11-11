@@ -52,11 +52,12 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 5. Zadania i plan dnia
 
-- **Co:** zadania (np. „wykupić receptę”), kto wziął zadanie, termin, komentarze.
-- **Po co:** podział obowiązków w rodzinie.
-- **Kto widzi:** osoby z kręgu.
+- **Co:** zadania i wydarzenia (np. „wykupić receptę”, „wizyta u lekarza”): co trzeba zrobić, notatka, dzień i godzina, kto się tym zajmuje (kto wziął zadanie), kto je dodał, kto i kiedy oznaczył je jako zrobione i czy pokazać je na ekranie seniora. Dni i godziny są w czasie polskim.
+- **Po co:** podział obowiązków w rodzinie i wspólny plan dnia.
+- **Kto widzi:** osoby z kręgu z uprawnieniem do zadań. Zadania na dziś oznaczone „pokaż na ekranie seniora” widzi też połączone urządzenie podopiecznego.
+- **Kto zmienia:** każdy z uprawnieniem do zadań może dodawać zadania, brać je i oznaczać jako zrobione. Usunąć zadanie może osoba, która je dodała, albo koordynator. Gdy ktoś opuści krąg, jego niezrobione zadania wracają do puli, bez osoby.
 - **Jak długo:** do usunięcia zadania albo kręgu.
-- **Uwaga:** treść zadania może zdradzać stan zdrowia, dlatego chronimy ją tak samo jak dane o zdrowiu.
+- **Uwaga:** treść zadania może zdradzać stan zdrowia, dlatego chronimy ją tak samo jak dane o zdrowiu. Do dziennika dostępu nie kopiujemy treści zadania: dziennik pokazuje ją, dopóki zadanie istnieje.
 
 ### 6. Wizyty i raporty opiekuna zawodowego
 

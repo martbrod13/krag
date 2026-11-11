@@ -3,6 +3,7 @@
 // Never put real people's data into this file.
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { addDays, dayToDate, todayInPoland } from "../src/lib/dates";
 import { DEFAULT_PERMISSIONS } from "../src/lib/permissions";
 import { hashToken, newToken } from "../src/lib/tokens";
 
@@ -142,6 +143,70 @@ async function main() {
         },
       },
     },
+  });
+
+  // The plan is built around the day the test data is loaded.
+  const today = todayInPoland();
+  const day = (offset: number) => dayToDate(addDays(today, offset));
+  await db.task.createMany({
+    data: [
+      {
+        circleId: circle.id,
+        title: "Zapłacić rachunek za prąd",
+        date: day(-1),
+        assigneeId: kasia.id,
+        createdById: ania.id,
+      },
+      {
+        circleId: circle.id,
+        title: "Odebrać recepty z przychodni",
+        date: day(0),
+        time: "12:00",
+        assigneeId: ania.id,
+        createdById: ania.id,
+      },
+      {
+        circleId: circle.id,
+        title: "Spacer po parku",
+        date: day(0),
+        time: "16:00",
+        assigneeId: ewa.id,
+        createdById: ania.id,
+        showToSenior: true,
+      },
+      {
+        circleId: circle.id,
+        title: "Wizyta u lekarza rodzinnego",
+        note: "Zabrać listę leków i dowód osobisty.",
+        date: day(1),
+        time: "10:00",
+        assigneeId: tomek.id,
+        createdById: ania.id,
+        showToSenior: true,
+      },
+      {
+        circleId: circle.id,
+        title: "Przyjazd Kasi z dziećmi",
+        date: day(3),
+        time: "15:00",
+        assigneeId: kasia.id,
+        createdById: kasia.id,
+        showToSenior: true,
+      },
+      {
+        circleId: circle.id,
+        title: "Kupić żarówki do łazienki",
+        createdById: tomek.id,
+      },
+      {
+        circleId: circle.id,
+        title: "Wymienić baterie w pilocie",
+        createdById: ewa.id,
+        assigneeId: ewa.id,
+        doneAt: new Date(),
+        doneById: ewa.id,
+      },
+    ],
   });
 
   await db.auditLog.createMany({

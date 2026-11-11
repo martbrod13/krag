@@ -1,11 +1,14 @@
 import { useTranslations } from "next-intl";
-import { PhoneIcon } from "@/components/icons";
+import { CheckIcon, PhoneIcon } from "@/components/icons";
 import { SeniorClock } from "@/components/senior/senior-clock";
 import { type Contact, telHref } from "@/lib/contacts";
 import { cx } from "@/lib/cx";
+import type { TaskView } from "@/lib/tasks";
 
 type SeniorScreenProps = {
   contacts: Contact[];
+  /** Today's tasks the family chose to show on the senior screen. */
+  plan: TaskView[];
   /** In the family's preview the buttons only show what the senior sees. */
   preview?: boolean;
 };
@@ -13,14 +16,62 @@ type SeniorScreenProps = {
 const buttonClass =
   "flex min-h-24 w-full items-center gap-5 rounded-3xl bg-brand px-5 py-4 text-left text-white";
 
-/** What the senior sees: the date, the time and big buttons to call family. */
-export function SeniorScreen({ contacts, preview = false }: SeniorScreenProps) {
+/**
+ * What the senior sees: the date and time, today's plan and big buttons to
+ * call family.
+ */
+export function SeniorScreen({
+  contacts,
+  plan,
+  preview = false,
+}: SeniorScreenProps) {
   const t = useTranslations("Senior");
 
   return (
     <div className="flex flex-col gap-8">
       {preview ? null : <h1 className="sr-only">{t("title")}</h1>}
       <SeniorClock />
+
+      {plan.length > 0 ? (
+        <section aria-labelledby="plan-title" className="flex flex-col gap-4">
+          <h2 id="plan-title" className="text-2xl font-extrabold">
+            {t("planTitle")}
+          </h2>
+          <ul className="flex flex-col gap-3">
+            {plan.map((task) => (
+              <li
+                key={task.id}
+                className={cx(
+                  "flex items-start gap-4 rounded-3xl border-2 border-line bg-surface p-5",
+                  task.done && "opacity-60",
+                )}
+              >
+                {task.time ? (
+                  <span className="text-3xl font-extrabold tabular-nums">
+                    {task.time}
+                  </span>
+                ) : null}
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <span className="text-2xl font-extrabold break-words">
+                    {task.title}
+                  </span>
+                  {task.assignee ? (
+                    <span className="text-xl text-muted">
+                      {task.assignee.name}
+                    </span>
+                  ) : null}
+                </span>
+                {task.done ? (
+                  <span className="shrink-0 text-brand">
+                    <CheckIcon className="size-9" />
+                    <span className="sr-only">{t("planDone")}</span>
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section aria-labelledby="call-title" className="flex flex-col gap-4">
         <h2 id="call-title" className="text-2xl font-extrabold">

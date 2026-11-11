@@ -293,6 +293,7 @@ try {
         circle.text.includes("Zofia Testowa") &&
         circle.text.includes("Tablet mamy") &&
         circle.text.includes("dr Jan Testowy") &&
+        circle.text.includes("Cały plan") &&
         circle.text.includes("Opuść krąg"),
       "the circle page shows the senior, people, numbers and the tablet",
     );
@@ -304,6 +305,8 @@ try {
       ["/krag/demo-krag-kowalscy/podglad", "Zadzwoń do bliskich"],
       ["/krag/demo-krag-kowalscy/ustawienia", "Usuń krąg na zawsze"],
       ["/krag/demo-krag-kowalscy/dane", "dr Jan Testowy"],
+      ["/krag/demo-krag-kowalscy/plan", "Kupić żarówki do łazienki"],
+      ["/krag/demo-krag-kowalscy/plan/nowe", "Co trzeba zrobić?"],
       ["/krag/demo-krag-kowalscy/dziennik", "założenie kręgu"],
       ["/krag/nowy", "Nowy krąg"],
     ];

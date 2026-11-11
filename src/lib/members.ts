@@ -133,6 +133,15 @@ export async function removeMember(params: {
     }
 
     await tx.membership.delete({ where });
+    // Tasks the person had taken go back to the pool (data map, section 5).
+    await tx.task.updateMany({
+      where: {
+        circleId: params.circleId,
+        assigneeId: params.memberId,
+        doneAt: null,
+      },
+      data: { assigneeId: null },
+    });
     await logAccess(
       {
         circleId: params.circleId,

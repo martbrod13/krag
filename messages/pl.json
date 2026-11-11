@@ -345,7 +345,65 @@
       "removeContact": "usunięcie ważnego numeru",
       "other": "inna zmiana",
       "updateRecipient": "zmiana danych podopiecznego",
-      "renameCircle": "zmiana nazwy kręgu"
+      "renameCircle": "zmiana nazwy kręgu",
+      "viewPlan": "oglądanie planu",
+      "createTask": "dodanie zadania: {name}",
+      "updateTask": "zmiana zadania: {name}",
+      "deleteTask": "usunięcie zadania",
+      "claimTask": "wzięcie zadania: {name}",
+      "doneTask": "zrobione: {name}",
+      "undoneTask": "cofnięcie „zrobione”: {name}"
+    },
+    "deletedTask": "usunięte zadanie"
+  },
+  "Plan": {
+    "title": "Plan i zadania",
+    "lead": "Co trzeba zrobić, kiedy i kto się tym zajmuje.",
+    "add": "Dodaj zadanie",
+    "overdue": "Zaległe",
+    "today": "Dziś · {date}",
+    "tomorrow": "Jutro · {date}",
+    "undated": "Bez dnia",
+    "nothingToday": "Na dziś nic nie zaplanowano.",
+    "doneTitle": "Zrobione ostatnio",
+    "markDone": "Oznacz jako zrobione: {title}",
+    "markNotDone": "Jednak nie zrobione: {title}",
+    "claim": "Biorę to",
+    "assignedTo": "Zajmuje się: {name}",
+    "assignedToYou": "Zajmujesz się tym Ty",
+    "doneBy": "Zrobione: {name}",
+    "someone": "ktoś",
+    "seniorSees": "Na ekranie seniora",
+    "todayTitle": "Dziś",
+    "fullPlan": "Cały plan",
+    "overdueCount": "{count, plural, one {# zaległe zadanie} few {# zaległe zadania} many {# zaległych zadań} other {# zaległego zadania}}",
+    "addToday": "Dodaj na dziś"
+  },
+  "TaskForm": {
+    "newTitle": "Nowe zadanie",
+    "editTitle": "Zadanie",
+    "back": "Plan i zadania",
+    "title": "Co trzeba zrobić?",
+    "titlePlaceholder": "np. Wykupić receptę",
+    "date": "Dzień",
+    "time": "Godzina",
+    "whenHint": "Oba pola są nieobowiązkowe. Zadanie bez dnia trafi na listę „Bez dnia”.",
+    "assignee": "Kto się tym zajmie?",
+    "nobody": "Jeszcze nie wiadomo",
+    "note": "Notatka (nieobowiązkowo)",
+    "showToSenior": "Pokaż na ekranie seniora",
+    "showToSeniorHint": "Np. wizyta u lekarza albo przyjazd wnuczki. Senior zobaczy to tego dnia w swoim planie.",
+    "add": "Dodaj zadanie",
+    "save": "Zapisz zmiany",
+    "delete": "Usuń zadanie",
+    "confirmDelete": "Tak, usuń",
+    "errors": {
+      "titleRequired": "Napisz, co trzeba zrobić.",
+      "dateInvalid": "Sprawdź dzień.",
+      "timeInvalid": "Sprawdź godzinę.",
+      "timeNeedsDate": "Godzina potrzebuje dnia. Wybierz dzień albo usuń godzinę.",
+      "notAllowed": "Nie masz dostępu do zadań w tym kręgu.",
+      "notFound": "Tego zadania już nie ma."
     }
   },
   "Senior": {
@@ -363,7 +421,9 @@
     "howStep2": "Na tym urządzeniu otwórz aparat i skieruj go na kod QR.",
     "howStep3": "Dotknij linku, który się pojawi, a potem przycisku „Połącz”.",
     "noAccount": "Senior nie potrzebuje konta ani hasła.",
-    "home": "Przejdź do strony głównej"
+    "home": "Przejdź do strony głównej",
+    "planTitle": "Dziś",
+    "planDone": "zrobione"
   },
   "SeniorPair": {
     "metaTitle": "Połącz ekran seniora",

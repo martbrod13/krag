@@ -22,7 +22,17 @@ const EVENTS = {
   "DELETE PairedDevice": "unpairDevice",
   "CREATE EmergencyContact": "addContact",
   "DELETE EmergencyContact": "removeContact",
+  "VIEW Task": "viewPlan",
+  "CREATE Task": "createTask",
+  "UPDATE Task": "updateTask",
+  "DELETE Task": "deleteTask",
+  "UPDATE TaskAssignee": "claimTask",
+  "CREATE TaskDone": "doneTask",
+  "DELETE TaskDone": "undoneTask",
 } as const;
+
+/** Entries about one task: their entityId is the task's id. */
+const TASK_ENTITIES = new Set(["Task", "TaskAssignee", "TaskDone"]);
 
 type KnownEvent = (typeof EVENTS)[keyof typeof EVENTS];
 
@@ -34,8 +44,10 @@ export type AccessLogEntry = {
   event: AccessEvent;
   /** Who did it: a person or the senior's device; null for a deleted account. */
   actor: string | null;
-  /** The person or device the entry is about, if any. */
+  /** The person, device or task the entry is about, if any. */
   subject: string | null;
+  /** What `subject` names; a deleted task has kind "task" but no subject. */
+  subjectKind: "person" | "device" | "task" | null;
 };
 
 type Row = {
@@ -88,35 +100,57 @@ export async function getAccessLog(circleId: string, page = 1) {
   const hasMore = rows.length > ACCESS_LOG_PAGE_SIZE;
   const pageRows = rows.slice(0, ACCESS_LOG_PAGE_SIZE);
 
-  // Names of the people whom changes in the circle's members were about.
+  // Names of the people whom membership changes were about, and the
+  // current text of the tasks. Neither is copied into the log itself.
   const memberIds = new Set<string>();
+  const taskIds = new Set<string>();
   for (const row of pageRows) {
-    if (row.entity === "Membership" && row.entityId)
-      memberIds.add(row.entityId);
+    if (!row.entityId) continue;
+    if (row.entity === "Membership") memberIds.add(row.entityId);
+    if (TASK_ENTITIES.has(row.entity)) taskIds.add(row.entityId);
   }
-  const people = memberIds.size
-    ? await db.user.findMany({
-        where: { id: { in: [...memberIds] } },
-        select: { id: true, name: true },
-      })
-    : [];
+  const [people, tasks] = await Promise.all([
+    memberIds.size
+      ? db.user.findMany({
+          where: { id: { in: [...memberIds] } },
+          select: { id: true, name: true },
+        })
+      : [],
+    taskIds.size
+      ? db.task.findMany({
+          where: { id: { in: [...taskIds] }, circleId },
+          select: { id: true, title: true },
+        })
+      : [],
+  ]);
   const nameOf = new Map(people.map((person) => [person.id, person.name]));
+  const titleOf = new Map(tasks.map((task) => [task.id, task.title]));
 
   const entries: AccessLogEntry[] = pageRows.map((row) => {
     const deviceName = row.deviceName ?? row.device?.name ?? null;
     const event = eventOf(row, deviceName);
-    const subject =
-      row.entity === "Membership"
-        ? (nameOf.get(row.entityId ?? "") ?? null)
-        : event === "seniorScreen"
-          ? null
-          : deviceName;
+    const entityId = row.entityId ?? "";
+
+    let subject: string | null = null;
+    let subjectKind: AccessLogEntry["subjectKind"] = null;
+    if (row.entity === "Membership") {
+      subject = nameOf.get(entityId) ?? null;
+      subjectKind = "person";
+    } else if (TASK_ENTITIES.has(row.entity) && row.entityId) {
+      subject = titleOf.get(entityId) ?? null;
+      subjectKind = "task";
+    } else if (event !== "seniorScreen" && deviceName) {
+      subject = deviceName;
+      subjectKind = "device";
+    }
+
     return {
       id: row.id,
       createdAt: row.createdAt,
       event,
       actor: row.user?.name ?? (event === "seniorScreen" ? deviceName : null),
       subject,
+      subjectKind,
     };
   });
 

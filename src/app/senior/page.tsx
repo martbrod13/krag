@@ -5,8 +5,10 @@ import { AutoRefresh } from "@/components/senior/auto-refresh";
 import { SeniorScreen } from "@/components/senior/senior-screen";
 import { ButtonLink } from "@/components/ui/button";
 import { listContacts } from "@/lib/contacts";
+import { todayInPoland } from "@/lib/dates";
 import { recordDeviceVisit } from "@/lib/devices";
 import { getPairedDevice } from "@/lib/senior-device";
+import { getSeniorPlan } from "@/lib/tasks";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Senior");
@@ -48,13 +50,16 @@ export default async function SeniorPage() {
     );
   }
 
-  const contacts = await listContacts(device.circleId);
+  const [contacts, plan] = await Promise.all([
+    listContacts(device.circleId),
+    getSeniorPlan(device.circleId, todayInPoland()),
+  ]);
   await recordDeviceVisit(device);
 
   return (
     <>
       <AutoRefresh seconds={REFRESH_SECONDS} />
-      <SeniorScreen contacts={contacts} />
+      <SeniorScreen contacts={contacts} plan={plan} />
     </>
   );
 }

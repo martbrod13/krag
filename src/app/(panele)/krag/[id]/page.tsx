@@ -10,12 +10,15 @@ import { ConfirmButton } from "@/components/ui/confirm-button";
 import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
 import { telHref } from "@/lib/contacts";
+import { todayInPoland } from "@/lib/dates";
 import { requireUser } from "@/lib/session";
+import { getPlan } from "@/lib/tasks";
 import {
   cancelInvitationAction,
   leaveCircleAction,
   unpairDeviceAction,
 } from "../actions";
+import { TaskItem } from "./plan/task-item";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Circles");
@@ -38,7 +41,13 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
     });
   }
 
+  const today = todayInPoland();
+  const plan = circle.permissions.includes("TASKS")
+    ? await getPlan(circle.id, today)
+    : null;
+
   const t = await getTranslations("Circles");
+  const planText = await getTranslations("Plan");
   const common = await getTranslations("Common");
   const format = await getFormatter();
   const recipient = circle.recipient;
@@ -62,6 +71,50 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
         </Badge>
         <h1 className="text-3xl font-extrabold">{circle.name}</h1>
       </div>
+
+      {plan ? (
+        <section aria-labelledby="today" className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="today" className="text-xl font-extrabold">
+              {planText("todayTitle")}
+            </h2>
+            <Link
+              href={`/krag/${circle.id}/plan`}
+              className="flex min-h-11 items-center font-bold text-brand hover:underline"
+            >
+              {planText("fullPlan")}
+            </Link>
+          </div>
+          {plan.overdue.length > 0 ? (
+            <Link
+              href={`/krag/${circle.id}/plan`}
+              className="rounded-2xl bg-danger-soft p-3 font-bold text-danger hover:underline"
+            >
+              {planText("overdueCount", { count: plan.overdue.length })}
+            </Link>
+          ) : null}
+          {plan.today.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {plan.today.map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  circleId={circle.id}
+                  userId={user.id}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted">{planText("nothingToday")}</p>
+          )}
+          <ButtonLink
+            href={`/krag/${circle.id}/plan/nowe?dzien=${today}`}
+            variant="secondary"
+          >
+            {planText("addToday")}
+          </ButtonLink>
+        </section>
+      ) : null}
 
       {recipient ? (
         <Card className="flex flex-col gap-1">
