@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { useTranslations } from "next-intl";
+import { ShareLink } from "@/components/share-link";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { INVITABLE_ROLES } from "@/lib/permissions";
@@ -20,33 +21,7 @@ export function InviteForm({ circleId, circleName }: InviteFormProps) {
     createInvitationAction,
     {},
   );
-  const [copied, setCopied] = useState(false);
   const link = state.link;
-
-  async function copy(value: string) {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(true);
-    } catch {
-      // Copying can be blocked; the link stays visible in the field.
-    }
-  }
-
-  async function share(value: string) {
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({
-          title: t("shareTitle"),
-          text: t("shareText", { circle: circleName }),
-          url: value,
-        });
-      } catch {
-        // The person closed the share sheet.
-      }
-      return;
-    }
-    await copy(value);
-  }
 
   if (link) {
     return (
@@ -60,14 +35,12 @@ export function InviteForm({ circleId, circleName }: InviteFormProps) {
           aria-label={t("linkLabel")}
           onFocus={(event) => event.target.select()}
         />
-        <div className="flex flex-wrap gap-2">
-          <Button size="lg" onClick={() => void share(link)}>
-            {t("share")}
-          </Button>
-          <Button size="lg" variant="secondary" onClick={() => void copy(link)}>
-            {copied ? t("copied") : t("copy")}
-          </Button>
-        </div>
+        <ShareLink
+          link={link}
+          title={t("shareTitle")}
+          text={t("shareText", { circle: circleName })}
+          labels={{ share: t("share"), copy: t("copy"), copied: t("copied") }}
+        />
         <div className="flex flex-wrap gap-2">
           <ButtonLink href={`/krag/${circleId}`} variant="secondary">
             {t("done")}

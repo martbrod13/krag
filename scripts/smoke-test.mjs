@@ -1,6 +1,7 @@
 // Smoke test: starts the built app and checks that every page opens in every
-// language, that the database answers and that signing in with an email code
-// works. Run `npm run build` first.
+// language, that the database answers, that signing in with an email code
+// works and that the paired demo tablet shows the senior screen.
+// Run `npm run build` first.
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -127,7 +128,8 @@ try {
   const pages = [
     ["/", "Zaloguj się albo załóż konto"],
     ["/logowanie", "wyślemy Ci 6-cyfrowy kod"],
-    ["/senior", "Dzień dobry!"],
+    ["/senior", "nie jest jeszcze połączony"],
+    ["/senior/polacz/to-nie-jest-prawdziwy-kod", "Ten kod już nie działa"],
     [
       "/zaproszenie/to-nie-jest-prawdziwy-link",
       "To zaproszenie już nie działa",
@@ -170,16 +172,24 @@ try {
     "the language chosen in the app wins over the browser language",
   );
 
-  const greetings = {
-    pl: "Dzień dobry!",
-    uk: "Добрий день!",
-    ru: "Добрый день!",
-    en: "Hello!",
+  const notPaired = {
+    pl: "nie jest jeszcze połączony",
+    uk: "ще не підключено",
+    ru: "ещё не подключён",
+    en: "isn’t paired with a circle yet",
   };
-  for (const [locale, greeting] of Object.entries(greetings)) {
+  for (const [locale, text] of Object.entries(notPaired)) {
     const page = await get("/senior", { cookie: `NEXT_LOCALE=${locale}` });
-    check(page.text.includes(greeting), `/senior opens in "${locale}"`);
+    check(page.text.includes(text), `/senior opens in "${locale}"`);
   }
+
+  const notReady = await get("/senior/gotowe", polish);
+  check(
+    notReady.status >= 300 &&
+      notReady.status < 400 &&
+      (notReady.headers.get("location") ?? "").endsWith("/senior"),
+    "the 'ready' page needs a paired device",
+  );
 
   const missing = await get("/nie-ma-takiej-strony", polish);
   check(
@@ -223,6 +233,45 @@ try {
       "the database answers",
     );
 
+    // The demo tablet from the test data (prisma/seed.ts), paired with the
+    // circle "Mama Halina". Its cookie replaces signing in.
+    const tablet = "krag_device=demo-tablet-mamy-tylko-dane-testowe";
+    const seniorScreen = await get("/senior", { ...polish, cookie: tablet });
+    check(
+      seniorScreen.status === 200 &&
+        seniorScreen.text.includes("Zadzwoń do bliskich") &&
+        seniorScreen.text.includes("Zofia Testowa") &&
+        seniorScreen.text.includes('href="tel:+48100000001"'),
+      "the paired tablet shows the senior screen with call buttons",
+    );
+    check(
+      (seniorScreen.headers.get("set-cookie") ?? "").includes("krag_device="),
+      "every visit renews the tablet's cookie",
+    );
+
+    const tabletHome = await get("/", { ...polish, cookie: tablet });
+    check(
+      tabletHome.status >= 300 &&
+        tabletHome.status < 400 &&
+        (tabletHome.headers.get("location") ?? "").endsWith("/senior"),
+      "the start page takes the tablet straight to the senior screen",
+    );
+
+    const ready = await get("/senior/gotowe", { ...polish, cookie: tablet });
+    check(
+      ready.status === 200 && ready.text.includes("Gotowe!"),
+      "the 'ready' page opens on the paired tablet",
+    );
+
+    const unpaired = await get("/senior", {
+      ...polish,
+      cookie: "krag_device=urzadzenie-ktorego-juz-nie-ma",
+    });
+    check(
+      unpaired.status === 200 && unpaired.text.includes("został odłączony"),
+      "an unpaired device is told so",
+    );
+
     // Ania from the test data: coordinator of the circle "Mama Halina".
     const ania = await signIn("ania.kowalska@example.com", true);
     const family = await get("/rodzina", { ...polish, cookie: ania });
@@ -239,26 +288,27 @@ try {
     });
     check(
       circle.status === 200 &&
-        circle.text.includes("Tomek Kowalski") &&
         circle.text.includes("Ewa Wiśniewska") &&
-        circle.text.includes("Zaproś osobę"),
-      "the circle page lists its people and lets the coordinator invite",
+        circle.text.includes("Zaproś osobę") &&
+        circle.text.includes("Zofia Testowa") &&
+        circle.text.includes("Tablet mamy"),
+      "the circle page lists people, numbers and the paired tablet",
     );
 
-    const invite = await get("/krag/demo-krag-kowalscy/zapros", {
-      ...polish,
-      cookie: ania,
-    });
-    check(
-      invite.status === 200 && invite.text.includes("Kogo zapraszasz?"),
-      "the invite page opens for the coordinator",
-    );
-
-    const newCircle = await get("/krag/nowy", { ...polish, cookie: ania });
-    check(
-      newCircle.status === 200 && newCircle.text.includes("Nowy krąg"),
-      "the new circle page opens",
-    );
+    const coordinatorPages = [
+      ["/krag/demo-krag-kowalscy/zapros", "Kogo zapraszasz?"],
+      ["/krag/demo-krag-kowalscy/polacz", "Pokaż kod QR"],
+      ["/krag/demo-krag-kowalscy/numery", "Dodaj numer"],
+      ["/krag/demo-krag-kowalscy/podglad", "Zadzwoń do bliskich"],
+      ["/krag/nowy", "Nowy krąg"],
+    ];
+    for (const [path, text] of coordinatorPages) {
+      const page = await get(path, { ...polish, cookie: ania });
+      check(
+        page.status === 200 && page.text.includes(text),
+        `${path} opens for the coordinator`,
+      );
+    }
 
     const otherCircle = await get("/krag/nie-ma-takiego-kregu", {
       ...polish,

@@ -26,17 +26,17 @@ Każda nowa tabela albo nowe pole w bazie danych musi najpierw trafić do tej ma
 
 ### 2. Krąg, role i zaproszenia
 
-- **Co:** nazwa kręgu, osoby w kręgu, ich role i uprawnienia, kto kogo zaprosił, zaproszenia, połączone urządzenia podopiecznego (np. „tablet mamy”) z datą połączenia i ostatniego użycia.
+- **Co:** nazwa kręgu, osoby w kręgu, ich role i uprawnienia, kto kogo zaprosił, zaproszenia, połączone urządzenia podopiecznego (np. „tablet mamy”): nazwa nadana przez rodzinę, kto i kiedy połączył urządzenie, kiedy było ostatnio używane. Do tego jednorazowe kody QR, którymi rodzina łączy urządzenie. Kod QR i tajny klucz urządzenia zapisujemy tylko jako skrót (hash).
 - **Po co:** żeby każdy widział tylko dane swoich kręgów i tylko w zakresie, na który pozwolił koordynator. Połączone urządzenie pozwala podopiecznemu korzystać z prostego ekranu bez konta i hasła.
-- **Kto widzi:** osoby z kręgu. Połączone urządzenia widzą koordynatorzy i mogą je w każdej chwili odłączyć.
-- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy. Odłączone urządzenie usuwamy od razu.
+- **Kto widzi:** osoby z kręgu. Połączone urządzenia widzą koordynatorzy: tylko oni łączą urządzenia i mogą je w każdej chwili odłączyć.
+- **Jak długo:** do usunięcia kręgu. Zaproszenie działa jeden raz i wygasa po 7 dniach, potem je usuwamy. Kod QR działa jeden raz przez 30 minut, potem go usuwamy. Odłączone urządzenie usuwamy od razu.
 - **Podstawa:** wykonanie umowy (art. 6 ust. 1 lit. b RODO).
 
 ### 3. Profil podopiecznego
 
-- **Co:** imię, data urodzenia, miasto, adres (nieobowiązkowy, potrzebny opiekunowi do wizyt), kontakty alarmowe, lekarz prowadzący (nieobowiązkowy).
-- **Po co:** plan opieki, wizyty opiekuna, koperta życia, przypomnienia o urodzinach, sprawdzanie świadczeń zależnych od wieku.
-- **Kto widzi:** osoby z kręgu, także opiekun zawodowy, bo adres i kontakty alarmowe są mu potrzebne do wizyt i w nagłych sytuacjach.
+- **Co:** imię, data urodzenia, miasto, adres (nieobowiązkowy, potrzebny opiekunowi do wizyt), kontakty alarmowe (imię, numer telefonu i kim ta osoba jest dla podopiecznego, np. „córka”), lekarz prowadzący (nieobowiązkowy).
+- **Po co:** plan opieki, wizyty opiekuna, koperta życia, przypomnienia o urodzinach, sprawdzanie świadczeń zależnych od wieku. Kontakty alarmowe są też na ekranie seniora jako duże przyciski „Zadzwoń”.
+- **Kto widzi:** osoby z kręgu, także opiekun zawodowy, bo adres i kontakty alarmowe są mu potrzebne do wizyt i w nagłych sytuacjach. Kontakty alarmowe widzi też połączone urządzenie podopiecznego. Zmieniają je koordynatorzy.
 - **Jak długo:** do usunięcia kręgu.
 - **Podstawa:** do ustalenia z prawnikiem. Dane wpisuje rodzina, ale dotyczą podopiecznego, więc potrzebna jest jego zgoda albo zgoda jego przedstawiciela prawnego.
 
@@ -77,7 +77,7 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 8. Dziennik dostępu i bezpieczeństwa
 
-- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu. Przy logowaniu zapisujemy sesję: datę, rodzaj urządzenia (przeglądarkę) i adres IP. Kod logowania zapisujemy tylko jako skrót (hash): działa raz, przez 10 minut, i przestaje działać po 3 błędnych próbach.
+- **Co:** kto i kiedy otworzył albo zmienił dane w kręgu, także kiedy połączone urządzenie podopiecznego otwierało ekran seniora (najwyżej jeden wpis na godzinę). Przy logowaniu zapisujemy sesję: datę, rodzaj urządzenia (przeglądarkę) i adres IP. Kod logowania zapisujemy tylko jako skrót (hash): działa raz, przez 10 minut, i przestaje działać po 3 błędnych próbach.
 - **Po co:** bezpieczeństwo i wykrywanie nadużyć. Koordynator widzi, kto oglądał dane podopiecznego.
 - **Kto widzi:** dziennik dostępu widzą koordynatorzy kręgu. Dziennik logowań widzi tylko sam użytkownik i administrator aplikacji.
 - **Jak długo:** dziennik dostępu 12 miesięcy, dziennik logowań 90 dni. Sesja kończy się po wylogowaniu albo po 30 dniach bez używania. Kod logowania usuwamy po użyciu albo wygaśnięciu.
@@ -85,9 +85,9 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 9. Pliki cookie
 
-- **Co:** wybrany język i cookie logowania (sesja).
+- **Co:** wybrany język, cookie logowania (sesja) i cookie połączonego urządzenia na telefonie albo tablecie podopiecznego. To ostatnie to tajny klucz, który zastępuje seniorowi logowanie.
 - **Po co:** działanie aplikacji. Nie używamy cookie reklamowych ani analitycznych.
-- **Jak długo:** język 12 miesięcy, sesja do wylogowania albo 30 dni bez używania.
+- **Jak długo:** język 12 miesięcy, sesja do wylogowania albo 30 dni bez używania. Cookie urządzenia działa do odłączenia urządzenia, a wygasa po 400 dniach bez używania. Każde otwarcie ekranu seniora liczy te 400 dni od nowa.
 
 ### 10. Płatności (etap 7)
 
@@ -133,6 +133,7 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 - Podstawa prawna dla danych podopiecznego, które wpisuje rodzina.
 - Czy agencja, która zatrudnia opiekuna zawodowego, jest osobnym administratorem danych.
 - Okresy przechowywania z tej mapy.
+- Kontakty alarmowe z numerami osób spoza kręgu (np. sąsiadki): czy i jak informujemy te osoby, że ich numer jest w aplikacji.
 
 ## Decyzje
 
@@ -141,5 +142,6 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 3. Zapisujemy pełną datę urodzenia podopiecznego.
 4. Zaproszenie do kręgu działa jeden raz i wygasa po 7 dniach.
 5. Dziennik dostępu trzymamy 12 miesięcy, a dziennik logowań 90 dni.
+6. Kod QR do połączenia ekranu seniora działa jeden raz przez 30 minut. Urządzenie zostaje połączone, dopóki koordynator go nie odłączy albo przez 400 dni nikt go nie użyje.
 
-Punkty 4 i 5 to propozycje, które można jeszcze zmienić.
+Punkty 4, 5 i 6 to propozycje, które można jeszcze zmienić.

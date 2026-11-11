@@ -1,10 +1,10 @@
 // Fills the database with made-up test data: the Kowalski family caring for
 // Halina. Every name, address and phone number here is fictional.
 // Never put real people's data into this file.
-import { createHash, randomBytes } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { DEFAULT_PERMISSIONS } from "../src/lib/permissions";
+import { hashToken, newToken } from "../src/lib/tokens";
 
 if (process.env.NODE_ENV === "production") {
   throw new Error("Test data must never be loaded into a production database.");
@@ -15,6 +15,11 @@ const db = new PrismaClient({
 });
 
 const DEMO_CIRCLE_ID = "demo-krag-kowalscy";
+
+// Secret token of the demo tablet ("Tablet mamy"). The smoke test opens the
+// senior screen with it. It belongs to made-up test data only; real devices
+// get a random token when they are paired with a QR code.
+const DEMO_DEVICE_TOKEN = "demo-tablet-mamy-tylko-dane-testowe";
 
 const { COORDINATOR, FAMILY, CAREGIVER } = DEFAULT_PERMISSIONS;
 
@@ -46,11 +51,6 @@ const people = {
     locale: "uk",
   },
 };
-
-function newTokenHash() {
-  const token = randomBytes(32).toString("hex");
-  return createHash("sha256").update(token).digest("hex");
-}
 
 async function main() {
   // Remove the previous copy of the test data, so the seed can run many times.
@@ -129,13 +129,17 @@ async function main() {
           role: "FAMILY",
           permissions: FAMILY,
           email: "wnuczka@example.com",
-          tokenHash: newTokenHash(),
+          tokenHash: hashToken(newToken()),
           expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           invitedById: ania.id,
         },
       },
       devices: {
-        create: { name: "Tablet mamy", tokenHash: newTokenHash() },
+        create: {
+          name: "Tablet mamy",
+          tokenHash: hashToken(DEMO_DEVICE_TOKEN),
+          pairedById: ania.id,
+        },
       },
     },
   });

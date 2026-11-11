@@ -6,7 +6,8 @@
     "appName": "Krąg",
     "backToStart": "Back to start",
     "comingSoon": "Coming soon",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "cancel": "Cancel"
   },
   "Home": {
     "lead": "Shared care for a loved one. Medicines, tasks and visits in one place.",
@@ -83,7 +84,20 @@
     "invite": "Invite someone",
     "pendingTitle": "Pending invitations",
     "validUntil": "valid until {date}",
-    "cancelInvitation": "Cancel"
+    "cancelInvitation": "Cancel",
+    "contactsTitle": "Important numbers",
+    "editContacts": "Edit",
+    "callContact": "Call {name}",
+    "noContacts": "No numbers yet.",
+    "noContactsManage": "Add the numbers of loved ones. The senior will see them on their screen as big call buttons.",
+    "seniorTitle": "Senior screen",
+    "seniorLead": "A simple screen on the senior’s phone or tablet: the date, the time and big buttons to call loved ones. No account or password needed.",
+    "pairDevice": "Pair a phone or tablet",
+    "seniorPreview": "See a preview",
+    "devicePaired": "paired {date}",
+    "deviceLastUsed": "last used {date}",
+    "unpair": "Unpair",
+    "confirmUnpair": "Yes, unpair"
   },
   "NewCircle": {
     "title": "New circle",
@@ -146,11 +160,103 @@
     "invalidLead": "The link has expired or has already been used. Ask the person who invited you for a new one.",
     "home": "Go to the home page"
   },
+  "Contacts": {
+    "title": "Important numbers",
+    "lead": "The senior sees these numbers on their screen as big call buttons. The caregiver has them at hand in an emergency.",
+    "empty": "No numbers yet.",
+    "remove": "Remove",
+    "confirmRemove": "Yes, remove",
+    "addTitle": "Add a number",
+    "name": "Name",
+    "namePlaceholder": "e.g. Anna",
+    "phone": "Phone number",
+    "phonePlaceholder": "e.g. 600 100 200",
+    "relationship": "Who are they to the senior? (optional)",
+    "relationshipPlaceholder": "e.g. daughter, neighbour",
+    "add": "Add number",
+    "added": "Added. The senior will see this number on their screen.",
+    "full": "The senior screen has room for {max, plural, one {# number} other {# numbers}}. Remove one to add a new one.",
+    "preview": "See how it looks for the senior",
+    "errors": {
+      "nameRequired": "Please enter a name.",
+      "phoneInvalid": "Please check the phone number. Digits are enough, e.g. 600 100 200.",
+      "tooMany": "There’s no room for more numbers on the senior screen. Remove one to add a new one.",
+      "notAllowed": "Only a coordinator can change the numbers."
+    }
+  },
+  "PairDevice": {
+    "title": "Pair a phone or tablet",
+    "lead": "The senior doesn’t need an account or a password. You show a QR code, the senior’s phone or tablet scans it with the camera and opens a simple screen right away.",
+    "nameLabel": "What should this device be called? (optional)",
+    "namePlaceholder": "e.g. Mum’s phone",
+    "defaultName": "Senior screen",
+    "showCode": "Show the QR code",
+    "qrLabel": "QR code to pair the senior screen",
+    "waiting": "Waiting for the device…",
+    "step1": "On the senior’s phone or tablet, open the camera and point it at the code.",
+    "step2": "Tap the link that appears, then tap “Pair”.",
+    "validUntil": "The code works once, until {time}.",
+    "paired": "Paired! “{name}” now shows the senior screen.",
+    "expired": "The code has expired.",
+    "newCode": "Show a new code",
+    "done": "Done",
+    "another": "Pair another device",
+    "remoteTitle": "Is the senior far away?",
+    "remoteLead": "Send the link to their phone, e.g. by text message or on WhatsApp. It works just like the QR code.",
+    "linkLabel": "Link to pair the senior screen",
+    "share": "Share",
+    "copy": "Copy link",
+    "copied": "Copied!",
+    "shareTitle": "Senior screen in Krąg",
+    "shareText": "Your screen in the circle “{circle}”. Open this link on your phone and tap “Pair”:",
+    "errors": {
+      "notAllowed": "Only a coordinator can pair devices."
+    }
+  },
+  "Preview": {
+    "title": "Senior screen preview",
+    "lead": "This is what the senior’s phone or tablet shows. The date and time update by themselves, and new numbers appear within a minute.",
+    "pair": "Pair a phone or tablet",
+    "editContacts": "Edit numbers"
+  },
   "Senior": {
     "title": "Senior screen",
-    "greeting": "Hello!",
-    "allOk": "I’m OK",
-    "preview": "This is a preview. The button will start working in a later stage."
+    "goodMorning": "Good morning!",
+    "goodAfternoon": "Good afternoon!",
+    "goodEvening": "Good evening!",
+    "callTitle": "Call your loved ones",
+    "call": "Call",
+    "noContacts": "The numbers of your loved ones will appear here. Your family will add them in the app.",
+    "notPairedLead": "This phone or tablet isn’t paired with a circle yet.",
+    "unpairedLead": "This phone or tablet has been unpaired from the circle. Ask your family for a new QR code.",
+    "howTitle": "How to pair it",
+    "howStep1": "Someone from the family opens Krąg on their phone, chooses the circle and taps “Pair a phone or tablet”.",
+    "howStep2": "On this device, open the camera and point it at the QR code.",
+    "howStep3": "Tap the link that appears, then tap “Pair”.",
+    "noAccount": "The senior doesn’t need an account or a password.",
+    "home": "Go to the home page"
+  },
+  "SeniorPair": {
+    "metaTitle": "Pair the senior screen",
+    "title": "Pair this device with the circle “{circle}”?",
+    "lead": "It will show a simple screen: the date, the time and big buttons to call loved ones. No sign-in, no passwords.",
+    "pair": "Pair",
+    "note": "In the circle it will be called “{device}”. The family can unpair it at any time.",
+    "invalidTitle": "This code no longer works",
+    "invalidLead": "A QR code works once, for 30 minutes. Ask someone from the family for a new one.",
+    "alreadyTitle": "This device is already paired",
+    "alreadyLead": "The code has already been used. The senior screen is ready.",
+    "openScreen": "Go to the senior screen"
+  },
+  "SeniorReady": {
+    "title": "All set!",
+    "lead": "This device now shows the senior screen. No sign-in needed.",
+    "installTitle": "Last step: an icon on the home screen",
+    "installLead": "With it, the senior opens their screen with one tap, like any other app.",
+    "installButton": "Add the icon to the home screen",
+    "android": "Android: tap the browser menu (three dots) and choose “Add to Home screen”.",
+    "iphone": "iPhone and iPad: tap the Share button (a square with an arrow pointing up) and choose “Add to Home Screen”.",
+    "open": "Go to the senior screen"
   },
   "NotFound": {
     "title": "Page not found",

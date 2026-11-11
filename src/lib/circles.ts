@@ -1,5 +1,6 @@
 import type { CircleRole, Permission } from "@/generated/prisma/client";
 import { logAccess } from "@/lib/audit";
+import { type Contact, contactFields, contactOrder } from "@/lib/contacts";
 import { db } from "@/lib/db";
 import { DEFAULT_PERMISSIONS } from "@/lib/permissions";
 
@@ -123,6 +124,19 @@ export async function isMember(circleId: string, userId: string) {
   return membership !== null;
 }
 
+/** Whether a member of the circle has a permission. False for outsiders. */
+export async function hasPermission(
+  circleId: string,
+  userId: string,
+  permission: Permission,
+) {
+  const membership = await db.membership.findUnique({
+    where: { circleId_userId: { circleId, userId } },
+    select: { permissions: true },
+  });
+  return membership?.permissions.includes(permission) ?? false;
+}
+
 /** Creates a circle; the person who creates it becomes its coordinator. */
 export async function createCircle(userId: string, input: NewCircleInput) {
   return db.$transaction(async (tx) => {
@@ -172,8 +186,20 @@ export type CircleView = {
     address: string | null;
   } | null;
   members: { userId: string; name: string; role: CircleRole }[];
+  /** Emergency contacts, for people with access to the profile. */
+  contacts: Contact[] | null;
   /** Pending invitations, only for people who manage the circle. */
   invitations: { id: string; role: CircleRole; expiresAt: Date }[] | null;
+  /** Paired senior devices, only for people who manage the circle. */
+  devices: DeviceView[] | null;
+};
+
+export type DeviceView = {
+  id: string;
+  name: string;
+  pairedAt: Date;
+  lastUsedAt: Date | null;
+  pairedBy: string | null;
 };
 
 /**
@@ -199,6 +225,10 @@ export async function getCircleForMember(
               birthDate: true,
               city: true,
               address: true,
+              emergencyContacts: {
+                orderBy: contactOrder,
+                select: contactFields,
+              },
             },
           },
           memberships: {
@@ -216,13 +246,26 @@ export async function getCircleForMember(
   const manages = permissions.includes("MANAGE");
   const recipient = circle.recipient;
 
-  const invitations = manages
-    ? await db.invitation.findMany({
-        where: { circleId, expiresAt: { gt: new Date() } },
-        orderBy: { createdAt: "desc" },
-        select: { id: true, role: true, expiresAt: true },
-      })
-    : null;
+  const [invitations, devices] = manages
+    ? await Promise.all([
+        db.invitation.findMany({
+          where: { circleId, expiresAt: { gt: new Date() } },
+          orderBy: { createdAt: "desc" },
+          select: { id: true, role: true, expiresAt: true },
+        }),
+        db.pairedDevice.findMany({
+          where: { circleId },
+          orderBy: { pairedAt: "asc" },
+          select: {
+            id: true,
+            name: true,
+            pairedAt: true,
+            lastUsedAt: true,
+            pairedBy: { select: { name: true } },
+          },
+        }),
+      ])
+    : ([null, null] as const);
 
   return {
     id: circle.id,
@@ -245,6 +288,12 @@ export async function getCircleForMember(
       name: member.user.name,
       role: member.role,
     })),
+    contacts: seesProfile ? (recipient?.emergencyContacts ?? []) : null,
     invitations,
+    devices:
+      devices?.map(({ pairedBy, ...device }) => ({
+        ...device,
+        pairedBy: pairedBy?.name ?? null,
+      })) ?? null,
   };
 }

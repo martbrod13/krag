@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
+import { PhoneIcon } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ConfirmButton } from "@/components/ui/confirm-button";
 import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
+import { telHref } from "@/lib/contacts";
 import { requireUser } from "@/lib/session";
-import { cancelInvitationAction } from "../actions";
+import { cancelInvitationAction, unpairDeviceAction } from "../actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Circles");
@@ -32,8 +35,11 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
   }
 
   const t = await getTranslations("Circles");
+  const common = await getTranslations("Common");
   const format = await getFormatter();
   const recipient = circle.recipient;
+  const contacts = circle.contacts;
+  const manages = circle.permissions.includes("MANAGE");
   const panel = circle.role === "CAREGIVER" ? "/opiekun" : "/rodzina";
 
   return (
@@ -67,6 +73,125 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
             <p className="text-muted">{recipient.address}</p>
           ) : null}
         </Card>
+      ) : null}
+
+      {contacts ? (
+        <section aria-labelledby="contacts" className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="contacts" className="text-xl font-extrabold">
+              {t("contactsTitle")}
+            </h2>
+            {manages ? (
+              <Link
+                href={`/krag/${circle.id}/numery`}
+                className="flex min-h-11 items-center font-bold text-brand hover:underline"
+              >
+                {t("editContacts")}
+              </Link>
+            ) : null}
+          </div>
+          {contacts.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {contacts.map((contact) => (
+                <li
+                  key={contact.id}
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-4 py-3"
+                >
+                  <span className="flex flex-col">
+                    <span className="font-bold">
+                      {contact.name}
+                      {contact.relationship ? (
+                        <span className="font-normal text-muted">
+                          {" · "}
+                          {contact.relationship}
+                        </span>
+                      ) : null}
+                    </span>
+                    <span className="text-muted">{contact.phone}</span>
+                  </span>
+                  <a
+                    href={telHref(contact.phone)}
+                    aria-label={t("callContact", { name: contact.name })}
+                    className={buttonClasses({ variant: "secondary" })}
+                  >
+                    <PhoneIcon className="size-5 text-brand" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted">
+              {manages ? t("noContactsManage") : t("noContacts")}
+            </p>
+          )}
+        </section>
+      ) : null}
+
+      {contacts ? (
+        <section aria-labelledby="senior" className="flex flex-col gap-3">
+          <h2 id="senior" className="text-xl font-extrabold">
+            {t("seniorTitle")}
+          </h2>
+          <p className="text-muted">{t("seniorLead")}</p>
+          {circle.devices && circle.devices.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {circle.devices.map((device) => (
+                <li
+                  key={device.id}
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-4 py-3"
+                >
+                  <span className="flex flex-col">
+                    <span className="font-bold">{device.name}</span>
+                    <span className="text-sm text-muted">
+                      {t("devicePaired", {
+                        date: format.dateTime(device.pairedAt, {
+                          day: "numeric",
+                          month: "long",
+                        }),
+                      })}
+                      {device.lastUsedAt ? (
+                        <>
+                          {" · "}
+                          {t("deviceLastUsed", {
+                            date: format.dateTime(device.lastUsedAt, {
+                              day: "numeric",
+                              month: "long",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }),
+                          })}
+                        </>
+                      ) : null}
+                    </span>
+                  </span>
+                  <form action={unpairDeviceAction}>
+                    <input type="hidden" name="circleId" value={circle.id} />
+                    <input type="hidden" name="deviceId" value={device.id} />
+                    <ConfirmButton
+                      label={t("unpair")}
+                      confirmLabel={t("confirmUnpair")}
+                      cancelLabel={common("cancel")}
+                    />
+                  </form>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <div className="flex flex-wrap gap-2">
+            {manages ? (
+              <ButtonLink href={`/krag/${circle.id}/polacz`} size="lg">
+                {t("pairDevice")}
+              </ButtonLink>
+            ) : null}
+            <ButtonLink
+              href={`/krag/${circle.id}/podglad`}
+              size="lg"
+              variant="secondary"
+            >
+              {t("seniorPreview")}
+            </ButtonLink>
+          </div>
+        </section>
       ) : null}
 
       <section aria-labelledby="members" className="flex flex-col gap-3">
