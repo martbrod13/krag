@@ -92,7 +92,11 @@ export default async function AccessLogPage({
                     </span>
                     <span>
                       {t(`events.${entry.event}`, {
-                        name: entry.subject ?? "—",
+                        name:
+                          entry.subject ??
+                          (entry.subjectKind === "task"
+                            ? t("deletedTask")
+                            : "—"),
                       })}
                     </span>
                   </span>

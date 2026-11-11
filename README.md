@@ -4,12 +4,12 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 3 z 7, **logowanie, role i uprawnienia**, jest gotowy. Mamy fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapę danych, bazę danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu: role, uprawnienia, dziennik dostępu, dane podopiecznego i usuwanie kręgu. Następny jest etap 4, czyli codzienne funkcje.
+Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Teraz dochodzi plan dnia i zadania, a potem leki, wizyty opiekunki i pobieranie swoich danych.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
 3. ✅ **Logowanie, role i uprawnienia** – logowanie kodem z e-maila, zakładanie kręgu, zaproszenia, ekran seniora przez kod QR, ustawienia kręgu.
-4. **Funkcje podstawowe** – plan dnia, leki, zadania, wizyty.
+4. **Funkcje podstawowe** – plan dnia i zadania, leki, wizyty, pobieranie swoich danych.
 5. **Funkcje „wow”** – np. odczytywanie wypisu ze szpitala.
 6. **Dokumenty prawne i beta** – polityka prywatności, regulamin, pierwsi użytkownicy.
 7. **Płatności** – pakiet premium. Na razie wszystko jest darmowe.
@@ -135,6 +135,20 @@ Koordynator zmienia też dane podopiecznego (adres, lekarz prowadzący, data uro
 
 Krąg testowy „Mama Halina” możesz w każdej chwili odtworzyć poleceniem `npm run db:seed`.
 
+## Plan dnia i zadania
+
+Wspólna lista: co trzeba zrobić, kiedy i kto się tym zajmuje. Na stronie kręgu, na samej górze, jest **Dziś**. Każdy, kto widzi zadania, może dodać zadanie, kliknąć **Biorę to** i oznaczyć zadanie jako zrobione. Zadanie z zaznaczonym **Pokaż na ekranie seniora** pojawia się tego dnia na ekranie seniora, np. wizyta u lekarza.
+
+### Jak przetestować
+
+1. Wpisz `npm run db:seed`. Plan testowy układa się wokół dnia, w którym go wczytasz.
+2. Zaloguj się jako `ania.kowalska@example.com` i otwórz krąg „Mama Halina”. Na górze jest **Dziś** z dwoma zadaniami.
+3. Kliknij kółko przy zadaniu: zadanie jest zrobione. Kliknij jeszcze raz, żeby to cofnąć.
+4. Kliknij **Cały plan**. Zobaczysz zaległe zadania, dzisiejsze, kolejne dni, zadania bez dnia i ostatnio zrobione. Przy zadaniu „Kupić żarówki do łazienki” kliknij **Biorę to**.
+5. Kliknij **Dodaj zadanie**, wpisz np. `Przyjazd wnuczki`, wybierz dzisiejszy dzień i godzinę, zaznacz **Pokaż na ekranie seniora** i kliknij **Dodaj zadanie**.
+6. Wróć do kręgu i kliknij **Zobacz podgląd** w sekcji **Ekran seniora**. Pod godziną jest teraz **Dziś** ze spacerem i przyjazdem wnuczki.
+7. Kliknij nazwę zadania, żeby je zmienić albo usunąć. Usunąć może osoba, która je dodała, albo koordynator.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -142,7 +156,7 @@ Krąg testowy „Mama Halina” możesz w każdej chwili odtworzyć poleceniem `
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora i ustawienia kręgu (uruchamia je GitHub na bazie testowej).
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu i plan dnia (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.

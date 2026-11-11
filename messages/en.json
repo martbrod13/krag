@@ -345,7 +345,65 @@
       "removeContact": "removed an important number",
       "other": "another change",
       "updateRecipient": "changed the senior’s details",
-      "renameCircle": "renamed the circle"
+      "renameCircle": "renamed the circle",
+      "viewPlan": "viewed the plan",
+      "createTask": "added a task: {name}",
+      "updateTask": "changed a task: {name}",
+      "deleteTask": "deleted a task",
+      "claimTask": "took a task: {name}",
+      "doneTask": "done: {name}",
+      "undoneTask": "marked as not done: {name}"
+    },
+    "deletedTask": "deleted task"
+  },
+  "Plan": {
+    "title": "Plan and tasks",
+    "lead": "What needs doing, when, and who takes care of it.",
+    "add": "Add a task",
+    "overdue": "Overdue",
+    "today": "Today · {date}",
+    "tomorrow": "Tomorrow · {date}",
+    "undated": "No day",
+    "nothingToday": "Nothing planned for today.",
+    "doneTitle": "Recently done",
+    "markDone": "Mark as done: {title}",
+    "markNotDone": "Not done after all: {title}",
+    "claim": "I’ll take it",
+    "assignedTo": "Taken by {name}",
+    "assignedToYou": "You’re taking care of it",
+    "doneBy": "Done by {name}",
+    "someone": "someone",
+    "seniorSees": "On the senior screen",
+    "todayTitle": "Today",
+    "fullPlan": "Whole plan",
+    "overdueCount": "{count, plural, one {# overdue task} other {# overdue tasks}}",
+    "addToday": "Add for today"
+  },
+  "TaskForm": {
+    "newTitle": "New task",
+    "editTitle": "Task",
+    "back": "Plan and tasks",
+    "title": "What needs doing?",
+    "titlePlaceholder": "e.g. Pick up the prescription",
+    "date": "Day",
+    "time": "Time",
+    "whenHint": "Both are optional. A task without a day goes to the “No day” list.",
+    "assignee": "Who will take care of it?",
+    "nobody": "Not decided yet",
+    "note": "Note (optional)",
+    "showToSenior": "Show on the senior screen",
+    "showToSeniorHint": "E.g. a doctor’s appointment or a grandchild’s visit. The senior will see it in their plan that day.",
+    "add": "Add the task",
+    "save": "Save changes",
+    "delete": "Delete the task",
+    "confirmDelete": "Yes, delete",
+    "errors": {
+      "titleRequired": "Please write what needs doing.",
+      "dateInvalid": "Please check the day.",
+      "timeInvalid": "Please check the time.",
+      "timeNeedsDate": "A time needs a day. Choose a day or clear the time.",
+      "notAllowed": "You don’t have access to tasks in this circle.",
+      "notFound": "This task no longer exists."
     }
   },
   "Senior": {
@@ -363,7 +421,9 @@
     "howStep2": "On this device, open the camera and point it at the QR code.",
     "howStep3": "Tap the link that appears, then tap “Pair”.",
     "noAccount": "The senior doesn’t need an account or a password.",
-    "home": "Go to the home page"
+    "home": "Go to the home page",
+    "planTitle": "Today",
+    "planDone": "done"
   },
   "SeniorPair": {
     "metaTitle": "Pair the senior screen",

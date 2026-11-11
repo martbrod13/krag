@@ -55,11 +55,14 @@ model User {
 
   sessions        Session[]
   accounts        Account[]
-  memberships     Membership[] @relation("MemberUser")
-  invitedMembers  Membership[] @relation("InvitedBy")
+  memberships     Membership[]    @relation("MemberUser")
+  invitedMembers  Membership[]    @relation("InvitedBy")
   invitationsSent Invitation[]
   devicePairings  DevicePairing[]
   pairedDevices   PairedDevice[]
+  tasksCreated    Task[]          @relation("TaskCreator")
+  tasksAssigned   Task[]          @relation("TaskAssignee")
+  tasksDone       Task[]          @relation("TaskDoneBy")
   auditEntries    AuditLog[]
 }
 
@@ -131,6 +134,7 @@ model CareCircle {
   invitations Invitation[]
   pairings    DevicePairing[]
   devices     PairedDevice[]
+  tasks       Task[]
   auditLog    AuditLog[]
 }
 
@@ -202,6 +206,35 @@ model EmergencyContact {
   recipient CareRecipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
 
   @@index([recipientId])
+}
+
+/// Something to do or something that happens in the care plan, e.g. "buy the
+/// prescription" or "doctor's appointment" (data map, section 5). The day and
+/// time are Polish time. The text may reveal health, so it is protected like
+/// health data and never copied into the access log.
+model Task {
+  id           String    @id @default(cuid())
+  circleId     String
+  title        String
+  note         String?
+  /// The day in Polish time; null for tasks without a day.
+  date         DateTime? @db.Date
+  /// "HH:MM" in Polish time; only together with a day.
+  time         String?
+  assigneeId   String?
+  showToSenior Boolean   @default(false)
+  createdById  String?
+  doneAt       DateTime?
+  doneById     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  circle    CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  createdBy User?      @relation("TaskCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  assignee  User?      @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  doneBy    User?      @relation("TaskDoneBy", fields: [doneById], references: [id], onDelete: SetNull)
+
+  @@index([circleId, date])
 }
 
 /// A one-time QR code that pairs the care recipient's phone or tablet with a
