@@ -57,6 +57,7 @@ export async function createPairing(params: {
       {
         circleId: params.circleId,
         userId: params.createdById,
+        deviceName: params.deviceName,
         action: "CREATE",
         entity: "DevicePairing",
         entityId: created.id,
@@ -155,6 +156,7 @@ export async function pairDevice(
         circleId: pairing.circleId,
         userId: pairing.createdById,
         deviceId: device.id,
+        deviceName: pairing.deviceName,
         action: "CREATE",
         entity: "PairedDevice",
         entityId: device.id,
@@ -174,7 +176,7 @@ async function removeDevice(
 ) {
   const device = await client.pairedDevice.findFirst({
     where,
-    select: { id: true, circleId: true },
+    select: { id: true, circleId: true, name: true },
   });
   if (!device) return false;
 
@@ -186,6 +188,7 @@ async function removeDevice(
     {
       circleId: device.circleId,
       userId,
+      deviceName: device.name,
       action: "DELETE",
       entity: "PairedDevice",
       entityId: device.id,
@@ -243,6 +246,7 @@ export async function recordDeviceVisit(device: PairedDeviceInfo) {
     await logAccess({
       circleId: device.circleId,
       deviceId: device.id,
+      deviceName: device.name,
       action: "VIEW",
       entity: "CareRecipient",
     });

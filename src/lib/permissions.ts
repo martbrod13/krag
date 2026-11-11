@@ -24,3 +24,31 @@ export function isInvitableRole(value: unknown): value is CircleRole {
     (INVITABLE_ROLES as readonly string[]).includes(value)
   );
 }
+
+/** All roles, in the order shown in the circle settings. */
+export const ROLES: CircleRole[] = ["COORDINATOR", "FAMILY", "CAREGIVER"];
+
+export function isRole(value: unknown): value is CircleRole {
+  return (
+    typeof value === "string" && (ROLES as readonly string[]).includes(value)
+  );
+}
+
+/**
+ * What a coordinator can switch on or off for family members and
+ * caregivers. Coordinators always have everything, including MANAGE.
+ */
+export const EDITABLE_PERMISSIONS: Permission[] = [
+  "PROFILE",
+  "HEALTH",
+  "TASKS",
+  "VISITS",
+  "DOCUMENTS",
+];
+
+/** Keeps only permissions a coordinator may hand out, in a fixed order. */
+export function editablePermissions(values: readonly unknown[]) {
+  return EDITABLE_PERMISSIONS.filter((permission) =>
+    values.includes(permission),
+  );
+}

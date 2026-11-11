@@ -11,7 +11,11 @@ import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
 import { telHref } from "@/lib/contacts";
 import { requireUser } from "@/lib/session";
-import { cancelInvitationAction, unpairDeviceAction } from "../actions";
+import {
+  cancelInvitationAction,
+  leaveCircleAction,
+  unpairDeviceAction,
+} from "../actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Circles");
@@ -41,6 +45,10 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
   const contacts = circle.contacts;
   const manages = circle.permissions.includes("MANAGE");
   const panel = circle.role === "CAREGIVER" ? "/opiekun" : "/rodzina";
+  const onlyCoordinator =
+    circle.role === "COORDINATOR" &&
+    circle.members.filter((member) => member.role === "COORDINATOR").length <=
+      1;
 
   return (
     <>
@@ -220,9 +228,18 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
 
       {circle.invitations ? (
         <section aria-labelledby="invitations" className="flex flex-col gap-3">
-          <ButtonLink href={`/krag/${circle.id}/zapros`} size="lg">
-            {t("invite")}
-          </ButtonLink>
+          <div className="flex flex-wrap gap-2">
+            <ButtonLink href={`/krag/${circle.id}/zapros`} size="lg">
+              {t("invite")}
+            </ButtonLink>
+            <ButtonLink
+              href={`/krag/${circle.id}/ustawienia`}
+              size="lg"
+              variant="secondary"
+            >
+              {t("settings")}
+            </ButtonLink>
+          </div>
           {circle.invitations.length > 0 ? (
             <>
               <h2 id="invitations" className="text-xl font-extrabold">
@@ -269,6 +286,31 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
           ) : null}
         </section>
       ) : null}
+
+      <section
+        aria-labelledby="leave"
+        className="flex flex-col gap-3 border-t border-line pt-6"
+      >
+        <h2 id="leave" className="text-lg font-extrabold">
+          {t("leaveTitle")}
+        </h2>
+        {onlyCoordinator ? (
+          <p className="text-muted">{t("onlyCoordinatorLeave")}</p>
+        ) : (
+          <>
+            <p className="text-muted">{t("leaveLead")}</p>
+            <form action={leaveCircleAction}>
+              <input type="hidden" name="circleId" value={circle.id} />
+              <input type="hidden" name="panel" value={panel} />
+              <ConfirmButton
+                label={t("leave")}
+                confirmLabel={t("confirmLeave")}
+                cancelLabel={common("cancel")}
+              />
+            </form>
+          </>
+        )}
+      </section>
     </>
   );
 }

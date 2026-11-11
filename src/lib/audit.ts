@@ -8,8 +8,11 @@ type AuditEntry = {
   userId?: string | null;
   /** The care recipient's paired phone or tablet (senior screen). */
   deviceId?: string;
+  /** The device's name, kept in the log after the device is unpaired. */
+  deviceName?: string;
   action: AuditAction;
   entity: string;
+  /** What changed; for Membership entries the member's user id. */
   entityId?: string;
 };
 

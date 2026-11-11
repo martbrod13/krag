@@ -97,7 +97,13 @@
     "devicePaired": "połączone {date}",
     "deviceLastUsed": "ostatnio używane {date}",
     "unpair": "Odłącz",
-    "confirmUnpair": "Tak, odłącz"
+    "confirmUnpair": "Tak, odłącz",
+    "settings": "Ustawienia kręgu",
+    "leaveTitle": "Opuść krąg",
+    "leaveLead": "Stracisz dostęp do danych tego kręgu. Wrócić można tylko z nowym zaproszeniem.",
+    "leave": "Opuść krąg",
+    "confirmLeave": "Tak, opuszczam krąg",
+    "onlyCoordinatorLeave": "Jesteś jedynym koordynatorem tego kręgu. Zanim go opuścisz, zrób koordynatorem kogoś innego w ustawieniach kręgu."
   },
   "NewCircle": {
     "title": "Nowy krąg",
@@ -218,6 +224,105 @@
     "lead": "Tak wygląda ekran na telefonie albo tablecie seniora. Data i godzina zmieniają się same, a nowe numery pojawiają się w ciągu minuty.",
     "pair": "Połącz telefon lub tablet",
     "editContacts": "Zmień numery"
+  },
+  "Settings": {
+    "title": "Ustawienia kręgu",
+    "lead": "Tu decydujesz, kto jest w kręgu i co widzi.",
+    "peopleTitle": "Osoby w kręgu",
+    "peopleLead": "Dotknij osoby, aby zmienić jej rolę albo to, co widzi.",
+    "you": "Ty",
+    "seesAll": "Widzi wszystko i zarządza kręgiem.",
+    "sees": "Widzi: {list}.",
+    "seesNothing": "Widzi tylko imię podopiecznego i osoby w kręgu.",
+    "roleLabel": "Rola",
+    "roles": {
+      "COORDINATOR": {
+        "title": "Koordynator",
+        "description": "Widzi wszystko, zaprasza osoby, łączy urządzenia i zmienia uprawnienia."
+      },
+      "FAMILY": {
+        "title": "Członek rodziny",
+        "description": "Widzi to, na co pozwolisz. Domyślnie wszystko oprócz ustawień kręgu."
+      },
+      "CAREGIVER": {
+        "title": "Opiekunka, opiekun albo pielęgniarka",
+        "description": "Widzi to, czego potrzebuje do opieki. Dokumenty dopiero za Twoją zgodą."
+      }
+    },
+    "permissionsLabel": "Co widzi",
+    "permissions": {
+      "PROFILE": {
+        "title": "Dane podopiecznego",
+        "short": "dane podopiecznego",
+        "description": "Wiek, adres i ważne numery."
+      },
+      "HEALTH": {
+        "title": "Zdrowie i leki",
+        "short": "zdrowie i leki",
+        "description": "Leki, choroby i alergie."
+      },
+      "TASKS": {
+        "title": "Zadania i plan dnia",
+        "short": "zadania",
+        "description": "Co i kiedy trzeba zrobić."
+      },
+      "VISITS": {
+        "title": "Wizyty i raporty",
+        "short": "wizyty",
+        "description": "Wizyty opiekunów i ich raporty."
+      },
+      "DOCUMENTS": {
+        "title": "Dokumenty",
+        "short": "dokumenty",
+        "description": "Wypisy ze szpitala, recepty i inne dokumenty."
+      },
+      "MANAGE": {
+        "title": "Ustawienia kręgu",
+        "short": "ustawienia kręgu",
+        "description": "Zapraszanie osób, łączenie urządzeń i uprawnienia."
+      }
+    },
+    "coordinatorSeesAll": "Koordynator zawsze widzi wszystko.",
+    "save": "Zapisz zmiany",
+    "saved": "Zapisano.",
+    "remove": "Usuń z kręgu",
+    "confirmRemove": "Tak, usuń",
+    "onlyCoordinator": "Jesteś jedynym koordynatorem, więc Twoja rola zostaje bez zmian. Gdy zrobisz koordynatorem kogoś innego, będzie można ją zmienić.",
+    "upcoming": "Zdrowie, zadania, wizyty i dokumenty pojawią się w aplikacji w następnym etapie. To, co ustawisz teraz, zacznie wtedy działać.",
+    "logTitle": "Dziennik dostępu",
+    "logLead": "Kto i kiedy oglądał albo zmieniał dane w tym kręgu.",
+    "openLog": "Otwórz dziennik dostępu",
+    "errors": {
+      "notAllowed": "Tylko koordynator może zmieniać ustawienia kręgu.",
+      "notFound": "Tej osoby nie ma już w kręgu.",
+      "lastCoordinator": "W kręgu musi zostać co najmniej jeden koordynator."
+    }
+  },
+  "AccessLog": {
+    "title": "Dziennik dostępu",
+    "lead": "Kto i kiedy oglądał albo zmieniał dane w tym kręgu. Wpisy przechowujemy przez 12 miesięcy.",
+    "empty": "Dziennik jest jeszcze pusty.",
+    "unknownActor": "Usunięte konto",
+    "newer": "Nowsze wpisy",
+    "older": "Starsze wpisy",
+    "pages": "Strony dziennika",
+    "events": {
+      "viewRecipient": "oglądanie danych podopiecznego",
+      "seniorScreen": "otwarcie ekranu seniora",
+      "createCircle": "założenie kręgu",
+      "createInvitation": "utworzenie zaproszenia",
+      "cancelInvitation": "anulowanie zaproszenia",
+      "join": "dołączenie do kręgu",
+      "leave": "opuszczenie kręgu",
+      "changeMember": "zmiana roli lub uprawnień: {name}",
+      "removeMember": "usunięcie z kręgu: {name}",
+      "createPairing": "utworzenie kodu QR dla „{name}”",
+      "pairDevice": "połączenie urządzenia „{name}”",
+      "unpairDevice": "odłączenie urządzenia „{name}”",
+      "addContact": "dodanie ważnego numeru",
+      "removeContact": "usunięcie ważnego numeru",
+      "other": "inna zmiana"
+    }
   },
   "Senior": {
     "title": "Ekran seniora",

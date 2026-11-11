@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami i ekran seniora łączony kodem QR. Do końca etapu zostały ustawienia kręgu.
+Etap 3 z 7: **logowanie, role i uprawnienia**. Gotowe są fundament (trzy panele, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon, logowanie kodem z e-maila, kręgi z zaproszeniami i ekran seniora łączony kodem QR. Teraz dochodzą ustawienia kręgu: role, uprawnienia i dziennik dostępu. Na koniec etapu zostanie edycja danych podopiecznego i usuwanie kręgu.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -117,6 +117,18 @@ Kod QR działa jeden raz przez 30 minut. Połączone urządzenie zostaje połąc
 
 Prawdziwym telefonem zeskanujesz kod, gdy aplikacja będzie w internecie (przed betą). Teraz działa tylko na Twoim komputerze i telefon jej nie widzi.
 
+## Ustawienia kręgu
+
+Koordynator decyduje, kto jest w kręgu i co widzi, np. czy opiekunka widzi dokumenty. Może też usunąć kogoś z kręgu. Każdy może sam opuścić krąg, ale w kręgu zawsze zostaje co najmniej jeden koordynator. Dziennik dostępu pokazuje, kto i kiedy oglądał albo zmieniał dane.
+
+### Jak przetestować
+
+1. Zaloguj się jako `ania.kowalska@example.com`, otwórz krąg „Mama Halina” i kliknij **Ustawienia kręgu**.
+2. Kliknij **Ewa Wiśniewska**, czyli opiekunkę. Zaznacz **Dokumenty** i kliknij **Zapisz zmiany**.
+3. Kliknij **Tomek Kowalski**, wybierz rolę **Koordynator** i zapisz. Teraz krąg ma dwóch koordynatorów.
+4. Wróć do kręgu i zjedź na dół strony. Pod **Opuść krąg** jest teraz przycisk. Wcześniej Ania była jedynym koordynatorem i zamiast przycisku była informacja, że najpierw trzeba wyznaczyć następcę.
+5. Wróć do ustawień i kliknij **Otwórz dziennik dostępu**. Zobaczysz, kto i kiedy oglądał dane mamy, kto co zmieniał i kiedy „Tablet mamy” otwierał ekran seniora.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -124,7 +136,7 @@ Prawdziwym telefonem zeskanujesz kod, gdy aplikacja będzie w internecie (przed 
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia i ekran seniora (uruchamia je GitHub na bazie testowej).
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora i ustawienia kręgu (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.
