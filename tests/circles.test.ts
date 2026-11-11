@@ -7,7 +7,7 @@ import { after, before, describe, test } from "node:test";
 import {
   createCircle,
   getCircleForMember,
-  parseNewCircle,
+  parseCircleForm,
 } from "@/lib/circles";
 import { db } from "@/lib/db";
 import {
@@ -50,7 +50,7 @@ describe("new circle form", () => {
   const today = new Date("2026-11-11T12:00:00Z");
 
   test("accepts a full form and trims text", () => {
-    const result = parseNewCircle(
+    const result = parseCircleForm(
       {
         name: "  Mama Halina ",
         firstName: "Halina",
@@ -69,10 +69,10 @@ describe("new circle form", () => {
   });
 
   test("needs a circle name and a first name", () => {
-    assert.deepEqual(parseNewCircle({ firstName: "Halina" }, today), {
+    assert.deepEqual(parseCircleForm({ firstName: "Halina" }, today), {
       error: "nameRequired",
     });
-    assert.deepEqual(parseNewCircle({ name: "Mama" }, today), {
+    assert.deepEqual(parseCircleForm({ name: "Mama" }, today), {
       error: "firstNameRequired",
     });
   });
@@ -85,7 +85,10 @@ describe("new circle form", () => {
       "12.03.1948",
     ]) {
       assert.deepEqual(
-        parseNewCircle({ name: "Mama", firstName: "Halina", birthDate }, today),
+        parseCircleForm(
+          { name: "Mama", firstName: "Halina", birthDate },
+          today,
+        ),
         { error: "birthDateInvalid" },
         birthDate,
       );

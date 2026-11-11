@@ -292,8 +292,9 @@ try {
         circle.text.includes("Zaproś osobę") &&
         circle.text.includes("Zofia Testowa") &&
         circle.text.includes("Tablet mamy") &&
+        circle.text.includes("dr Jan Testowy") &&
         circle.text.includes("Opuść krąg"),
-      "the circle page lists people, numbers and the paired tablet",
+      "the circle page shows the senior, people, numbers and the tablet",
     );
 
     const coordinatorPages = [
@@ -301,7 +302,8 @@ try {
       ["/krag/demo-krag-kowalscy/polacz", "Pokaż kod QR"],
       ["/krag/demo-krag-kowalscy/numery", "Dodaj numer"],
       ["/krag/demo-krag-kowalscy/podglad", "Zadzwoń do bliskich"],
-      ["/krag/demo-krag-kowalscy/ustawienia", "Widzi wszystko i zarządza"],
+      ["/krag/demo-krag-kowalscy/ustawienia", "Usuń krąg na zawsze"],
+      ["/krag/demo-krag-kowalscy/dane", "dr Jan Testowy"],
       ["/krag/demo-krag-kowalscy/dziennik", "założenie kręgu"],
       ["/krag/nowy", "Nowy krąg"],
     ];

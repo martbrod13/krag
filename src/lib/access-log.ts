@@ -9,7 +9,9 @@ export const ACCESS_LOG_PAGE_SIZE = 50;
 // What happened, as a key of the AccessLog.events messages.
 const EVENTS = {
   "VIEW CareRecipient": "viewRecipient",
+  "UPDATE CareRecipient": "updateRecipient",
   "CREATE CareCircle": "createCircle",
+  "UPDATE CareCircle": "renameCircle",
   "CREATE Invitation": "createInvitation",
   "DELETE Invitation": "cancelInvitation",
   "CREATE Membership": "join",

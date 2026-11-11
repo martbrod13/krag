@@ -12,15 +12,28 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title") };
 }
 
-export default async function FamilyPage() {
+export default async function FamilyPage({
+  searchParams,
+}: PageProps<"/rodzina">) {
   const user = await requireUser("/rodzina");
   const circles = await getMyCircles(user.id);
   const t = await getTranslations("Family");
   const common = await getTranslations("Common");
+  // Set after a coordinator deleted a circle (circle settings).
+  const circleDeleted = (await searchParams).usunieto === "1";
 
   return (
     <>
       <h1 className="text-3xl font-extrabold">{t("title")}</h1>
+
+      {circleDeleted ? (
+        <p
+          role="status"
+          className="rounded-2xl bg-brand-soft p-4 text-brand-strong"
+        >
+          {t("circleDeleted")}
+        </p>
+      ) : null}
 
       <section aria-labelledby="my-circles" className="flex flex-col gap-3">
         <h2 id="my-circles" className="text-xl font-extrabold">

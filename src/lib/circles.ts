@@ -78,14 +78,23 @@ export type NewCircleInput = {
   city: string | null;
 };
 
-type MissingFieldError = "nameRequired" | "firstNameRequired";
-export type NewCircleError = MissingFieldError | "birthDateInvalid";
+/** The circle form: a new circle, or changes to the care recipient's data. */
+export type CircleFormInput = NewCircleInput & {
+  address: string | null;
+  primaryDoctor: string | null;
+};
 
-/** Checks the "new circle" form. Text is trimmed and shortened to safe lengths. */
-export function parseNewCircle(
+type MissingFieldError = "nameRequired" | "firstNameRequired";
+export type CircleFormError = MissingFieldError | "birthDateInvalid";
+
+/**
+ * Checks the circle form. Text is trimmed and shortened to safe lengths,
+ * and empty optional fields become null.
+ */
+export function parseCircleForm(
   fields: Record<string, unknown>,
   today: Date,
-): { input: NewCircleInput } | { error: NewCircleError } {
+): { input: CircleFormInput } | { error: CircleFormError } {
   const text = (key: string, max: number) =>
     String(fields[key] ?? "")
       .trim()
@@ -94,6 +103,8 @@ export function parseNewCircle(
   const name = text("name", 80);
   const firstName = text("firstName", 60);
   const city = text("city", 80);
+  const address = text("address", 160);
+  const primaryDoctor = text("primaryDoctor", 120);
   const birthDateText = text("birthDate", 10);
 
   if (!name) return { error: "nameRequired" };
@@ -113,7 +124,16 @@ export function parseNewCircle(
     if (!valid) return { error: "birthDateInvalid" };
   }
 
-  return { input: { name, firstName, birthDate, city: city || null } };
+  return {
+    input: {
+      name,
+      firstName,
+      birthDate,
+      city: city || null,
+      address: address || null,
+      primaryDoctor: primaryDoctor || null,
+    },
+  };
 }
 
 export async function isMember(circleId: string, userId: string) {
@@ -184,6 +204,7 @@ export type CircleView = {
     age: number | null;
     city: string | null;
     address: string | null;
+    primaryDoctor: string | null;
   } | null;
   members: { userId: string; name: string; role: CircleRole }[];
   /** Emergency contacts, for people with access to the profile. */
@@ -225,6 +246,7 @@ export async function getCircleForMember(
               birthDate: true,
               city: true,
               address: true,
+              primaryDoctor: true,
               emergencyContacts: {
                 orderBy: contactOrder,
                 select: contactFields,
@@ -281,6 +303,7 @@ export async function getCircleForMember(
               : null,
           city: seesProfile ? recipient.city : null,
           address: seesProfile ? recipient.address : null,
+          primaryDoctor: seesProfile ? recipient.primaryDoctor : null,
         }
       : null,
     members: circle.memberships.map((member) => ({
@@ -296,4 +319,124 @@ export async function getCircleForMember(
         pairedBy: pairedBy?.name ?? null,
       })) ?? null,
   };
+}
+
+const recipientFields = {
+  firstName: true,
+  birthDate: true,
+  city: true,
+  address: true,
+  primaryDoctor: true,
+} as const;
+
+/** The circle form's fields as text, e.g. a birth date as YYYY-MM-DD. */
+export type CircleFormValues = Record<keyof CircleFormInput, string>;
+
+/**
+ * The circle's current data for the edit form, or null if there is no such
+ * circle. The caller must check that the user may manage the circle.
+ */
+export async function getCircleFormValues(
+  circleId: string,
+): Promise<CircleFormValues | null> {
+  const circle = await db.careCircle.findUnique({
+    where: { id: circleId },
+    select: { name: true, recipient: { select: recipientFields } },
+  });
+  if (!circle) return null;
+  const recipient = circle.recipient;
+  return {
+    name: circle.name,
+    firstName: recipient?.firstName ?? "",
+    birthDate: recipient?.birthDate?.toISOString().slice(0, 10) ?? "",
+    city: recipient?.city ?? "",
+    address: recipient?.address ?? "",
+    primaryDoctor: recipient?.primaryDoctor ?? "",
+  };
+}
+
+/**
+ * Saves the circle's name and the care recipient's data. Each part that
+ * changed goes into the access log. The caller must check that the user may
+ * manage the circle. Returns false if there is no such circle.
+ */
+export async function updateCircle(params: {
+  circleId: string;
+  userId: string;
+  input: CircleFormInput;
+}) {
+  const { circleId, userId, input } = params;
+  return db.$transaction(async (tx) => {
+    const circle = await tx.careCircle.findUnique({
+      where: { id: circleId },
+      select: { name: true, recipient: { select: recipientFields } },
+    });
+    if (!circle) return false;
+
+    if (circle.name !== input.name) {
+      await tx.careCircle.update({
+        where: { id: circleId },
+        data: { name: input.name },
+      });
+      await logAccess(
+        {
+          circleId,
+          userId,
+          action: "UPDATE",
+          entity: "CareCircle",
+          entityId: circleId,
+        },
+        tx,
+      );
+    }
+
+    const data = {
+      firstName: input.firstName,
+      birthDate: input.birthDate,
+      city: input.city,
+      address: input.address,
+      primaryDoctor: input.primaryDoctor,
+    };
+    const before = circle.recipient;
+    const changed =
+      !before ||
+      before.firstName !== data.firstName ||
+      before.birthDate?.getTime() !== data.birthDate?.getTime() ||
+      before.city !== data.city ||
+      before.address !== data.address ||
+      before.primaryDoctor !== data.primaryDoctor;
+    if (changed) {
+      await tx.careRecipient.upsert({
+        where: { circleId },
+        create: { circleId, ...data },
+        update: data,
+      });
+      await logAccess(
+        { circleId, userId, action: "UPDATE", entity: "CareRecipient" },
+        tx,
+      );
+    }
+    return true;
+  });
+}
+
+/**
+ * Whether the text typed to confirm deleting matches the circle's name.
+ * Letter case and extra spaces do not matter.
+ */
+export function confirmsCircleName(typed: string, name: string) {
+  const normalize = (value: string) =>
+    value.trim().replace(/\s+/g, " ").toLocaleLowerCase("pl");
+  return normalize(typed) !== "" && normalize(typed) === normalize(name);
+}
+
+/**
+ * Deletes the circle with everything in it: memberships, invitations, the
+ * care recipient's data and numbers, paired devices and the access log
+ * (data map, "Prawa użytkowników"). The caller must check that the user may
+ * manage the circle. Returns false if there was no such circle.
+ */
+export async function deleteCircle(circleId: string) {
+  const deleted = await db.careCircle.deleteMany({ where: { id: circleId } });
+  return deleted.count > 0;
 }

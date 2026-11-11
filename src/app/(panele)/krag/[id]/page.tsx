@@ -65,9 +65,19 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
 
       {recipient ? (
         <Card className="flex flex-col gap-1">
-          <h2 className="text-sm font-bold tracking-wide text-muted uppercase">
-            {t("recipientTitle")}
-          </h2>
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-sm font-bold tracking-wide text-muted uppercase">
+              {t("recipientTitle")}
+            </h2>
+            {manages ? (
+              <Link
+                href={`/krag/${circle.id}/dane`}
+                className="flex min-h-11 items-center font-bold text-brand hover:underline"
+              >
+                {t("editRecipient")}
+              </Link>
+            ) : null}
+          </div>
           <p className="text-2xl font-extrabold">
             {recipient.age === null
               ? recipient.firstName
@@ -79,6 +89,11 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
           {recipient.city ? <p className="text-lg">{recipient.city}</p> : null}
           {recipient.address ? (
             <p className="text-muted">{recipient.address}</p>
+          ) : null}
+          {recipient.primaryDoctor ? (
+            <p className="text-muted">
+              {t("doctor", { doctor: recipient.primaryDoctor })}
+            </p>
           ) : null}
         </Card>
       ) : null}

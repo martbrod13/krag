@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { appOrigin } from "@/lib/app-origin";
-import { createCircle, hasPermission, parseNewCircle } from "@/lib/circles";
+import { createCircle, hasPermission, parseCircleForm } from "@/lib/circles";
 import { unpairDevice } from "@/lib/devices";
 import { formValues } from "@/lib/form";
 import { cancelInvitation, createInvitation } from "@/lib/invitations";
@@ -20,7 +20,7 @@ export async function createCircleAction(
   formData: FormData,
 ): Promise<NewCircleState> {
   const userId = await currentUserId();
-  const parsed = parseNewCircle(Object.fromEntries(formData), new Date());
+  const parsed = parseCircleForm(Object.fromEntries(formData), new Date());
   if ("error" in parsed) {
     return {
       error: parsed.error,
