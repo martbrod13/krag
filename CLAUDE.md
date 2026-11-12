@@ -73,6 +73,12 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - The senior screen and the start page cards show today's visits (`getTodayVisits`, `summarizeVisits`).
 - Access log entities: `Visit` (VIEW, CREATE, UPDATE, DELETE), `VisitStart` and `VisitReport` (UPDATE); `entityId` is the visit id and the subject is the visitor's name, read when the log is shown. The plan and report texts are never copied into it.
 
+## Data export
+
+- "Download my data" (data map, users' rights; GDPR art. 15 and 20) lives in `src/lib/export.ts`. `exportAccount` gives a person their account, sign-ins, circles with role and permissions, and their own tasks and visits from circles where they have `TASKS` or `VISITS`. `exportCircle` gives a coordinator everything in the circle, without other people's e-mail addresses, and logs `VIEW CircleExport`.
+- The files are JSON made on request by route handlers (`/konto/pobierz`, `/krag/[id]/ustawienia/pobierz` for `MANAGE`) through `jsonDownload` (`src/lib/export-response.ts`): `no-store`, never saved on the server. Link to them with a plain `<a download>`, not `next/link`.
+- When adding a table or field, add it to the export too (and to the data map).
+
 ## Senior screen
 
 - The senior has no account. A coordinator shows a one-time QR code (`DevicePairing`, 30 minutes, only a hash stored) on `/krag/[id]/polacz`. The device opens `/senior/polacz/[token]` and pairs only after a tap on "Połącz": link previews in chat apps open links too, so a GET never uses up a code.

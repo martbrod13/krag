@@ -152,6 +152,11 @@ try {
     check(redirectsTo(page, "/"), `${path} leads to the start page`);
   }
 
+  check(
+    redirectsToSignIn(await get("/konto/pobierz", polish), "/konto"),
+    "downloading data needs signing in",
+  );
+
   const circleForVisitor = await get("/krag/demo-krag-kowalscy", polish);
   check(
     redirectsToSignIn(circleForVisitor, "/krag/demo-krag-kowalscy"),
@@ -313,6 +318,42 @@ try {
       "after signing in Ania sees her circle with today's tasks",
     );
 
+    // "Download my data": her own file and, as the coordinator, the circle's.
+    const readJson = (page) => {
+      try {
+        return JSON.parse(page.text);
+      } catch {
+        return null;
+      }
+    };
+    const account = await get("/konto", { ...polish, cookie: ania });
+    check(
+      account.status === 200 && account.text.includes("Pobierz moje dane"),
+      "the account page offers Ania's data",
+    );
+    const myData = await get("/konto/pobierz", { ...polish, cookie: ania });
+    check(
+      myData.status === 200 &&
+        (myData.headers.get("content-disposition") ?? "").includes(
+          "attachment",
+        ) &&
+        readJson(myData)?.account?.email === "ania.kowalska@example.com",
+      "Ania downloads her own data",
+    );
+    const circleData = readJson(
+      await get("/krag/demo-krag-kowalscy/ustawienia/pobierz", {
+        ...polish,
+        cookie: ania,
+      }),
+    );
+    check(
+      circleData?.circle?.name === "Mama Halina" &&
+        circleData.medications?.length === 6 &&
+        circleData.visits?.length > 0 &&
+        circleData.accessLog?.length > 0,
+      "the coordinator downloads all of the circle's data",
+    );
+
     const circle = await get("/krag/demo-krag-kowalscy", {
       ...polish,
       cookie: ania,
@@ -380,6 +421,14 @@ try {
     check(
       redirectsTo(welcome, "/witaj?next=%2F"),
       "a new person is asked for a first name",
+    );
+    const outsider = await get("/krag/demo-krag-kowalscy/ustawienia/pobierz", {
+      ...polish,
+      cookie: newcomer,
+    });
+    check(
+      outsider.status !== 200 && !outsider.text.includes("Mama Halina"),
+      "someone outside the circle cannot download its data",
     );
   }
 } catch (error) {

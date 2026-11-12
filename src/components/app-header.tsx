@@ -4,8 +4,9 @@ import { Logo } from "@/components/brand/logo";
 import { SignOutButton } from "@/components/sign-out-button";
 
 /**
- * The top bar of the signed-in app: the logo takes you to "My circles",
- * on the right is signing out (or, for visitors, back to the start).
+ * The top bar of the signed-in app: the logo takes you to "My circles", on
+ * the right are the account and signing out (or, for visitors, back to the
+ * start).
  */
 export function AppHeader({ signedIn }: { signedIn: boolean }) {
   const t = useTranslations("Common");
@@ -20,7 +21,15 @@ export function AppHeader({ signedIn }: { signedIn: boolean }) {
         {t("appName")}
       </Link>
       {signedIn ? (
-        <SignOutButton />
+        <div className="flex items-center gap-1">
+          <Link
+            href="/konto"
+            className="flex min-h-11 items-center rounded-full px-3 font-bold text-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {t("account")}
+          </Link>
+          <SignOutButton />
+        </div>
       ) : (
         <Link
           href="/"

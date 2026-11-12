@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
-import { ButtonLink } from "@/components/ui/button";
+import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { getCircleForMember } from "@/lib/circles";
@@ -163,6 +163,19 @@ export default async function SettingsPage({
         <ButtonLink href={`/krag/${id}/dziennik`} variant="secondary">
           {t("openLog")}
         </ButtonLink>
+      </Card>
+
+      <Card className="flex flex-col gap-3">
+        <h2 className="text-xl font-extrabold">{t("exportTitle")}</h2>
+        <p className="text-muted">{t("exportLead")}</p>
+        {/* A plain link: a download, not a page to prefetch. */}
+        <a
+          href={`/krag/${id}/ustawienia/pobierz`}
+          download
+          className={buttonClasses({ variant: "secondary" })}
+        >
+          {t("exportButton")}
+        </a>
       </Card>
 
       <section

@@ -33,6 +33,9 @@ Dopóki nie będzie gotowy cały komplet poniżej, w aplikacji są wyłącznie z
 - Senior nie ma konta ani hasła. Jego telefon albo tablet łączy koordynator kodem QR, który działa raz przez 30 minut, i może go w każdej chwili odłączyć.
 - Linki z zaproszeniami, kody QR i klucze urządzeń zapisujemy w bazie tylko jako skróty (hash). Nawet ktoś, kto zobaczy bazę, nie otworzy dzięki nim żadnego kręgu.
 - Dziennik dostępu zapisuje, kto i kiedy oglądał albo zmieniał dane podopiecznego.
+- Koordynator może usunąć cały krąg ze wszystkimi danymi.
+- Każdy pobiera swoje dane w „Moim koncie”, a koordynator wszystkie dane kręgu w ustawieniach kręgu (pliki JSON, art. 15 i 20 RODO). Pliki powstają w chwili pobrania i nie zostają na serwerze.
+- Wizyty opiekunki zapisują tylko godziny, nigdy lokalizację.
 
 ## Mapa danych
 

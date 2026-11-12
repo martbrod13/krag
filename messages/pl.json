@@ -6,7 +6,8 @@
     "appName": "Krąg",
     "backToStart": "Wróć do startu",
     "signOut": "Wyloguj się",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "account": "Moje konto"
   },
   "Home": {
     "title": "Wspólna opieka nad bliską osobą",
@@ -59,7 +60,7 @@
         "text": "Polski, ukraiński, rosyjski i angielski. Każdy wybiera swój."
       }
     },
-    "soon": "Wkrótce: pobieranie wszystkich danych kręgu jednym kliknięciem.",
+    "soon": "Wkrótce: zdjęcie wypisu ze szpitala zamienione w propozycję planu leków do sprawdzenia.",
     "privacyTitle": "Dane o zdrowiu traktujemy poważnie",
     "privacy": {
       "noAds": "Bez reklam i bez śledzenia.",
@@ -361,7 +362,10 @@
     "deleteTitle": "Usuń krąg",
     "deleteLead": "Usuniemy krąg ze wszystkimi danymi: dane podopiecznego, ważne numery, zaproszenia, połączone urządzenia i dziennik dostępu. Osoby z kręgu stracą do niego dostęp, ale ich konta zostaną. Tego nie da się cofnąć.",
     "deleteConfirm": "Aby potwierdzić, wpisz nazwę kręgu: {name}",
-    "delete": "Usuń krąg na zawsze"
+    "delete": "Usuń krąg na zawsze",
+    "exportTitle": "Pobierz dane kręgu",
+    "exportLead": "Plik JSON ze wszystkimi danymi kręgu: dane podopiecznego, osoby, zadania, leki z potwierdzeniami, wizyty z raportami i dziennik dostępu. Plik zawiera dane o zdrowiu, więc przechowuj go bezpiecznie. Pobranie zapiszemy w dzienniku dostępu.",
+    "exportButton": "Pobierz dane kręgu"
   },
   "AccessLog": {
     "title": "Dziennik dostępu",
@@ -407,7 +411,8 @@
       "updateVisit": "zmiana terminu wizyty: {name}",
       "deleteVisit": "usunięcie wizyty",
       "startVisit": "rozpoczęcie wizyty: {name}",
-      "reportVisit": "raport z wizyty: {name}"
+      "reportVisit": "raport z wizyty: {name}",
+      "exportCircle": "pobranie wszystkich danych kręgu"
     },
     "deletedTask": "usunięte zadanie",
     "deletedMedication": "usunięty lek",
@@ -611,6 +616,19 @@
       "notFound": "Tej wizyty już nie ma.",
       "notAllowed": "Nie masz dostępu do wizyt w tym kręgu."
     }
+  },
+  "Account": {
+    "title": "Moje konto",
+    "exportTitle": "Pobierz moje dane",
+    "exportLead": "Plik JSON z Twoimi danymi: konto, ostatnie logowania, Twoje kręgi z rolą i uprawnieniami oraz Twoje zadania i wizyty.",
+    "exportButton": "Pobierz moje dane",
+    "exportCircleHint": "Wszystkie dane podopiecznego pobiera koordynator w ustawieniach kręgu."
+  },
+  "Export": {
+    "circleAbout": "Wszystkie dane kręgu „{name}” z aplikacji Krąg, pobrane {date}. Plik zawiera dane o zdrowiu: przechowuj go bezpiecznie.",
+    "accountAbout": "Twoje dane z aplikacji Krąg, pobrane {date}.",
+    "accountFileName": "moje-dane",
+    "circleFileName": "dane-kregu"
   },
   "Senior": {
     "title": "Ekran seniora",

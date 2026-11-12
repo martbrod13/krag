@@ -41,6 +41,7 @@ const EVENTS = {
   "DELETE Visit": "deleteVisit",
   "UPDATE VisitStart": "startVisit",
   "UPDATE VisitReport": "reportVisit",
+  "VIEW CircleExport": "exportCircle",
 } as const;
 
 /** Entries about one task: their entityId is the task's id. */

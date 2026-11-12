@@ -130,7 +130,9 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 
 - **Usunięcie konta:** w każdej chwili, w ustawieniach. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
 - **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, zadania, leki z potwierdzeniami dawek, wizyty z raportami, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
-- **Pobranie danych:** przycisk „Pobierz moje dane” (art. 20 RODO), w etapie 4.
+- **Pobranie swoich danych** (art. 15 i 20 RODO): każdy w „Moim koncie” pobiera plik JSON ze swoimi danymi: konto (imię, e-mail, telefon, język), ostatnie logowania (data, adres IP i przeglądarka), kręgi z rolą i uprawnieniami oraz swoje zadania i wizyty. Zadania i wizyty trafiają do pliku tylko z kręgów, w których ta osoba je widzi.
+- **Pobranie danych kręgu:** koordynator w ustawieniach kręgu pobiera plik JSON ze wszystkimi danymi kręgu: dane podopiecznego i kontakty alarmowe, osoby z kręgu (imiona, role, uprawnienia, bez adresów e-mail), ważne zaproszenia, połączone urządzenia, zadania, leki z potwierdzeniami dawek, wizyty z raportami i dziennik dostępu. Tak rodzina może skorzystać z praw podopiecznego albo przekazać dane lekarzowi. Pobranie danych kręgu zapisujemy w dzienniku dostępu.
+- Plików z danymi nie zapisujemy na serwerze: powstają w chwili pobrania.
 - **Wycofanie zgody:** w każdej chwili. Wtedy usuwamy dane o zdrowiu podopiecznego.
 
 ## Do ustalenia z prawnikiem

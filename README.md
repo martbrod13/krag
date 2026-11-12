@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami, nowa strona startowa, leki i wizyty opiekunki. Teraz kolej na pobieranie swoich danych.
+Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Etap 4 jest gotowy: plan dnia z zadaniami, nowa strona startowa, leki, wizyty opiekunki i pobieranie danych.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -195,6 +195,21 @@ Opiekun zawodowy widzi tylko swoje wizyty i raporty, rodzina widzi wszystkie. Na
 4. Wyloguj się i zaloguj jako `ewa.wisniewska@example.com`. Otwórz dzisiejszą wizytę i kliknij **Zaczynam wizytę**. Potem zaznacz, co było zrobione, napisz kilka słów i kliknij **Kończę wizytę i zapisuję raport**.
 5. Zaloguj się znowu jako Ania. W kręgu, w sekcji **Wizyty**, jest raport Ewy.
 
+## Pobieranie danych
+
+To prawo z RODO: każdy może dostać swoje dane w pliku.
+
+- **Moje dane:** w pasku u góry kliknij **Moje konto**, a potem **Pobierz moje dane**. W pliku jest konto, ostatnie logowania, kręgi z rolą i uprawnieniami oraz Twoje zadania i wizyty.
+- **Dane kręgu:** koordynator w **Ustawieniach kręgu** klika **Pobierz dane kręgu**. W pliku jest wszystko z kręgu: dane podopiecznego, osoby, zadania, leki z potwierdzeniami, wizyty z raportami i dziennik dostępu. Pobranie widać w dzienniku dostępu.
+
+Pliki są w formacie JSON. Powstają w chwili pobrania i nie zostają na serwerze. Plik z danymi kręgu zawiera dane o zdrowiu, więc trzeba go przechowywać bezpiecznie.
+
+### Jak przetestować
+
+1. Zaloguj się jako `ania.kowalska@example.com`, kliknij **Moje konto** i **Pobierz moje dane**. Plik pojawi się w folderze **Pobrane**. Otwórz go w VS Code: zobaczysz swoje dane.
+2. Otwórz krąg „Mama Halina”, wejdź w **Ustawienia kręgu** i kliknij **Pobierz dane kręgu**.
+3. W ustawieniach kliknij **Dziennik dostępu**: na górze jest „pobranie wszystkich danych kręgu”.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -202,7 +217,7 @@ Opiekun zawodowy widzi tylko swoje wizyty i raporty, rodzina widzi wszystkie. Na
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia, leki i wizyty (uruchamia je GitHub na bazie testowej).
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia, leki, wizyty i pobieranie danych (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych i odświeża klienta bazy danych w kodzie aplikacji.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.

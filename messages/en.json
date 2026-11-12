@@ -6,7 +6,8 @@
     "appName": "Krąg",
     "backToStart": "Back to start",
     "signOut": "Sign out",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "account": "My account"
   },
   "Home": {
     "title": "Caring for someone close, together",
@@ -59,7 +60,7 @@
         "text": "Polish, Ukrainian, Russian and English. Everyone picks their own."
       }
     },
-    "soon": "Coming soon: downloading all of the circle’s data in one click.",
+    "soon": "Coming soon: a photo of a hospital discharge letter turned into a suggested medicine plan to check.",
     "privacyTitle": "We take health data seriously",
     "privacy": {
       "noAds": "No ads and no tracking.",
@@ -361,7 +362,10 @@
     "deleteTitle": "Delete the circle",
     "deleteLead": "We will delete the circle with all its data: the senior’s details, important numbers, invitations, paired devices and the access log. People in the circle will lose access to it, but their accounts will stay. This cannot be undone.",
     "deleteConfirm": "To confirm, type the circle’s name: {name}",
-    "delete": "Delete the circle for good"
+    "delete": "Delete the circle for good",
+    "exportTitle": "Download the circle’s data",
+    "exportLead": "A JSON file with all of the circle’s data: the senior’s details, people, tasks, medicines with confirmations, visits with reports and the access log. It contains health data, so keep it safe. The download is written into the access log.",
+    "exportButton": "Download the circle’s data"
   },
   "AccessLog": {
     "title": "Access log",
@@ -407,7 +411,8 @@
       "updateVisit": "changed the time of a visit: {name}",
       "deleteVisit": "deleted a visit",
       "startVisit": "started a visit: {name}",
-      "reportVisit": "visit report: {name}"
+      "reportVisit": "visit report: {name}",
+      "exportCircle": "downloaded all of the circle’s data"
     },
     "deletedTask": "deleted task",
     "deletedMedication": "deleted medicine",
@@ -611,6 +616,19 @@
       "notFound": "This visit no longer exists.",
       "notAllowed": "You don’t have access to visits in this circle."
     }
+  },
+  "Account": {
+    "title": "My account",
+    "exportTitle": "Download my data",
+    "exportLead": "A JSON file with your data: your account, recent sign-ins, your circles with role and permissions, and your tasks and visits.",
+    "exportButton": "Download my data",
+    "exportCircleHint": "The coordinator downloads all of the senior’s data in the circle settings."
+  },
+  "Export": {
+    "circleAbout": "All data of the circle “{name}” from the Krąg app, downloaded {date}. The file contains health data: keep it safe.",
+    "accountAbout": "Your data from the Krąg app, downloaded {date}.",
+    "accountFileName": "my-data",
+    "circleFileName": "circle-data"
   },
   "Senior": {
     "title": "Senior screen",
