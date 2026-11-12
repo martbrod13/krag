@@ -8,6 +8,7 @@ import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
 import { timeInPoland, todayInPoland } from "@/lib/dates";
 import { getDoses, slotsOf } from "@/lib/medications";
+import { getTodayVisits } from "@/lib/visits";
 import { requireUser } from "@/lib/session";
 import { getSeniorPlan } from "@/lib/tasks";
 
@@ -35,12 +36,17 @@ export default async function PreviewPage({
     entity: "CareRecipient",
   });
 
-  // Tasks and medicines only for people who may see them.
+  // Tasks, medicines and visits only for people who may see them; a
+  // caregiver sees only their own visits (data map, decision 2).
   const today = todayInPoland();
-  const [plan, doses] = await Promise.all([
+  const viewer = { userId: user.id, role: circle.role };
+  const [plan, doses, visits] = await Promise.all([
     circle.permissions.includes("TASKS") ? getSeniorPlan(circle.id, today) : [],
     circle.permissions.includes("HEALTH")
       ? getDoses(circle.id, today, { seniorOnly: true })
+      : [],
+    circle.permissions.includes("VISITS")
+      ? getTodayVisits(circle.id, today, viewer)
       : [],
   ]);
   const t = await getTranslations("Preview");
@@ -64,6 +70,7 @@ export default async function PreviewPage({
           contacts={contacts}
           plan={plan}
           medicines={slotsOf(doses, timeInPoland())}
+          visits={visits}
           preview
         />
       </div>

@@ -65,11 +65,19 @@ Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4, next-i
 - Access log entities: `Medication` (VIEW, CREATE, UPDATE, DELETE) and `MedicationIntake` (CREATE = taken, DELETE = taken back; the senior's device logs with `deviceName`); `entityId` is the medicine's id. The name is read from the medicine when the log is shown, never copied into it.
 - `src/lib/medications.ts` uses the database, so client components import only its types; pass values such as `MAX_TIMES` as props.
 
+## Visits
+
+- Visits (`src/lib/visits.ts`, data map section 6) need `VISITS`. A caregiver (role `CAREGIVER`) sees only the visits they come to (data map, decision 2); pass a `VisitViewer` (`userId`, `role`) to every read, and server actions get it from `getVisitViewer`.
+- A visit has a day, planned times, a visitor, a plan, the real times (`actualStart`, `actualEnd`, "HH:MM") and the report (`activities` from `VISIT_ACTIVITIES`, text, `reportedAt`). A weekly repeat creates one row per day (`parseVisit`, at most 8 weeks) and logs one entry.
+- Family plans visits for anyone with `VISITS`; a caregiver plans only their own. Only the visitor starts a visit (on its day, time only, never a location) and writes the report (from its day on; saving it ends a visit in progress). The person who planned it or a coordinator deletes it. Leaving the circle frees the person's future visits they have not started (`removeMember`).
+- The senior screen and the start page cards show today's visits (`getTodayVisits`, `summarizeVisits`).
+- Access log entities: `Visit` (VIEW, CREATE, UPDATE, DELETE), `VisitStart` and `VisitReport` (UPDATE); `entityId` is the visit id and the subject is the visitor's name, read when the log is shown. The plan and report texts are never copied into it.
+
 ## Senior screen
 
 - The senior has no account. A coordinator shows a one-time QR code (`DevicePairing`, 30 minutes, only a hash stored) on `/krag/[id]/polacz`. The device opens `/senior/polacz/[token]` and pairs only after a tap on "Połącz": link previews in chat apps open links too, so a GET never uses up a code.
 - A paired device (`PairedDevice`) keeps a secret token in the httpOnly cookie `krag_device` (`src/lib/device-cookie.ts`); only its hash is stored. `src/proxy.ts` renews the cookie on every visit. Read the device with `getPairedDevice()` from `src/lib/senior-device.ts`; on the start page a paired device without a session goes straight to `/senior`.
 - Logic: `src/lib/devices.ts` (pairing, unpairing, visits) and `src/lib/contacts.ts` (the emergency contacts shown as call buttons). Only coordinators (`MANAGE`) pair devices and change the numbers.
 - A visit to the senior screen goes into the access log at most once an hour (`recordDeviceVisit`).
-- The senior screen shows the clock, today's medicines with a reminder, today's tasks marked `showToSenior` and the call buttons.
+- The senior screen shows the clock, today's medicines with a reminder, today's visits and tasks marked `showToSenior` (together by time) and the call buttons.
 - Keep the senior screen calm: big text, few elements, nothing that signs out or deletes. Time-dependent text (clock, greeting) renders on the device only (`useSyncExternalStore` with a `null` server snapshot).

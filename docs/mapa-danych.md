@@ -64,10 +64,12 @@ To dane szczególnej kategorii (art. 9 RODO), więc chronimy je najmocniej.
 
 ### 6. Wizyty i raporty opiekuna zawodowego
 
-- **Co:** termin wizyty, godzina rozpoczęcia i zakończenia wpisana przez opiekuna, raport z wizyty (tekst, później także notatka głosowa).
-- **Po co:** rodzina wie, co działo się podczas wizyty.
-- **Kto widzi:** opiekun, który prowadził wizytę, i rodzina z kręgu.
-- **Jak długo:** do usunięcia kręgu.
+- **Co:** zaplanowana wizyta: dzień, godziny od i do, kto przychodzi (zwykle opiekun zawodowy), co trzeba zrobić i kto wizytę zaplanował. Godzina rozpoczęcia i zakończenia wpisana przez osobę, która przyszła: przycisk „Zaczynam wizytę” zapisuje aktualną godzinę, a w raporcie można ją poprawić. Raport z wizyty: co zostało zrobione (np. posiłek, leki, spacer, zakupy), opis i kiedy raport zapisano. Później także notatka głosowa. Dni i godziny są w czasie polskim.
+- **Po co:** rodzina wie, kto i kiedy przyjdzie i co działo się podczas wizyty. Senior widzi na swoim ekranie, kto dziś przyjdzie.
+- **Kto widzi:** osoby z kręgu z uprawnieniem do wizyt. Opiekun zawodowy widzi tylko swoje wizyty i raporty (decyzja 2), rodzina wszystkie. Połączone urządzenie podopiecznego widzi dzisiejsze wizyty: godziny i imię osoby, która przyjdzie.
+- **Kto zmienia:** wizytę planuje rodzina z uprawnieniem do wizyt, a opiekun zawodowy może zaplanować wizytę sobie. Termin może zmienić każdy, kto widzi wizytę. Rozpocząć wizytę i napisać raport może tylko osoba, która przychodzi. Usunąć wizytę razem z raportem może osoba, która ją zaplanowała, albo koordynator. Gdy ktoś opuści krąg, jego przyszłe, nierozpoczęte wizyty zostają bez osoby, a rodzina może wybrać kogoś innego.
+- **Jak długo:** do usunięcia wizyty albo kręgu.
+- **Uwaga:** raport może zdradzać stan zdrowia, dlatego chronimy go tak samo jak dane o zdrowiu. Do dziennika dostępu nie kopiujemy treści raportu ani planu wizyty.
 - **Czego nie robimy:** nie zapisujemy lokalizacji (GPS) opiekuna ani podopiecznego.
 
 ### 7. Dokumenty
@@ -127,7 +129,7 @@ Z każdym przed betą podpisujemy umowę powierzenia przetwarzania danych.
 ## Prawa użytkowników
 
 - **Usunięcie konta:** w każdej chwili, w ustawieniach. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
-- **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, zadania, leki z potwierdzeniami dawek, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
+- **Usunięcie kręgu:** koordynator może w ustawieniach kręgu usunąć cały krąg ze wszystkimi danymi. Musi wtedy wpisać nazwę kręgu. Znikają członkostwa (konta tych osób zostają), zaproszenia, dane i kontakty podopiecznego, zadania, leki z potwierdzeniami dawek, wizyty z raportami, połączone urządzenia i dziennik dostępu. Dane znikają od razu, a z kopii zapasowych najpóźniej po 30 dniach.
 - **Pobranie danych:** przycisk „Pobierz moje dane” (art. 20 RODO), w etapie 4.
 - **Wycofanie zgody:** w każdej chwili. Wtedy usuwamy dane o zdrowiu podopiecznego.
 

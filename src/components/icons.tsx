@@ -38,6 +38,17 @@ export function CalendarIcon({ className }: IconProps) {
   );
 }
 
+/** A house: visits at home. */
+export function HouseIcon({ className }: IconProps) {
+  return (
+    <svg {...strokeProps} className={className}>
+      <path d="M3 10.5 12 3l9 7.5" />
+      <path d="M5 9v12h14V9" />
+      <path d="M10 21v-6h4v6" />
+    </svg>
+  );
+}
+
 /** A capsule: medicines. */
 export function PillIcon({ className }: IconProps) {
   return (

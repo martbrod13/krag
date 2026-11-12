@@ -4,7 +4,7 @@ Aplikacja do wspólnej opieki nad bliską osobą. Rodzina, opiekunka lub pielęg
 
 ## Gdzie jesteśmy
 
-Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami, nowa strona startowa i leki. Teraz kolej na wizyty opiekunki, a potem na pobieranie swoich danych.
+Etap 4 z 7: **funkcje podstawowe**. Gotowe są fundament (szkielet aplikacji, cztery języki, automatyczne sprawdzanie kodu), mapa danych, baza danych w Neon i cały etap 3: logowanie kodem z e-maila, kręgi z zaproszeniami, ekran seniora łączony kodem QR i ustawienia kręgu. Z etapu 4 gotowe są plan dnia z zadaniami, nowa strona startowa, leki i wizyty opiekunki. Teraz kolej na pobieranie swoich danych.
 
 1. ✅ **Fundament** – szkielet aplikacji, wygląd, cztery języki, automatyczne sprawdzanie kodu.
 2. ✅ **Mapa danych i baza danych** – co zapisujemy, gdzie i po co ([docs/mapa-danych.md](docs/mapa-danych.md)).
@@ -179,6 +179,22 @@ Leki widzą tylko osoby z uprawnieniem do danych o zdrowiu. Potwierdzenia dawek 
 5. Wróć do kręgu i w sekcji **Ekran seniora** kliknij **Zobacz podgląd**. W **Leki na dziś** przy tej godzinie jest duży przycisk **Wzięte**. W podglądzie przycisk tylko pokazuje, co widzi senior.
 6. Jeśli masz połączone okno prywatne z ekranem seniora (patrz **Ekran seniora** wyżej), kliknij w nim **Wzięte**. W kręgu przy tej dawce pojawi się „Wzięte o … (ekran seniora)”.
 
+## Wizyty opiekunki
+
+Rodzina planuje wizyty: dzień, godziny, kto przyjdzie i co trzeba zrobić. Wizytę można powtarzać co tydzień przez 2, 4 albo 8 tygodni, np. od poniedziałku do piątku w godzinach 9:00–12:00. Opiekunka może też zaplanować wizytę sobie.
+
+Na miejscu opiekunka klika **Zaczynam wizytę**. Zapisuje się tylko godzina, bez lokalizacji. Na koniec wypełnia raport: zaznacza, co zostało zrobione (np. posiłek, leki, spacer, zakupy), dopisuje kilka zdań i klika **Kończę wizytę i zapisuję raport**. Rodzina od razu widzi, kto jest teraz u podopiecznego i co działo się na wizycie. Wizyta z przeszłości, której nikt nie rozpoczął, jest oznaczona „Nie odnotowano wizyty”.
+
+Opiekun zawodowy widzi tylko swoje wizyty i raporty, rodzina widzi wszystkie. Na ekranie seniora jest np. „Przyjdzie Ewa Wiśniewska”, a w czasie wizyty „Ewa Wiśniewska jest u Ciebie”. Na stronie startowej karta kręgu pokazuje dzisiejszą wizytę.
+
+### Jak przetestować
+
+1. Wpisz `npm run db:migrate`, a potem `npm run db:seed`. W danych testowych są wizyty Ewy z ostatnich dni (z raportami), dzisiejsza i kolejne.
+2. Zaloguj się jako `ania.kowalska@example.com`. Na karcie kręgu jest „Wizyta dziś: Ewa Wiśniewska”. Otwórz krąg, a potem **Wszystkie wizyty**: jedna z ostatnich wizyt jest „Nie odnotowana”.
+3. Kliknij **Zaplanuj wizytę**, wybierz np. **Co tydzień przez 2 tygodnie** i zaznacz kilka dni. Po zapisaniu wizyty pojawią się w **Najbliższe dni**.
+4. Wyloguj się i zaloguj jako `ewa.wisniewska@example.com`. Otwórz dzisiejszą wizytę i kliknij **Zaczynam wizytę**. Potem zaznacz, co było zrobione, napisz kilka słów i kliknij **Kończę wizytę i zapisuję raport**.
+5. Zaloguj się znowu jako Ania. W kręgu, w sekcji **Wizyty**, jest raport Ewy.
+
 ## Polecenia
 
 - `npm run dev` – uruchamia aplikację na Twoim komputerze (http://localhost:3000).
@@ -186,7 +202,7 @@ Leki widzą tylko osoby z uprawnieniem do danych o zdrowiu. Potwierdzenia dawek 
 - `npm run format` – automatycznie porządkuje formatowanie wszystkich plików.
 - `npm run build` – buduje wersję produkcyjną, czyli sprawdza, czy całość się składa.
 - `npm run test:smoke` – po `npm run build` uruchamia aplikację i sprawdza, czy wszystkie strony się otwierają i czy baza odpowiada.
-- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia i leki (uruchamia je GitHub na bazie testowej).
+- `npm run test:db` – testy na bazie danych: kręgi, zaproszenia, ekran seniora, ustawienia kręgu, plan dnia, leki i wizyty (uruchamia je GitHub na bazie testowej).
 - `npm run db:migrate` – zakłada albo aktualizuje tabele w bazie danych i odświeża klienta bazy danych w kodzie aplikacji.
 - `npm run db:seed` – wgrywa zmyślone dane testowe. Można je wgrywać wiele razy, za każdym razem od nowa.
 - `npm run db:studio` – otwiera podgląd bazy danych w przeglądarce.

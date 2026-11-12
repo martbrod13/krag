@@ -8,6 +8,7 @@ import { listContacts } from "@/lib/contacts";
 import { timeInPoland, todayInPoland } from "@/lib/dates";
 import { recordDeviceVisit } from "@/lib/devices";
 import { getDoses, slotsOf } from "@/lib/medications";
+import { getTodayVisits } from "@/lib/visits";
 import { getPairedDevice } from "@/lib/senior-device";
 import { getSeniorPlan } from "@/lib/tasks";
 
@@ -52,10 +53,11 @@ export default async function SeniorPage() {
   }
 
   const today = todayInPoland();
-  const [contacts, plan, doses] = await Promise.all([
+  const [contacts, plan, doses, visits] = await Promise.all([
     listContacts(device.circleId),
     getSeniorPlan(device.circleId, today),
     getDoses(device.circleId, today, { seniorOnly: true }),
+    getTodayVisits(device.circleId, today),
   ]);
   await recordDeviceVisit(device);
 
@@ -66,6 +68,7 @@ export default async function SeniorPage() {
         contacts={contacts}
         plan={plan}
         medicines={slotsOf(doses, timeInPoland())}
+        visits={visits}
       />
     </>
   );

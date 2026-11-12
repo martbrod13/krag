@@ -267,6 +267,10 @@ try {
       "the senior screen shows today's medicines with a reminder",
     );
     check(
+      seniorScreen.text.includes("Przyjdzie Ewa Wiśniewska"),
+      "the senior screen shows who comes today",
+    );
+    check(
       (seniorScreen.headers.get("set-cookie") ?? "").includes("krag_device="),
       "every visit renews the tablet's cookie",
     );
@@ -304,7 +308,8 @@ try {
         myCircles.text.includes("Koordynator kręgu") &&
         /Dziś do zrobienia: \d+ zada|Na dziś nic do zrobienia/.test(
           myCircles.text,
-        ),
+        ) &&
+        myCircles.text.includes("Wizyta dziś: Ewa Wiśniewska"),
       "after signing in Ania sees her circle with today's tasks",
     );
 
@@ -321,6 +326,7 @@ try {
         circle.text.includes("dr Jan Testowy") &&
         circle.text.includes("Cały plan") &&
         circle.text.includes("Wszystkie leki") &&
+        circle.text.includes("Wszystkie wizyty") &&
         circle.text.includes("Opuść krąg"),
       "the circle page shows the senior, people, numbers and the tablet",
     );
@@ -336,6 +342,8 @@ try {
       ["/krag/demo-krag-kowalscy/plan/nowe", "Co trzeba zrobić?"],
       ["/krag/demo-krag-kowalscy/leki", "Paracetamol 500 mg"],
       ["/krag/demo-krag-kowalscy/leki/nowy", "Nazwa leku i dawka"],
+      ["/krag/demo-krag-kowalscy/wizyty", "Nie odnotowano wizyty"],
+      ["/krag/demo-krag-kowalscy/wizyty/nowa", "Kto przyjdzie?"],
       ["/krag/demo-krag-kowalscy/dziennik", "założenie kręgu"],
       ["/krag/nowy", "Nowy krąg"],
     ];

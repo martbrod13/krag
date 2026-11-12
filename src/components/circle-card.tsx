@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import type { MyCircle } from "@/lib/circles";
 
 /**
- * One care circle: who is cared for, the user's role and what is left to do
- * today. Opens the circle page.
+ * One care circle: who is cared for, the user's role, today's visit and what
+ * is left to do today. Opens the circle page.
  */
 export function CircleCard({ circle }: { circle: MyCircle }) {
   const t = useTranslations("Circles");
@@ -15,6 +15,24 @@ export function CircleCard({ circle }: { circle: MyCircle }) {
   const tasks = circle.tasks;
   // Doses still not confirmed an hour after their time.
   const missedDoses = circle.missedDoses ?? 0;
+
+  // Today's visit: a caregiver reads their own, family who comes.
+  const visit = circle.visit;
+  const visitLine = () => {
+    if (!visit) return null;
+    const name = visit.visitor ?? "";
+    if (visit.actualStart) {
+      return circle.role === "CAREGIVER"
+        ? home("visitNow", { time: visit.actualStart })
+        : home("visitNowBy", { name, time: visit.actualStart });
+    }
+    const time = visit.endTime
+      ? `${visit.startTime}–${visit.endTime}`
+      : visit.startTime;
+    return circle.role === "CAREGIVER"
+      ? home("visitToday", { time })
+      : home("visitTodayBy", { name, time });
+  };
 
   return (
     <Link
@@ -38,6 +56,9 @@ export function CircleCard({ circle }: { circle: MyCircle }) {
               <span className="text-muted">, {recipient.city}</span>
             ) : null}
           </span>
+        ) : null}
+        {visit ? (
+          <span className="font-bold text-info">{visitLine()}</span>
         ) : null}
         {tasks || missedDoses ? (
           <span className="flex flex-wrap gap-x-3 gap-y-1 font-bold">

@@ -331,6 +331,65 @@ async function main() {
     }
   }
 
+  // Ewa's visits on weekdays (data map, section 6): reports for the last
+  // days and one visit nobody recorded, then today's and the next days'.
+  const reports: [string[], string][] = [
+    [
+      ["meal", "walk"],
+      "Obiad zjedzony prawie cały. Krótki spacer wokół bloku, dobry humor.",
+    ],
+    [
+      ["shopping", "meds"],
+      "Zakupy według listy. Mama skarżyła się na ból kolana, warto powiedzieć lekarzowi.",
+    ],
+    [
+      ["hygiene", "meds"],
+      "Pomoc przy kąpieli, leki podane o 9:30. Dużo rozmowy o wnukach.",
+    ],
+    [
+      ["cleaning", "meal"],
+      "Sprzątanie kuchni i obiad. Mama trochę senna po nieprzespanej nocy.",
+    ],
+  ];
+  const weekday = (offset: number) => weekdayOf(addDays(today, offset)) <= 5;
+  const visits: Prisma.VisitCreateManyInput[] = [];
+  let pastIndex = 0;
+  for (let offset = -6; offset <= 7; offset++) {
+    if (offset !== 0 && !weekday(offset)) continue;
+    const visitDay = addDays(today, offset);
+    const planned = {
+      circleId: circle.id,
+      visitorId: ewa.id,
+      createdById: ania.id,
+      date: dayToDate(visitDay),
+      startTime: "09:00",
+      endTime: "12:00",
+      plan: "Obiad, leki i krótki spacer.",
+      activities: [] as string[],
+    };
+    if (offset >= 0) {
+      visits.push(planned);
+      continue;
+    }
+    // The second past visit was never recorded.
+    const missed = pastIndex === 1;
+    const [activities, report] = reports[pastIndex % reports.length];
+    pastIndex++;
+    visits.push(
+      missed
+        ? planned
+        : {
+            ...planned,
+            actualStart: "09:05",
+            actualEnd: "11:55",
+            activities,
+            report,
+            reportedAt: polishMoment(visitDay, "11:58"),
+          },
+    );
+  }
+  await db.visit.createMany({ data: visits });
+
   await db.auditLog.createMany({
     data: [
       {
@@ -363,7 +422,7 @@ async function main() {
   });
 
   console.log(
-    `Test data ready: circle "${circle.name}" with 4 people, 1 invitation, 1 paired device and ${medicines.length} medicines.`,
+    `Test data ready: circle "${circle.name}" with 4 people, 1 invitation, 1 paired device, ${medicines.length} medicines and ${visits.length} visits.`,
   );
 }
 

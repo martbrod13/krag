@@ -7,8 +7,9 @@ import { logAccess } from "@/lib/audit";
 import { getCircleForMember } from "@/lib/circles";
 import { MAX_TIMES, getMedication } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
+import { weekdayNames } from "@/lib/weekday-names";
 import { deleteMedicationAction } from "../actions";
-import { valuesOf, weekdayNames } from "../form-values";
+import { valuesOf } from "../form-values";
 import { MedicationForm } from "../medication-form";
 
 export async function generateMetadata(): Promise<Metadata> {
