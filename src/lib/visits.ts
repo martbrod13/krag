@@ -436,12 +436,8 @@ export async function updateVisit(params: {
   });
 }
 
-export type StartVisitResult =
-  | "started"
-  | "already"
-  | "notToday"
-  | "notYours"
-  | "notFound";
+type StartRefusal = "already" | "notToday" | "notYours" | "notFound";
+export type StartVisitResult = "started" | StartRefusal;
 
 /** "I'm starting the visit": the person who comes, on the day of the visit. */
 export async function startVisit(params: {
