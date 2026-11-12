@@ -51,10 +51,12 @@ export default async function AccessLogPage({
     else days.push({ label, entries: [entry] });
   }
 
-  // A task or medicine deleted since keeps a placeholder instead of its name.
+  // A task, medicine or visit deleted since keeps a placeholder instead of
+  // its name.
   const deletedSubject = (kind: AccessLogEntry["subjectKind"]) => {
     if (kind === "task") return t("deletedTask");
     if (kind === "medication") return t("deletedMedication");
+    if (kind === "visit") return t("deletedVisit");
     return "—";
   };
 

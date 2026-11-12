@@ -42,20 +42,24 @@
         "title": "Daily plan",
         "text": "Tasks for today and the days ahead. One “I’ll take it” and everyone knows who does what."
       },
-      "senior": {
-        "title": "Senior screen",
-        "text": "The date, the time, today’s medicines and plan, and big buttons to call loved ones."
-      },
       "meds": {
         "title": "Medicines",
         "text": "Times and doses in one place. The senior confirms them with one tap, and the family sees what’s been taken."
+      },
+      "visits": {
+        "title": "Caregiver visits",
+        "text": "Who comes and when, and after every visit a short report for the family: what was done and how it went."
+      },
+      "senior": {
+        "title": "Senior screen",
+        "text": "The date, the time, today’s medicines, visits and plan, and big buttons to call loved ones."
       },
       "languages": {
         "title": "Four languages",
         "text": "Polish, Ukrainian, Russian and English. Everyone picks their own."
       }
     },
-    "soon": "Coming soon: caregiver visits with a report after each one.",
+    "soon": "Coming soon: downloading all of the circle’s data in one click.",
     "privacyTitle": "We take health data seriously",
     "privacy": {
       "noAds": "No ads and no tracking.",
@@ -76,7 +80,11 @@
     "newCircle": "Create a circle",
     "circleDeleted": "The circle has been deleted with all its data.",
     "todayCount": "{count, plural, =0 {Nothing to do today} one {Still to do today: # task} other {Still to do today: # tasks}}",
-    "missedDoses": "Unconfirmed doses: {count}"
+    "missedDoses": "Unconfirmed doses: {count}",
+    "visitToday": "Visit today: {time}",
+    "visitTodayBy": "Visit today: {name}, {time}",
+    "visitNow": "Visit in progress since {time}",
+    "visitNowBy": "Visit in progress: {name}, since {time}"
   },
   "Login": {
     "title": "Sign in",
@@ -393,10 +401,17 @@
       "updateMedication": "changed a medicine: {name}",
       "deleteMedication": "deleted a medicine",
       "takeDose": "confirmed a dose: {name}",
-      "undoDose": "took back a dose confirmation: {name}"
+      "undoDose": "took back a dose confirmation: {name}",
+      "viewVisits": "viewed visits",
+      "createVisit": "planned a visit: {name}",
+      "updateVisit": "changed the time of a visit: {name}",
+      "deleteVisit": "deleted a visit",
+      "startVisit": "started a visit: {name}",
+      "reportVisit": "visit report: {name}"
     },
     "deletedTask": "deleted task",
-    "deletedMedication": "deleted medicine"
+    "deletedMedication": "deleted medicine",
+    "deletedVisit": "deleted visit"
   },
   "Plan": {
     "title": "Plan and tasks",
@@ -517,6 +532,86 @@
       "notFound": "This medicine no longer exists."
     }
   },
+  "Visits": {
+    "title": "Visits",
+    "lead": "Who visits and when, and what happened during the visits.",
+    "leadCaregiver": "Your visits. When you arrive, tap “I’m starting the visit”, and at the end save a short report for the family.",
+    "add": "Plan a visit",
+    "empty": "No visits planned yet.",
+    "allLink": "All visits",
+    "noneToday": "No visits today.",
+    "latestReport": "Latest report",
+    "nowTitle": "Now",
+    "today": "Today, {date}",
+    "upcomingTitle": "Next days",
+    "pastTitle": "Recent visits",
+    "visitTitle": "Visit",
+    "noVisitor": "Nobody yet: choose who will come",
+    "inProgress": "In progress since {time}",
+    "happened": "Took place {time}",
+    "missed": "Visit not recorded",
+    "planTitle": "What to do",
+    "start": "I’m starting the visit",
+    "startHint": "Only the time is saved, never the location.",
+    "reportLater": "You can write the report on the day of the visit.",
+    "alreadyHappened": "Already visited? Write the report"
+  },
+  "VisitForm": {
+    "newTitle": "New visit",
+    "editTitle": "Change the time",
+    "back": "Back to visits",
+    "ownVisit": "You are planning your own visit.",
+    "date": "Day",
+    "startTime": "From",
+    "endTime": "Until",
+    "visitor": "Who will come?",
+    "chooseVisitor": "Choose a person",
+    "plan": "What needs doing?",
+    "planPlaceholder": "e.g. lunch, a bath, shopping from the list",
+    "repeat": "Repeat",
+    "noRepeat": "Don’t repeat",
+    "repeatFor": "Every week for {weeks, plural, one {# week} other {# weeks}}",
+    "repeatHint": "Tick the days of the week. With none ticked, the visit repeats on the same weekday as the first one.",
+    "add": "Plan the visit",
+    "save": "Save changes",
+    "delete": "Delete visit",
+    "confirmDelete": "Yes, delete the visit and its report",
+    "errors": {
+      "dateInvalid": "Enter a real date.",
+      "startRequired": "Enter the start time.",
+      "timeInvalid": "Enter a time, e.g. 09:00.",
+      "visitorRequired": "Choose who will come.",
+      "notAllowed": "You don’t have access to visits in this circle.",
+      "notFound": "This visit no longer exists."
+    }
+  },
+  "VisitReport": {
+    "title": "Visit report",
+    "actualStart": "Start",
+    "actualEnd": "End",
+    "done": "What was done?",
+    "activities": {
+      "meal": "Meal",
+      "meds": "Medicines",
+      "hygiene": "Personal care",
+      "walk": "Walk",
+      "shopping": "Shopping",
+      "cleaning": "Cleaning"
+    },
+    "report": "How did the visit go?",
+    "reportPlaceholder": "e.g. Ate all the lunch, a short walk, in good spirits.",
+    "end": "End the visit and save the report",
+    "save": "Save report",
+    "saved": "Report saved. The family can see it now.",
+    "savedAt": "Report saved {date}",
+    "errors": {
+      "timeInvalid": "Enter the start and end time, e.g. 09:00.",
+      "notYet": "You can write the report on the day of the visit.",
+      "notYours": "The report is written by the person who came.",
+      "notFound": "This visit no longer exists.",
+      "notAllowed": "You don’t have access to visits in this circle."
+    }
+  },
   "Senior": {
     "title": "Senior screen",
     "goodMorning": "Good morning!",
@@ -539,7 +634,11 @@
     "medsDue": "Time for your medicines",
     "medsTake": "Taken",
     "medsTaken": "Taken at {time}",
-    "medsDoseTaken": "taken"
+    "medsDoseTaken": "taken",
+    "visitComing": "{name} is coming",
+    "visitNow": "{name} is with you",
+    "visitDone": "Visit: {name}",
+    "visitUntil": "until {time}"
   },
   "SeniorPair": {
     "metaTitle": "Pair the senior screen",

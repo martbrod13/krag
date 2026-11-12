@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { countMissedDoses } from "@/lib/medications";
 import { DEFAULT_PERMISSIONS } from "@/lib/permissions";
 import { countOpenTasks, type OpenTaskCounts } from "@/lib/tasks";
+import { summarizeVisits, type VisitSummary } from "@/lib/visits";
 
 export type MyCircle = {
   id: string;
@@ -21,6 +22,8 @@ export type MyCircle = {
   tasks: OpenTaskCounts | null;
   /** Today's doses not confirmed in time; only with access to health data. */
   missedDoses: number | null;
+  /** Today's visit in progress or next; caregivers see only their own. */
+  visit: VisitSummary | null;
 };
 
 /** Full years between the birth date and today (dates compared in UTC). */
@@ -58,9 +61,16 @@ export async function getMyCircles(userId: string): Promise<MyCircle[]> {
       .filter((membership) => membership.permissions.includes(permission))
       .map((membership) => membership.circle.id);
   const today = todayInPoland();
-  const [taskCounts, missedDoses] = await Promise.all([
+  const visitMemberships = memberships
+    .filter((membership) => membership.permissions.includes("VISITS"))
+    .map((membership) => ({
+      circleId: membership.circle.id,
+      role: membership.role,
+    }));
+  const [taskCounts, missedDoses, visits] = await Promise.all([
     countOpenTasks(circlesWith("TASKS"), today),
     countMissedDoses(circlesWith("HEALTH"), today, timeInPoland()),
+    summarizeVisits(visitMemberships, userId, today),
   ]);
 
   const now = new Date();
@@ -73,6 +83,7 @@ export async function getMyCircles(userId: string): Promise<MyCircle[]> {
       role,
       tasks: taskCounts.get(circle.id) ?? null,
       missedDoses: missedDoses.get(circle.id) ?? null,
+      visit: visits.get(circle.id) ?? null,
       recipient: recipient
         ? {
             firstName: recipient.firstName,

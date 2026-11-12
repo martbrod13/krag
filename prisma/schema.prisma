@@ -66,6 +66,8 @@ model User {
   medsCreated     Medication[]       @relation("MedicationCreator")
   medsUpdated     Medication[]       @relation("MedicationEditor")
   medsConfirmed   MedicationIntake[]
+  visits          Visit[]            @relation("VisitVisitor")
+  visitsPlanned   Visit[]            @relation("VisitCreator")
   auditEntries    AuditLog[]
 }
 
@@ -139,6 +141,7 @@ model CareCircle {
   devices     PairedDevice[]
   tasks       Task[]
   medications Medication[]
+  visits      Visit[]
   auditLog    AuditLog[]
 }
 
@@ -306,6 +309,40 @@ model MedicationIntake {
   confirmedBy User?      @relation(fields: [confirmedById], references: [id], onDelete: SetNull)
 
   @@unique([medicationId, date, time])
+}
+
+/// A visit to the care recipient, usually by the professional caregiver, with
+/// the report written by the person who came (data map, section 6). The
+/// report may reveal health, so it is protected like health data and never
+/// copied into the access log. Days and times are Polish time; no location
+/// is stored.
+model Visit {
+  id          String    @id @default(cuid())
+  circleId    String
+  /// The person who comes; null after they left the circle before the visit.
+  visitorId   String?
+  date        DateTime  @db.Date
+  /// Planned times, "HH:MM"; the end is optional.
+  startTime   String
+  endTime     String?
+  /// What to do during the visit.
+  plan        String?
+  /// The times the visit really started and ended, "HH:MM".
+  actualStart String?
+  actualEnd   String?
+  /// What was done, e.g. "meal" or "walk" (VISIT_ACTIVITIES in src/lib/visits.ts).
+  activities  String[]
+  report      String?
+  reportedAt  DateTime?
+  createdById String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  circle    CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  visitor   User?      @relation("VisitVisitor", fields: [visitorId], references: [id], onDelete: SetNull)
+  createdBy User?      @relation("VisitCreator", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([circleId, date])
 }
 
 /// A one-time QR code that pairs the care recipient's phone or tablet with a

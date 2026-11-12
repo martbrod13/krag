@@ -15,8 +15,8 @@ import {
   listMedications,
 } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
+import { weekdayNames } from "@/lib/weekday-names";
 import { DoseItem } from "./dose-item";
-import { weekdayNames } from "./form-values";
 import { MedicationCard } from "./medication-card";
 
 export async function generateMetadata(): Promise<Metadata> {

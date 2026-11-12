@@ -42,20 +42,24 @@
         "title": "Plan dnia",
         "text": "Zadania na dziś i na kolejne dni. Jedno „Biorę to” i wiadomo, kto się czym zajmie."
       },
-      "senior": {
-        "title": "Ekran seniora",
-        "text": "Data, godzina, leki i plan na dziś oraz duże przyciski do dzwonienia do bliskich."
-      },
       "meds": {
         "title": "Leki",
         "text": "Godziny i dawki w jednym miejscu. Senior potwierdza leki jednym dotknięciem, a rodzina widzi, co już wzięte."
+      },
+      "visits": {
+        "title": "Wizyty opiekunki",
+        "text": "Kto i kiedy przyjdzie, a po każdej wizycie krótki raport dla rodziny: co zostało zrobione i jak było."
+      },
+      "senior": {
+        "title": "Ekran seniora",
+        "text": "Data, godzina, leki, wizyty i plan na dziś oraz duże przyciski do dzwonienia do bliskich."
       },
       "languages": {
         "title": "Cztery języki",
         "text": "Polski, ukraiński, rosyjski i angielski. Każdy wybiera swój."
       }
     },
-    "soon": "Wkrótce: wizyty opiekunki z raportem po każdej wizycie.",
+    "soon": "Wkrótce: pobieranie wszystkich danych kręgu jednym kliknięciem.",
     "privacyTitle": "Dane o zdrowiu traktujemy poważnie",
     "privacy": {
       "noAds": "Bez reklam i bez śledzenia.",
@@ -76,7 +80,11 @@
     "newCircle": "Załóż krąg",
     "circleDeleted": "Krąg został usunięty razem ze wszystkimi danymi.",
     "todayCount": "{count, plural, =0 {Na dziś nic do zrobienia} one {Dziś do zrobienia: # zadanie} few {Dziś do zrobienia: # zadania} many {Dziś do zrobienia: # zadań} other {Dziś do zrobienia: # zadania}}",
-    "missedDoses": "Niepotwierdzone leki: {count}"
+    "missedDoses": "Niepotwierdzone leki: {count}",
+    "visitToday": "Wizyta dziś: {time}",
+    "visitTodayBy": "Wizyta dziś: {name}, {time}",
+    "visitNow": "Wizyta trwa od {time}",
+    "visitNowBy": "Wizyta trwa: {name}, od {time}"
   },
   "Login": {
     "title": "Zaloguj się",
@@ -393,10 +401,17 @@
       "updateMedication": "zmiana leku: {name}",
       "deleteMedication": "usunięcie leku",
       "takeDose": "potwierdzenie dawki: {name}",
-      "undoDose": "cofnięcie potwierdzenia dawki: {name}"
+      "undoDose": "cofnięcie potwierdzenia dawki: {name}",
+      "viewVisits": "oglądanie wizyt",
+      "createVisit": "zaplanowanie wizyty: {name}",
+      "updateVisit": "zmiana terminu wizyty: {name}",
+      "deleteVisit": "usunięcie wizyty",
+      "startVisit": "rozpoczęcie wizyty: {name}",
+      "reportVisit": "raport z wizyty: {name}"
     },
     "deletedTask": "usunięte zadanie",
-    "deletedMedication": "usunięty lek"
+    "deletedMedication": "usunięty lek",
+    "deletedVisit": "usunięta wizyta"
   },
   "Plan": {
     "title": "Plan i zadania",
@@ -517,6 +532,86 @@
       "notFound": "Tego leku już nie ma."
     }
   },
+  "Visits": {
+    "title": "Wizyty",
+    "lead": "Kto i kiedy przychodzi do podopiecznego i co działo się na wizytach.",
+    "leadCaregiver": "Twoje wizyty u podopiecznego. Na miejscu kliknij „Zaczynam wizytę”, a na koniec zapisz krótki raport dla rodziny.",
+    "add": "Zaplanuj wizytę",
+    "empty": "Nie ma jeszcze zaplanowanych wizyt.",
+    "allLink": "Wszystkie wizyty",
+    "noneToday": "Dziś nie ma wizyt.",
+    "latestReport": "Ostatni raport",
+    "nowTitle": "Teraz",
+    "today": "Dziś, {date}",
+    "upcomingTitle": "Najbliższe dni",
+    "pastTitle": "Ostatnie wizyty",
+    "visitTitle": "Wizyta",
+    "noVisitor": "Bez osoby: wybierz, kto przyjdzie",
+    "inProgress": "W trakcie od {time}",
+    "happened": "Odbyła się {time}",
+    "missed": "Nie odnotowano wizyty",
+    "planTitle": "Co trzeba zrobić",
+    "start": "Zaczynam wizytę",
+    "startHint": "Zapiszemy tylko godzinę, bez lokalizacji.",
+    "reportLater": "Raport napiszesz w dniu wizyty.",
+    "alreadyHappened": "Wizyta już się odbyła? Napisz raport"
+  },
+  "VisitForm": {
+    "newTitle": "Nowa wizyta",
+    "editTitle": "Zmień termin",
+    "back": "Wróć do wizyt",
+    "ownVisit": "Planujesz swoją wizytę u podopiecznego.",
+    "date": "Dzień",
+    "startTime": "Od",
+    "endTime": "Do",
+    "visitor": "Kto przyjdzie?",
+    "chooseVisitor": "Wybierz osobę",
+    "plan": "Co trzeba zrobić?",
+    "planPlaceholder": "np. obiad, kąpiel, zakupy według listy",
+    "repeat": "Powtarzaj",
+    "noRepeat": "Nie powtarzaj",
+    "repeatFor": "Co tydzień przez {weeks, plural, one {# tydzień} few {# tygodnie} many {# tygodni} other {# tygodnia}}",
+    "repeatHint": "Zaznacz dni tygodnia. Bez zaznaczenia wizyta powtórzy się w ten sam dzień tygodnia co pierwsza.",
+    "add": "Zaplanuj wizytę",
+    "save": "Zapisz zmiany",
+    "delete": "Usuń wizytę",
+    "confirmDelete": "Tak, usuń wizytę i raport",
+    "errors": {
+      "dateInvalid": "Wpisz prawdziwą datę.",
+      "startRequired": "Wpisz, od której godziny.",
+      "timeInvalid": "Wpisz godzinę, np. 09:00.",
+      "visitorRequired": "Wybierz osobę, która przyjdzie.",
+      "notAllowed": "Nie masz dostępu do wizyt w tym kręgu.",
+      "notFound": "Tej wizyty już nie ma."
+    }
+  },
+  "VisitReport": {
+    "title": "Raport z wizyty",
+    "actualStart": "Początek",
+    "actualEnd": "Koniec",
+    "done": "Co zostało zrobione?",
+    "activities": {
+      "meal": "Posiłek",
+      "meds": "Leki",
+      "hygiene": "Higiena",
+      "walk": "Spacer",
+      "shopping": "Zakupy",
+      "cleaning": "Sprzątanie"
+    },
+    "report": "Jak minęła wizyta?",
+    "reportPlaceholder": "np. Cały obiad zjedzony, krótki spacer, dobry humor.",
+    "end": "Kończę wizytę i zapisuję raport",
+    "save": "Zapisz raport",
+    "saved": "Raport zapisany. Rodzina już go widzi.",
+    "savedAt": "Raport zapisany {date}",
+    "errors": {
+      "timeInvalid": "Wpisz godzinę początku i końca, np. 09:00.",
+      "notYet": "Raport napiszesz w dniu wizyty.",
+      "notYours": "Raport pisze osoba, która przyszła na wizytę.",
+      "notFound": "Tej wizyty już nie ma.",
+      "notAllowed": "Nie masz dostępu do wizyt w tym kręgu."
+    }
+  },
   "Senior": {
     "title": "Ekran seniora",
     "goodMorning": "Dzień dobry!",
@@ -539,7 +634,11 @@
     "medsDue": "Pora na leki",
     "medsTake": "Wzięte",
     "medsTaken": "Wzięte o {time}",
-    "medsDoseTaken": "wzięte"
+    "medsDoseTaken": "wzięte",
+    "visitComing": "Przyjdzie {name}",
+    "visitNow": "{name} jest u Ciebie",
+    "visitDone": "Wizyta: {name}",
+    "visitUntil": "do {time}"
   },
   "SeniorPair": {
     "metaTitle": "Połącz ekran seniora",

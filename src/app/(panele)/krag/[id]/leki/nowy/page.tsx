@@ -6,7 +6,8 @@ import { getCircleForMember } from "@/lib/circles";
 import { todayInPoland } from "@/lib/dates";
 import { MAX_TIMES } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
-import { emptyValues, weekdayNames } from "../form-values";
+import { weekdayNames } from "@/lib/weekday-names";
+import { emptyValues } from "../form-values";
 import { MedicationForm } from "../medication-form";
 
 export async function generateMetadata(): Promise<Metadata> {

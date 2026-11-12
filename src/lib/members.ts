@@ -1,5 +1,6 @@
 import type { CircleRole, Permission } from "@/generated/prisma/client";
 import { logAccess } from "@/lib/audit";
+import { dayToDate, todayInPoland } from "@/lib/dates";
 import type { DbClient } from "@/lib/db";
 import { db } from "@/lib/db";
 import { DEFAULT_PERMISSIONS, editablePermissions } from "@/lib/permissions";
@@ -141,6 +142,17 @@ export async function removeMember(params: {
         doneAt: null,
       },
       data: { assigneeId: null },
+    });
+    // Future visits they have not started stay without a person, so the
+    // family can choose someone else (data map, section 6).
+    await tx.visit.updateMany({
+      where: {
+        circleId: params.circleId,
+        visitorId: params.memberId,
+        actualStart: null,
+        date: { gte: dayToDate(todayInPoland()) },
+      },
+      data: { visitorId: null },
     });
     await logAccess(
       {

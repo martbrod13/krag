@@ -14,6 +14,7 @@ import { timeInPoland, todayInPoland } from "@/lib/dates";
 import { countMedications, getDoses } from "@/lib/medications";
 import { requireUser } from "@/lib/session";
 import { getPlan } from "@/lib/tasks";
+import { getLatestReport, getTodayVisits } from "@/lib/visits";
 import {
   cancelInvitationAction,
   leaveCircleAction,
@@ -21,6 +22,7 @@ import {
 } from "../actions";
 import { DoseItem } from "./leki/dose-item";
 import { TaskItem } from "./plan/task-item";
+import { VisitItem } from "./wizyty/visit-item";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Circles");
@@ -47,15 +49,26 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
 
   const today = todayInPoland();
   const now = timeInPoland();
-  const [plan, doses, medicationCount] = await Promise.all([
-    circle.permissions.includes("TASKS") ? getPlan(circle.id, today) : null,
-    seesHealth ? getDoses(circle.id, today) : null,
-    seesHealth ? countMedications(circle.id) : 0,
-  ]);
+  // A caregiver sees only the visits they come to (data map, decision 2).
+  const viewer = { userId: user.id, role: circle.role };
+  const seesVisits = circle.permissions.includes("VISITS");
+  const [plan, doses, medicationCount, visits, latestReport] =
+    await Promise.all([
+      circle.permissions.includes("TASKS") ? getPlan(circle.id, today) : null,
+      seesHealth ? getDoses(circle.id, today) : null,
+      seesHealth ? countMedications(circle.id) : 0,
+      seesVisits ? getTodayVisits(circle.id, today, viewer) : null,
+      seesVisits ? getLatestReport(circle.id, viewer) : null,
+    ]);
+  const earlierReport =
+    latestReport && !visits?.some((visit) => visit.id === latestReport.id)
+      ? latestReport
+      : null;
 
   const t = await getTranslations("Circles");
   const planText = await getTranslations("Plan");
   const meds = await getTranslations("Medications");
+  const visitText = await getTranslations("Visits");
   const common = await getTranslations("Common");
   const format = await getFormatter();
   const recipient = circle.recipient;
@@ -160,6 +173,57 @@ export default async function CirclePage({ params }: PageProps<"/krag/[id]">) {
               </ButtonLink>
             </>
           )}
+        </section>
+      ) : null}
+
+      {visits ? (
+        <section aria-labelledby="visits" className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="visits" className="text-xl font-extrabold">
+              {visitText("title")}
+            </h2>
+            <Link
+              href={`/krag/${circle.id}/wizyty`}
+              className="flex min-h-11 items-center font-bold text-brand hover:underline"
+            >
+              {visitText("allLink")}
+            </Link>
+          </div>
+          {visits.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {visits.map((visit) => (
+                <VisitItem
+                  key={visit.id}
+                  visit={visit}
+                  circleId={circle.id}
+                  today={today}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted">{visitText("noneToday")}</p>
+          )}
+          {earlierReport ? (
+            <div className="flex flex-col gap-2">
+              <h3 className="font-bold">{visitText("latestReport")}</h3>
+              <ul>
+                <VisitItem
+                  visit={earlierReport}
+                  circleId={circle.id}
+                  today={today}
+                  showDay
+                />
+              </ul>
+            </div>
+          ) : null}
+          {visits.length === 0 && !earlierReport ? (
+            <ButtonLink
+              href={`/krag/${circle.id}/wizyty/nowa`}
+              variant="secondary"
+            >
+              {visitText("add")}
+            </ButtonLink>
+          ) : null}
         </section>
       ) : null}
 

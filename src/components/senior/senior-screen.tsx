@@ -8,6 +8,7 @@ import { type Contact, telHref } from "@/lib/contacts";
 import { cx } from "@/lib/cx";
 import type { DoseSlot } from "@/lib/medications";
 import type { TaskView } from "@/lib/tasks";
+import { type VisitView, isInProgress } from "@/lib/visits";
 
 type SeniorScreenProps = {
   contacts: Contact[];
@@ -15,6 +16,8 @@ type SeniorScreenProps = {
   plan: TaskView[];
   /** Today's medicines with a reminder, by time. */
   medicines: DoseSlot[];
+  /** Today's visits: who comes and when. */
+  visits: VisitView[];
   /** In the family's preview the buttons only show what the senior sees. */
   preview?: boolean;
 };
@@ -22,17 +25,104 @@ type SeniorScreenProps = {
 const buttonClass =
   "flex min-h-24 w-full items-center gap-5 rounded-3xl bg-brand px-5 py-4 text-left text-white";
 
+/** One of today's tasks on the senior screen. */
+function SeniorTaskItem({ task }: { task: TaskView }) {
+  const t = useTranslations("Senior");
+  return (
+    <li
+      className={cx(
+        "flex items-start gap-4 rounded-3xl border-2 border-line bg-surface p-5",
+        task.done && "opacity-60",
+      )}
+    >
+      {task.time ? (
+        <span className="text-3xl font-extrabold tabular-nums">
+          {task.time}
+        </span>
+      ) : null}
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="text-2xl font-extrabold break-words">
+          {task.title}
+        </span>
+        {task.assignee ? (
+          <span className="text-xl text-muted">{task.assignee.name}</span>
+        ) : null}
+      </span>
+      {task.done ? (
+        <span className="shrink-0 text-brand">
+          <CheckIcon className="size-9" />
+          <span className="sr-only">{t("planDone")}</span>
+        </span>
+      ) : null}
+    </li>
+  );
+}
+
+/** Who comes today: "Przyjdzie Ewa", then "Ewa jest u Ciebie". */
+function SeniorVisitItem({ visit }: { visit: VisitView }) {
+  const t = useTranslations("Senior");
+  const name = visit.visitor?.name ?? "";
+  const now = isInProgress(visit);
+  const done = visit.actualEnd !== null;
+  let label = t("visitComing", { name });
+  if (now) label = t("visitNow", { name });
+  else if (done) label = t("visitDone", { name });
+
+  return (
+    <li
+      className={cx(
+        "flex items-start gap-4 rounded-3xl border-2 bg-surface p-5",
+        now ? "border-brand" : "border-line",
+        done && "opacity-60",
+      )}
+    >
+      <span className="text-3xl font-extrabold tabular-nums">
+        {visit.startTime}
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="text-2xl font-extrabold break-words">{label}</span>
+        {visit.endTime && !done ? (
+          <span className="text-xl text-muted">
+            {t("visitUntil", { time: visit.endTime })}
+          </span>
+        ) : null}
+      </span>
+      {done ? (
+        <span className="shrink-0 text-brand">
+          <CheckIcon className="size-9" />
+        </span>
+      ) : null}
+    </li>
+  );
+}
+
 /**
  * What the senior sees: the date and time, today's medicines with one big
- * "taken" button per time, today's plan and big buttons to call family.
+ * "taken" button per time, today's visits and plan, and big buttons to call
+ * family.
  */
 export function SeniorScreen({
   contacts,
   plan,
   medicines,
+  visits,
   preview = false,
 }: SeniorScreenProps) {
   const t = useTranslations("Senior");
+
+  // Today's visits and tasks together by time; tasks without a time last.
+  const dayEntries = [
+    ...visits
+      .filter((visit) => visit.visitor)
+      .map((visit) => ({
+        time: visit.startTime,
+        item: <SeniorVisitItem key={`visit-${visit.id}`} visit={visit} />,
+      })),
+    ...plan.map((task) => ({
+      time: task.time ?? "99:99",
+      item: <SeniorTaskItem key={task.id} task={task} />,
+    })),
+  ].sort((a, b) => a.time.localeCompare(b.time));
 
   return (
     <div className="flex flex-col gap-8">
@@ -129,43 +219,13 @@ export function SeniorScreen({
         </section>
       ) : null}
 
-      {plan.length > 0 ? (
+      {dayEntries.length > 0 ? (
         <section aria-labelledby="plan-title" className="flex flex-col gap-4">
           <h2 id="plan-title" className="text-2xl font-extrabold">
             {t("planTitle")}
           </h2>
           <ul className="flex flex-col gap-3">
-            {plan.map((task) => (
-              <li
-                key={task.id}
-                className={cx(
-                  "flex items-start gap-4 rounded-3xl border-2 border-line bg-surface p-5",
-                  task.done && "opacity-60",
-                )}
-              >
-                {task.time ? (
-                  <span className="text-3xl font-extrabold tabular-nums">
-                    {task.time}
-                  </span>
-                ) : null}
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="text-2xl font-extrabold break-words">
-                    {task.title}
-                  </span>
-                  {task.assignee ? (
-                    <span className="text-xl text-muted">
-                      {task.assignee.name}
-                    </span>
-                  ) : null}
-                </span>
-                {task.done ? (
-                  <span className="shrink-0 text-brand">
-                    <CheckIcon className="size-9" />
-                    <span className="sr-only">{t("planDone")}</span>
-                  </span>
-                ) : null}
-              </li>
-            ))}
+            {dayEntries.map((entry) => entry.item)}
           </ul>
         </section>
       ) : null}

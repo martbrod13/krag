@@ -4,10 +4,12 @@ import { CareCircle } from "@/components/home/care-circle";
 import {
   CalendarIcon,
   GlobeIcon,
+  HouseIcon,
   PillIcon,
   ShieldIcon,
   TabletIcon,
 } from "@/components/icons";
+import { cx } from "@/lib/cx";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { PanelLink } from "@/components/panel-link";
 import { ButtonLink } from "@/components/ui/button";
@@ -17,6 +19,7 @@ const steps = ["create", "invite", "pair"] as const;
 const features = [
   { key: "plan", icon: <CalendarIcon className="size-7" /> },
   { key: "meds", icon: <PillIcon className="size-7" /> },
+  { key: "visits", icon: <HouseIcon className="size-7" /> },
   { key: "senior", icon: <TabletIcon className="size-7" /> },
   { key: "languages", icon: <GlobeIcon className="size-7" /> },
 ] as const;
@@ -79,8 +82,17 @@ export function Landing() {
           {t("featuresTitle")}
         </h2>
         <ul className="grid gap-x-12 gap-y-8 md:grid-cols-2">
-          {features.map((feature) => (
-            <li key={feature.key} className="flex gap-4">
+          {features.map((feature, index) => (
+            <li
+              key={feature.key}
+              className={cx(
+                "flex gap-4",
+                // An odd last feature takes the whole row.
+                index === features.length - 1 &&
+                  features.length % 2 === 1 &&
+                  "md:col-span-2",
+              )}
+            >
               <span className="text-brand">{feature.icon}</span>
               <span className="flex flex-col gap-1">
                 <span className="text-xl font-extrabold">
